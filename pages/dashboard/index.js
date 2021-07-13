@@ -6,6 +6,7 @@ import AccountDetails from "../../components/dashboard/AccountDetails";
 import Loading from "../../components/Loading";
 import DashboardStatus from "../../components/dashboard/DashboardStatus";
 import DashboardService from "../../services/DashboardService";
+import ChangePasswordModal from "../../components/dashboard/ChangePasswordModal";
 
 const Dashboard = ({ locations }) => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const Dashboard = ({ locations }) => {
 
   const logout = async () => {
     if (user) {
-      const logoutRes = await DashboardService.instance.logout(
+      const logoutRes = await DashboardService.instance.logoutUser(
         user.customer.token
       );
 
@@ -33,7 +34,6 @@ const Dashboard = ({ locations }) => {
     }
   }, [user]);
 
-  
   if (!user) {
     return <Loading />;
   }
@@ -76,7 +76,6 @@ const Dashboard = ({ locations }) => {
             onClick={() => {
               setOrders(false);
               setAccountDetails(true);
-
               setDashboard(false);
             }}
           >
@@ -121,6 +120,7 @@ const Dashboard = ({ locations }) => {
   };
   return (
     <React.Fragment>
+      {/* <ChangePasswordModal /> */}
       <main className="main account">
         <div className="page-content mt-4 mb-10 pb-6">
           <div className="container">

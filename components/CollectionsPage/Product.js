@@ -40,13 +40,6 @@ const Product = () => {
     setPage(pageIndex);
   };
 
-  if (!products_loading && paginatedProduct.length === 0) {
-    return (
-      <div className="col-lg-9 text-center mt-5">
-        <h1>No products found</h1>
-      </div>
-    );
-  }
   return (
     <React.Fragment>
       {/* <Head>

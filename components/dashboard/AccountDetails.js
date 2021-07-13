@@ -3,8 +3,9 @@ import { useUserContext } from "../../context/user_context";
 import { based_url } from "../../utils/constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DashboardService from "../../services/DashboardService";
 const AccountDetails = () => {
-  const notify = (data) => toast.success(`${data}`);
+  // const notify = (data) => toast.success(`${data}`);
   const [openModal, setOpenModal] = useState(false);
   const { user, setUser } = useUserContext();
   // console.log(user.customer);
@@ -19,20 +20,13 @@ const AccountDetails = () => {
   const accountHandleSubmit = async (e) => {
     e.preventDefault();
     if (account.name && account.address) {
-      const accountEdit = await fetch(`${based_url}/customer/edit_profile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + user.customer.token,
-        },
-        body: JSON.stringify({ name: account.name, address: account.address }),
-      });
-      const data = await accountEdit.json();
-      // console.log(data);
+      const data = await DashboardService.instance.editProfile(
+        user.customer.token,
+        account
+      );
+
       if (data.errors) {
-        const failedMessage = "Failed to update profile";
-        notify(failedMessage);
+        toast.error("Failed to update profile");
       } else {
         const newCustomer = {
           ...user.customer,
@@ -41,7 +35,7 @@ const AccountDetails = () => {
         };
         setUser({ ...user, customer: newCustomer });
         localStorage.setItem("user", JSON.stringify(user));
-        notify(data.message);
+        toast.success(data.message);
         // setOpenModal(false);
       }
     }
@@ -60,7 +54,16 @@ const AccountDetails = () => {
               setOpenModal(true);
             }}
           >
-            Edit <i className="far fa-edit"></i>
+            Edit Profile <i className="far fa-edit"></i>
+          </a>
+          <br />
+          <a
+            className="btn btn-link btn-secondary btn-underline mt-2"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            Edit Password <i className="far fa-edit"></i>
           </a>
         </div>
       </div>
@@ -75,7 +78,7 @@ const AccountDetails = () => {
                   className="form-control"
                   name="name"
                   value={account.name}
-                  required=""
+                  required
                   onChange={accountInputHandler}
                   style={{ background: "white" }}
                 />
@@ -87,50 +90,16 @@ const AccountDetails = () => {
                   className="form-control"
                   style={{ background: "white" }}
                   name="address"
-                  required=""
+                  required
                   rows="4"
                   cols="50"
                   value={account.address}
                   onChange={accountInputHandler}
                 ></textarea>
               </div>
-              {/* <div className="col-sm-6">
-                <label>Email</label>
-                <input
-                  className="form-control"
-                  value={user && user.customer.email}
-                  readOnly
-                />
-              </div> */}
             </div>
-            {/* <div className="row">
-              <div className="col-sm-6">
-                <label>Address *</label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  name="address"
-                  required=""
-                  value={account.address}
-                  onChange={accountInputHandler}
-                ></textarea>
-              </div>
-              <div className="col-sm-6">
-                <label>Phone *</label>
-                <input
-                  className="form-control"
-                  value={user && user.customer.phone}
-                  readOnly
-                />
-              </div>
-            </div> */}
-            <button
-              type="submit"
-              className="btn btn-primary"
-              // onClick={() => {
-              //   notify();
-              // }}
-            >
+
+            <button type="submit" className="btn btn-primary">
               SAVE CHANGES
             </button>
             <ToastContainer />

@@ -52,4 +52,32 @@ export default class DashboardService {
     }
     return "";
   }
+
+  // Edit Profile
+  async editProfile(token, account) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const editProfileResponse = await axios(
+          {
+            method: "POST",
+            url: `${based_url}/customer/edit_profile`,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + token,
+            },
+            data: JSON.stringify(account),
+          }
+          // based_url + "/customer/logout"
+        );
+        // Expecting a list from the response
+        if (editProfileResponse.data) return editProfileResponse.data;
+      } catch (error) {
+        console.log("Error in editProfile() in services/DashboardService.js");
+        console.log(error);
+      }
+    }
+    return "";
+  }
 }

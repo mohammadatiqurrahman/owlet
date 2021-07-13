@@ -24,14 +24,16 @@ const collections = () => {
       setBannerLoading(false);
       setShowBanner(false);
     } else {
-      const categoryBanner = navigations.find(
-        (item) => item.slug === slug
-      ).banner_image;
-      setBanner(categoryBanner);
-      setBannerLoading(false);
-      setShowBanner(true);
+      if (navigations_child.length > 0) {
+        const categoryBanner = navigations_child.find(
+          (item) => item.slug === slug
+        );
+        setBanner(categoryBanner.banner_image);
+        setBannerLoading(false);
+        setShowBanner(true);
+      }
     }
-  }, [slug]);
+  });
   //Banner End
   const [title, setTitle] = useState("");
   const [metaKey, setMetaKey] = useState("");
@@ -71,7 +73,7 @@ const collections = () => {
       }
     }
   }, [slug]);
-  
+
   if (products_loading) {
     return <Loading />;
   }
