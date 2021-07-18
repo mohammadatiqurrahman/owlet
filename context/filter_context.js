@@ -42,8 +42,6 @@ export const FilterProvider = ({ children }) => {
   }, [products, state.sort, state.filters]);
 
   const updateSort = (e) => {
-    // for demonstration
-    // const name = e.target.name
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
@@ -57,11 +55,9 @@ export const FilterProvider = ({ children }) => {
     }
     if (name === "color") {
       value = e.target.dataset.color;
-      // console.log(name, value);
     }
     if (name === "size") {
       value = e.target.dataset.size;
-      // console.log(name, value);
     }
     if (name === "price") {
       value = Number(value);
@@ -87,7 +83,7 @@ export const FilterProvider = ({ children }) => {
     </FilterContext.Provider>
   );
 };
-// make sure use
+
 export const useFilterContext = () => {
   return useContext(FilterContext);
 };

@@ -1,51 +1,184 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useGeneralContext } from "../../context/general_context";
+import { useUserContext } from "../../context/user_context";
+import DashboardService from "../../services/DashboardService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ChangePasswordModal = () => {
+  const { user } = useUserContext();
+  const [changePasswordStatus, setChangePasswordStatus] = useState(false);
+  const { setChangePasswordModal } = useGeneralContext();
+  const [changePassword, setChangePassword] = useState({
+    password: "",
+    password_confirmation: "",
+  });
+
+  const [changePassError, setChangePassError] = useState({
+    passwordError: "",
+    confirmPasswordError: "",
+  });
+  const changePasswordInputHandler = (e) => {
+    const { name, value } = e.target;
+    setChangePassword({ ...changePassword, [name]: value });
+  };
+  const changePasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (!changePassword.password || !changePassword.password_confirmation) {
+      setChangePassError({
+        ...changePassError,
+        passwordError: changePassword.password
+          ? ""
+          : "The password field is required",
+        confirmPasswordError: changePassword.password_confirmation
+          ? ""
+          : "The confirm password field is required",
+      });
+      return;
+    }
+    setChangePasswordStatus(true);
+    if (changePassword.password !== changePassword.password_confirmation) {
+      setChangePasswordStatus(false);
+      setChangePassError({
+        ...changePassError,
+        passwordError: "The password confirmation does not match.",
+        confirmPasswordError:
+          "The password confirmation and password must match.",
+      });
+      return;
+    }
+    const updateResponse =
+      await DashboardService.instance.editPasswordFromDashboard(
+        user.customer.token,
+        changePassword
+      );
+
+    setChangePasswordStatus(false);
+    toast.success(updateResponse.message);
+  };
+
+  const passwordInputField = () => {
+    return (
+      <>
+        <div style={{ textAlign: "left", color: "black" }}>Password</div>
+        <input
+          type="password"
+          className="form-control"
+          name="password"
+          placeholder="Password"
+          style={{ border: "1px solid #232323" }}
+          onChange={changePasswordInputHandler}
+          value={changePassword.password}
+          onKeyUp={() =>
+            changePassError.passwordError &&
+            setChangePassError({
+              ...changePassError,
+              passwordError: "",
+            })
+          }
+        />
+        <div
+          style={{
+            display: changePassError.passwordError ? "block" : "none",
+            fontSize: "80%",
+            color: " #cb2431",
+            marginLeft: "5px",
+          }}
+        >
+          {changePassError.passwordError ? changePassError.passwordError : ""}
+        </div>
+      </>
+    );
+  };
+
+  const confirmPasswordInputField = () => {
+    return (
+      <>
+        <div style={{ textAlign: "left", color: "black" }} className="mt-3">
+          Confirm Password
+        </div>
+        <input
+          type="password"
+          className="form-control"
+          name="password_confirmation"
+          placeholder="Confirm Password"
+          style={{ border: "1px solid #232323" }}
+          onChange={changePasswordInputHandler}
+          value={changePassword.password_confirmation}
+          onKeyUp={() =>
+            changePassError.confirmPasswordError &&
+            setChangePassError({
+              ...changePassError,
+              confirmPasswordError: "",
+            })
+          }
+        />
+        <div
+          style={{
+            display: changePassError.confirmPasswordError ? "block" : "none",
+            fontSize: "80%",
+            color: " #cb2431",
+            marginLeft: "5px",
+          }}
+        >
+          {changePassError.confirmPasswordError
+            ? changePassError.confirmPasswordError
+            : ""}
+        </div>
+      </>
+    );
+  };
   return (
     <React.Fragment>
+      <ToastContainer />
       <div
         className="mfp-bg mfp-newsletter mfp-flip-popup mfp-ready"
         style={{ display: "block" }}
       ></div>
       <div
         className="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-newsletter mfp-flip-popup mfp-ready"
-        tabindex="-1"
+        tabIndex="-1"
         style={{ display: "block" }}
       >
         <div className="mfp-container mfp-s-ready mfp-inline-holder">
           <div className="mfp-content">
             <div className="newsletter-popup" id="newsletter-popup">
-              <div className="newsletter-content">
-                <h4 className="text-uppercase text-dark">
-                  Up to <span className="text-primary">20% Off</span>
-                </h4>
-                <h2 className="font-weight-semi-bold">
-                  Sign up to <span>RIODE</span>
-                </h2>
-                <p className="text-grey">
-                  Subscribe to the Riode eCommerce newsletter to receive timely
-                  updates from your favorite products.
-                </p>
+              <div className="container">
+                <div className="row">
+                  <h4 className="text-uppercase text-dark mt-5">
+                    Change Password
+                  </h4>
 
-                <div className="form-checkbox justify-content-center">
-                  <input
-                    type="checkbox"
-                    className="custom-checkbox"
-                    id="hide-newsletter-popup"
-                    name="hide-newsletter-popup"
-                    required=""
-                  />
-                  <label for="hide-newsletter-popup">
-                    Don't show this popup again
-                  </label>
+                  <form
+                    style={{
+                      padding: "0px 95px 15px 95px",
+                    }}
+                    onSubmit={changePasswordSubmit}
+                  >
+                    {passwordInputField()}
+                    {confirmPasswordInputField()}
+                    {!changePasswordStatus ? (
+                      <button className="btn btn-dark mt-3" type="submit">
+                        Change Password
+                      </button>
+                    ) : (
+                      <button className="btn btn-disabled mt-3">
+                        Changing password...
+                      </button>
+                    )}
+                  </form>
                 </div>
               </div>
-              <button title="Close (Esc)" type="button" className="mfp-close">
+
+              <button
+                title="Close (Esc)"
+                type="button"
+                className="mfp-close"
+                onClick={() => setChangePasswordModal(false)}
+              >
                 <span>×</span>
               </button>
             </div>
           </div>
-          <div className="mfp-preloader"></div>
         </div>
       </div>
     </React.Fragment>

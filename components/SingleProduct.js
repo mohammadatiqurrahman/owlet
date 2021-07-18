@@ -8,62 +8,75 @@ const SingleProduct = ({ item }) => {
     useCartContext();
   const [slugForHomeCart, setSlugForHomeCart] = useState(null);
   const router = useRouter();
-  const { slug } = router;
-  // console.log(item);
 
-  return (
-    <div className="product text-center">
-      <figure className="product-media">
-        <Link href={`/products/${item.slug}`}>
-          <a>
-            <img
-              src={`${
-                item.main_image
-                  ? item.main_image
-                  : "/images/dummy-images/product-preview.jpeg"
-              }`}
-              alt="product"
-              width="247"
-              height="278"
-            />
-          </a>
-        </Link>
-        <div className="product-label-group">
-          {item.new_arrival === "1" && (
-            <label className="product-label label-new">new</label>
-          )}
-          {item.sale_percentage && (
-            <label className="product-label label-sale">
-              {item.sale_percentage}% OFF
-            </label>
-          )}
-        </div>
-        <div className="product-action-vertical">
-          <a
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              setHomeCartWishlistStatus(true);
-              setSlugForHomeCart(item.slug);
-            }}
-            className="btn-product-icon btn-cart"
-            title="Add to cart"
-          >
-            <i className="d-icon-bag"></i>
-          </a>
-          <a
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              setHomeCartWishlistStatus(true);
-              setSlugForHomeCart(item.slug);
-            }}
-            className="btn-product-icon btn-wishlist"
-            title="Add to wishlist"
-          >
-            <i className="d-icon-heart"></i>
-          </a>
-        </div>
-      </figure>
-      {HomeCartWishlistStatus && <HomeCartWishlist slug={slugForHomeCart} />}
+  const productImage = () => {
+    return (
+      <Link href={`/products/${item.slug}`}>
+        <a>
+          <img
+            src={`${
+              item.main_image
+                ? item.main_image
+                : "/images/dummy-images/product-preview.jpeg"
+            }`}
+            alt="product"
+            width="247"
+            height="278"
+          />
+        </a>
+      </Link>
+    );
+  };
+
+  const productLabel = () => {
+    return (
+      <div className="product-label-group">
+        {item.new_arrival === "1" && (
+          <label className="product-label label-new">new</label>
+        )}
+        {item.sale_percentage && (
+          <label className="product-label label-sale">
+            {item.sale_percentage}% OFF
+          </label>
+        )}
+      </div>
+    );
+  };
+
+  const addToCartButton = () => {
+    return (
+      <a
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          setHomeCartWishlistStatus(true);
+          setSlugForHomeCart(item.slug);
+        }}
+        className="btn-product-icon btn-cart"
+        title="Add to cart"
+      >
+        <i className="d-icon-bag"></i>
+      </a>
+    );
+  };
+
+  const addToWishListButton = () => {
+    return (
+      <a
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          setHomeCartWishlistStatus(true);
+          setSlugForHomeCart(item.slug);
+        }}
+        className="btn-product-icon btn-wishlist"
+        title="Add to wishlist"
+      >
+        <i className="d-icon-heart"></i>
+      </a>
+    );
+  };
+
+  const productNameAndPrice = () => {
+    return (
       <div className="product-details">
         <h3 className="product-name">
           <Link href={`/products/${item.slug}`}>
@@ -88,6 +101,20 @@ const SingleProduct = ({ item }) => {
           </del>
         </div>
       </div>
+    );
+  };
+  return (
+    <div className="product text-center">
+      <figure className="product-media">
+        {productImage()}
+        {productLabel()}
+        <div className="product-action-vertical">
+          {addToCartButton()}
+          {addToWishListButton()}
+        </div>
+      </figure>
+      {HomeCartWishlistStatus && <HomeCartWishlist slug={slugForHomeCart} />}
+      {productNameAndPrice()}
     </div>
   );
 };

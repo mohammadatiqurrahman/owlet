@@ -16,7 +16,6 @@ const Calculations = () => {
     shipping_fee,
   } = useCartContext();
 
-  // console.log(cart);
   const increase = (id) => {
     toggleAmount(id, "inc");
   };

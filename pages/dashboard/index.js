@@ -7,8 +7,12 @@ import Loading from "../../components/Loading";
 import DashboardStatus from "../../components/dashboard/DashboardStatus";
 import DashboardService from "../../services/DashboardService";
 import ChangePasswordModal from "../../components/dashboard/ChangePasswordModal";
+import { useGeneralContext } from "../../context/general_context";
+import UserProfileEditModal from "../../components/dashboard/UserProfileEditModal";
 
 const Dashboard = ({ locations }) => {
+  const { changePasswordModal, userProfileEditModal } = useGeneralContext();
+
   const router = useRouter();
   const [dashboard, setDashboard] = useState(true);
   const [orders, setOrders] = useState(false);
@@ -120,8 +124,9 @@ const Dashboard = ({ locations }) => {
   };
   return (
     <React.Fragment>
-      {/* <ChangePasswordModal /> */}
       <main className="main account">
+        {changePasswordModal && <ChangePasswordModal />}
+        {userProfileEditModal && <UserProfileEditModal />}
         <div className="page-content mt-4 mb-10 pb-6">
           <div className="container">
             <h2 className="title title-center mb-10 mt-5">

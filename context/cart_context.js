@@ -10,19 +10,9 @@ import {
   COUNT_CART_TOTALS,
 } from "../actions";
 
-const getLocalStorage = () => {
-  let cart = localStorage.getItem("cart");
-  if (cart) {
-    return JSON.parse(localStorage.getItem("cart"));
-  } else {
-    return [];
-  }
-};
-
 const initialState = {
   cart: [],
   wishlist: [],
-  // cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
   total_tax: 0,
@@ -57,6 +47,8 @@ export const CartProvider = ({ children }) => {
       },
     });
   };
+
+  // Add to wishlist
   const addToWishlist = (
     id,
     selectedColor,
@@ -81,15 +73,16 @@ export const CartProvider = ({ children }) => {
   };
 
   const [HomeCartWishlistStatus, setHomeCartWishlistStatus] = useState(false);
-  //remove item
+  //remove cart Item item
   const removeItem = (id) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
-  //remove item
+
   const removeWishlistItem = (id) => {
     dispatch({ type: REMOVE_WISHLIST_ITEM, payload: id });
   };
-  //toggle amount
+
+  //toggle amount, increase or decrease product item
   const toggleAmount = (id, value) => {
     dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
   };
@@ -97,22 +90,17 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
   };
+
   useEffect(() => {
     dispatch({ type: "LOAD_CART" });
-  }, []);
-  useEffect(() => {
     dispatch({ type: "LOAD_WISHLIST" });
   }, []);
   useEffect(() => {
     dispatch({ type: COUNT_CART_TOTALS });
-    // if (typeof window !== "undefined") {
     localStorage.setItem("cart", JSON.stringify(state.cart));
-
-    // }
-  }, [state.cart]);
-  useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(state.wishlist));
-  }, [state.wishlist]);
+  }, [state.cart, state.wishlist]);
+
   const [placeOrderClick, setPlaceOrderClick] = useState(null);
   return (
     <CartContext.Provider

@@ -10,7 +10,7 @@ import {
   FeaturedProduct,
   TopHeader,
 } from "../components";
-import { based_url } from "../utils/constants";
+
 import HomePageService from "../services/HomePageService";
 
 const index = ({

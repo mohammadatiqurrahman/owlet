@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import reducer from "../reducers/products_reducer";
-import { parentNavigationUrl,allCategories } from "../utils/constants";
+import { parentNavigationUrl, allCategories } from "../utils/constants";
 
 import {
   GET_NAVIGATION_BEGIN,
@@ -53,13 +53,17 @@ export const ProductsProvider = ({ children }) => {
       dispatch({ type: GET_NAVIGATION_ERROR });
     }
   };
-  // Fetch navigation child
+
+  // Fetch all categories
   const fetchNavigationsChild = async (url) => {
     dispatch({ type: GET_NAVIGATION_CHILD_BEGIN });
     try {
       const response = await axios.get(url);
       const navigationsChild = response.data;
-      dispatch({ type: GET_NAVIGATION_CHILD_SUCCESS, payload: navigationsChild });
+      dispatch({
+        type: GET_NAVIGATION_CHILD_SUCCESS,
+        payload: navigationsChild,
+      });
     } catch (error) {
       dispatch({ type: GET_NAVIGATION_CHILD_ERROR });
     }
@@ -72,40 +76,39 @@ export const ProductsProvider = ({ children }) => {
       const response = await axios.get(url);
       const products = response.data;
 
-      const modifiedProducts = products.length>0 ? products.map((item) => {
-        const variants = JSON.parse(item.variants);
-        // console.log(variants);
-        const merged = [].concat.apply([], variants);
-        const sizes = merged.map((item) => item.sizes);
-        const mergedSizes = [].concat.apply([], sizes);
-        // console.log(mergedSizes)
-        const actualSizes = mergedSizes.map((item) => Object.keys(item));
-        // console.log(actualSizes)
-        const sizeArray = [].concat.apply([], actualSizes);
-        // console.log(sizeArray)
-        let uniqueSizes = ["all", ...new Set(sizeArray)];
-        // console.log(uniqueSizes);
-        const uniqueColorCode = [
-          "all",
-          ...new Set(merged.map((item) => item.color_code)),
-        ];
-        // console.log(colorCode);
-        const uniqueColorName = [
-          "all",
-          ...new Set(merged.map((item) => item.color_name)),
-        ];
+      const modifiedProducts =
+        products.length > 0
+          ? products.map((item) => {
+              const variants = JSON.parse(item.variants);
 
-        // console.log(variants);
-        const newItem = {
-          ...item,
-          newVariants: variants,
-          uniqueSizes,
-          uniqueColorCode,
-          uniqueColorName,
-        };
-        return newItem;
-      }):[];
-      // console.log(modifiedProducts);
+              const merged = [].concat.apply([], variants);
+
+              const sizes = merged.map((item) => item.sizes);
+              const mergedSizes = [].concat.apply([], sizes);
+              const actualSizes = mergedSizes.map((item) => Object.keys(item));
+              const sizeArray = [].concat.apply([], actualSizes);
+              let uniqueSizes = ["all", ...new Set(sizeArray)];
+
+              const uniqueColorCode = [
+                "all",
+                ...new Set(merged.map((item) => item.color_code)),
+              ];
+              const uniqueColorName = [
+                "all",
+                ...new Set(merged.map((item) => item.color_name)),
+              ];
+
+              const newItem = {
+                ...item,
+                newVariants: variants,
+                uniqueSizes,
+                uniqueColorCode,
+                uniqueColorName,
+              };
+              return newItem;
+            })
+          : [];
+
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: modifiedProducts });
     } catch (error) {
       dispatch({ type: GET_PRODUCTS_ERROR });
@@ -122,7 +125,6 @@ export const ProductsProvider = ({ children }) => {
 
       const variants = JSON.parse(singleProduct.variants);
       const modifiedSingleProduct = { ...singleProduct, newVariants: variants };
-      // console.log(modifiedSingleProduct);
 
       dispatch({
         type: GET_SINGLE_PRODUCT_SUCCESS,
@@ -156,14 +158,13 @@ export const ProductsProvider = ({ children }) => {
         fetchProducts,
         fetchSingleProduct,
         handleCart,
-        // fetchNavigationsChild,
       }}
     >
       {children}
     </ProductsContext.Provider>
   );
 };
-// make sure use
+
 export const useProductsContext = () => {
   return useContext(ProductsContext);
 };

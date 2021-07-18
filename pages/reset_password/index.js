@@ -31,25 +31,7 @@ const index = () => {
   // Submit form
   const resetHandleSubmit = async (e) => {
     e.preventDefault();
-    if (resetPassword.password && resetPassword.password_confirmation) {
-      setResetPasswordStatus(true);
-      if (resetPassword.password === resetPassword.password_confirmation) {
-        const updateResponse =
-          await ResetPasswordService.instance.updatePassword(resetPassword);
-
-        setResetPasswordStatus(false);
-        const notify = () => toast.success(updateResponse.message);
-        notify();
-      } else {
-        setResetPasswordStatus(false);
-        setResetPassError({
-          ...resetPassError,
-          passwordError: "The password confirmation does not match.",
-          confirmPasswordError:
-            "The password confirmation and password must match.",
-        });
-      }
-    } else {
+    if (!resetPassword.password || !resetPassword.password_confirmation) {
       setResetPassError({
         ...resetPassError,
         passwordError: resetPassword.password
@@ -59,7 +41,27 @@ const index = () => {
           ? ""
           : "The confirm password field is required",
       });
+      return;
     }
+
+    setResetPasswordStatus(true);
+    if (resetPassword.password !== resetPassword.password_confirmation) {
+      setResetPasswordStatus(false);
+      setResetPassError({
+        ...resetPassError,
+        passwordError: "The password confirmation does not match.",
+        confirmPasswordError:
+          "The password confirmation and password must match.",
+      });
+      return;
+    }
+
+    const updateResponse = await ResetPasswordService.instance.updatePassword(
+      resetPassword
+    );
+
+    setResetPasswordStatus(false);
+    toast.success(updateResponse.message);
   };
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const index = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <Head>
         <title>Reset Password | The Owlet</title>
       </Head>
@@ -152,15 +155,10 @@ const index = () => {
                             Reset Password
                           </button>
                         ) : (
-                          <button
-                            className="btn btn-dark btn-block btn-rounded"
-                            disabled={true}
-                          >
+                          <button className="btn btn-disabled btn-block btn-rounded">
                             Changing Password...
                           </button>
                         )}
-
-                        <ToastContainer />
                       </form>
                     </div>
                   </div>

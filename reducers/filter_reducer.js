@@ -36,18 +36,8 @@ const filter_reducer = (state, action) => {
   if (action.type === SORT_PRODUCTS) {
     const { sort, filtered_products } = state;
     let tempProducts = [...filtered_products];
+    // Sorting low to high price
     if (sort === "price-lowest") {
-      // tempProducts = tempProducts.sort((a, b) => {
-      //   if (a.price < b.price) {
-      //     return -1;
-      //   }
-      //   if (a.price > b.price) {
-      //     return 1;
-      //   }
-      //   return 0;
-      // });
-
-      // Sortcut
       tempProducts = tempProducts.sort((a, b) => a.price - b.price);
     }
     if (sort === "price-highest") {
@@ -91,11 +81,8 @@ const filter_reducer = (state, action) => {
 
     // filter with size
     if (size !== "all") {
-      // tempProducts = tempProducts.filter(
-      //   (product) => product.size === size
-      // );
+      
       tempProducts = tempProducts.filter((item) => {
-        // console.log(item.newVariants);
         const newItem = item.uniqueSizes.find((e) => {
           return e === size;
         });
@@ -105,11 +92,9 @@ const filter_reducer = (state, action) => {
 
     // colors
     if (color !== "all") {
-      // tempProducts = tempProducts.filter((product) => {
-      //   return product.colors.find((item) => item === color);
-      // });
+    
       tempProducts = tempProducts.filter((item) => {
-        // console.log(item.newVariants);
+      
         const newItem = item.uniqueColorCode.find((e) => {
           return e === color;
         });

@@ -80,4 +80,35 @@ export default class DashboardService {
     }
     return "";
   }
+
+  // Edit password from dahsboard
+  async editPasswordFromDashboard(token, password) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const editPasswordFromDashboardResponse = await axios(
+          {
+            method: "POST",
+            url: `${based_url}/customer/change/password`,
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: "Bearer " + token,
+            },
+            data: JSON.stringify(password),
+          }
+          // based_url + "/customer/logout"
+        );
+        // Expecting a string from the response
+        if (editPasswordFromDashboardResponse.data)
+          return editPasswordFromDashboardResponse.data;
+      } catch (error) {
+        console.log(
+          "Error in editPasswordFromDashboard() in services/DashboardService.js"
+        );
+        console.log(error);
+      }
+    }
+    return "";
+  }
 }

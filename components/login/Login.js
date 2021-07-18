@@ -1,5 +1,4 @@
-import { based_url } from "../../utils/constants";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useUserContext } from "../../context/user_context";
 
@@ -14,8 +13,9 @@ const Login = () => {
     loginInfo,
     loginButtonLoading,
   } = useUserContext();
-  return (
-    <form onSubmit={loginHandleSubmit}>
+
+  const emailInputField = () => {
+    return (
       <div className="form-group mb-3">
         <input
           type="email"
@@ -40,6 +40,11 @@ const Login = () => {
           {loginInfoError.emailError ? loginInfoError.emailError : ""}
         </div>
       </div>
+    );
+  };
+
+  const passwordInputField = () => {
+    return (
       <div className="form-group">
         <input
           type="password"
@@ -64,22 +69,23 @@ const Login = () => {
           {loginInfoError.passwordError ? loginInfoError.passwordError : ""}
         </div>
       </div>
+    );
+  };
+
+  const lostPasswordField = () => {
+    return (
       <div className="form-footer">
-        {/* <div className="form-checkbox">
-          <input
-            type="checkbox"
-            className="custom-checkbox"
-            id="signin-remember"
-            name="signin-remember"
-          />
-          <label className="form-control-label" htmlFor="signin-remember">
-            Remember me
-          </label>
-        </div> */}
         <Link href="/forget_password" className="lost-link">
           Lost your password?
         </Link>
       </div>
+    );
+  };
+  return (
+    <form onSubmit={loginHandleSubmit}>
+      {emailInputField()}
+      {passwordInputField()}
+      {lostPasswordField()}
       {!loginButtonLoading ? (
         <button className="btn btn-dark btn-block btn-rounded" type="submit">
           Login

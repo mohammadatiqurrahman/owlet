@@ -11,7 +11,8 @@ class GuestInvoice {
     tax,
     shipping_cost,
     total,
-    payment_type
+    payment_type,
+    note
   ) {
     this.name = name;
     this.email = email;
@@ -26,6 +27,7 @@ class GuestInvoice {
     this.total = total;
 
     this.payment_type = payment_type;
+    this.note = note;
   }
 }
 export default GuestInvoice;

@@ -78,7 +78,7 @@ class MyDocument extends Document {
           <link rel="stylesheet" type="text/css" href="/css/demo24.min.css" />
           <link rel="stylesheet" type="text/css" href="/css/custom.css" />
         </Head>
-        <body>
+        <body className="loaded">
           <Main />
           <NextScript />
           {/* <script src="/vendor/jquery/jquery.min.js"></script> */}
