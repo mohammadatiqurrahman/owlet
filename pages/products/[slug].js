@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import {
   Details,
   DetailsBottom,
@@ -11,7 +12,7 @@ import { useProductsContext } from "../../context/products_context";
 import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import ProductsService from "../../services/ProductsService";
-const products = () => {
+const products = ({ seo }) => {
   const {
     single_product_loading: loading,
     single_product_error: error,
@@ -54,6 +55,18 @@ const products = () => {
   return (
     <React.Fragment>
       {/* <Header navigations={navigations} /> */}
+      <Head>
+        <title>{seo.title} | The Owlet</title>
+        {seo.meta_keywords && (
+          <meta name="keywords" content={seo.meta_keywords} />
+        )}
+        {seo.meta_description && (
+          <meta name="description" content={seo.meta_description} />
+        )}
+        {seo.main_image && (
+          <meta property="og:image" content={seo.main_image} />
+        )}
+      </Head>
       <main className="main single-product mt-6">
         <div className="page-content mb-10">
           <div className="container">
@@ -75,47 +88,15 @@ const products = () => {
   );
 };
 
-// export const getServerSideProps = async (context) => {
-//   const navRes = await fetch(`${based_url}/category/parent/list`);
-//   const navigations = await navRes.json();
-//   // console.log(navigations);
-//   // const singleProduct = navigations.find(
-//   //   (item) => context.query.slug == "product-one"
-//   // );
-//   // console.log(singleProduct);
-//   return {
-//     props: {
-//       navigations,
-//     },
-//   };
-// };
+export async function getServerSideProps(context) {
+  // const res = await fetch(`${based_url}/product/${context.query.slug}`);
+  const seo = await ProductsService.instance.getProductForSeo(
+    context.query.slug
+  );
 
-// export const getStaticProps = async ({ params: { slug } }) => {
-//   const navRes = await fetch(`${based_url}/category/parent/list`);
-//   const navigations = await navRes.json();
-
-//   // const productRes = await fetch(`${based_url}/`)
-//   return {
-//     props: {
-//       navigations,
-//     },
-//   };
-// };
-
-// export async function getStaticPaths() {
-//   const navRes = await fetch(`${based_url}/category/parent/list`);
-//   const navigations = await navRes.json();
-
-//   const slugs = navigations.map((item) => item.slug);
-//   const paths = slugs.map((slug) => ({
-//     params: { slug: slug.toString() },
-//   }));
-
-//   return {
-//     // paths: [{ params: { slug: "product-one" } }],
-//     paths,
-//     fallback: true,
-//   };
-// }
+  return {
+    props: { seo },
+  };
+}
 
 export default products;

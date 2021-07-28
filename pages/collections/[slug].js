@@ -6,6 +6,7 @@ import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import Head from "next/head";
 import NoProductFound from "../../components/NoProductFound";
+import CollectionsPageService from "../../services/CollectionsPageService";
 
 const collections = ({ seo }) => {
   const { fetchProducts, products, navigations_child, products_loading } =
@@ -14,28 +15,6 @@ const collections = ({ seo }) => {
   const router = useRouter();
 
   const { slug } = router.query;
-
-  //Banner start
-  const [banner, setBanner] = useState(null);
-  const [bannerLoading, setBannerLoading] = useState(true);
-  const [showBanner, setShowBanner] = useState(false);
-
-  useEffect(() => {
-    if (slug === "new_arrival" || slug === "on_sale" || slug === "featured") {
-      setBanner("");
-      setBannerLoading(false);
-      setShowBanner(false);
-    } else {
-      if (navigations_child.length > 0) {
-        const categoryBanner = navigations_child.find(
-          (item) => item.slug === slug
-        );
-        setBanner(categoryBanner.banner_image);
-        setBannerLoading(false);
-        setShowBanner(true);
-      }
-    }
-  });
 
   // Slug wise products fetching
   useEffect(() => {
@@ -71,9 +50,7 @@ const collections = ({ seo }) => {
       <main className="main">
         <div className="page-content mb-10 pb-3">
           <div className="container">
-            {showBanner && (
-              <CollectionBanner bannerLoading={bannerLoading} banner={banner} />
-            )}
+            <CollectionBanner banner={seo.banner_image} />
             <div className="row gutter-lg">
               <Filter />
               {products.length > 0 ? <Product /> : <NoProductFound />}
@@ -88,8 +65,7 @@ const collections = ({ seo }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`${based_url}/category/parent/list`);
-  const parents = await res.json();
+  const parents = await CollectionsPageService.instance.getParentCategoryList();
   if (context.query.slug === "new_arrival") {
     const seo = {
       meta_keywords: "sdfg,sadg,sadfg",
@@ -124,6 +100,7 @@ export async function getServerSideProps(context) {
     };
   }
   const seo = parents.find((item) => item.slug === context.query.slug);
+
   return {
     props: { seo },
   };

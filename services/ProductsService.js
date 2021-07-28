@@ -25,4 +25,23 @@ export default class ProductsService {
     }
     return [];
   }
+
+  async getProductForSeo(slug) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const getProductForSeoResponse = await axios.get(
+          based_url + `/product/${slug}`
+        );
+        // Expecting an object from the response
+        if (getProductForSeoResponse.data) return getProductForSeoResponse.data;
+      } catch (error) {
+        console.log(
+          "Error in getProductForSeo() in services/ProductsService.js"
+        );
+        console.log(error);
+      }
+    }
+    return {};
+  }
 }

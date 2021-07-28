@@ -1,10 +1,6 @@
 import React from "react";
-import Loading from "../Loading";
 
-const CollectionBanner = ({ bannerLoading, banner }) => {
-  if (bannerLoading) {
-    return <Loading />;
-  }
+const CollectionBanner = ({ banner }) => {
   return (
     <React.Fragment>
       <section>
