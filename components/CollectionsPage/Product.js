@@ -6,6 +6,7 @@ import { paginate } from "../../utils/helpers";
 import SingleProduct from "../SingleProduct";
 import Loading from "../../components/Loading";
 import Head from "next/head";
+import NoProductFound from "../NoProductFound";
 const Product = () => {
   const { fetchProducts, products_loading, navigations_child, navigations } =
     useProductsContext();
@@ -134,11 +135,15 @@ const Product = () => {
         {metaKey && <meta name="keywords" content={metaKey} />}
         {metaDesc && <meta name="description" content={metaDesc} />}
       </Head> */}
-      <div className="col-lg-9 text-center">
-        {productSorting()}
-        {showProducts()}
-        {paginationOfProducts()}
-      </div>
+      {paginatedProduct[page] && paginatedProduct[page].length > 0 ? (
+        <div className="col-lg-9 text-center">
+          {productSorting()}
+          {showProducts()}
+          {paginationOfProducts()}
+        </div>
+      ) : (
+        <NoProductFound />
+      )}
     </React.Fragment>
   );
 };

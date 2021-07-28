@@ -5,15 +5,12 @@ import { paginate } from "../../utils/helpers";
 const Order = () => {
   const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState([]);
-  // console.log(products);
   const { order } = useUserContext();
-  // console.log(order);
   const [tax, setTax] = useState(null);
   const [total, setTotal] = useState(null);
   const [shippingCost, setShippingCost] = useState(null);
   const [page, setPage] = useState(0);
   const [paginatedOrder, setPaginatedOrder] = useState([]);
-  // console.log(paginatedOrder);
   useEffect(() => {
     setPaginatedOrder(paginate(order));
   }, [order]);
@@ -394,7 +391,7 @@ const Order = () => {
       </>
     );
   };
-  
+
   return (
     <React.Fragment>
       {paginatedOrder.length > 0 ? (

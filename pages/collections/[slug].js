@@ -5,10 +5,12 @@ import { useProductsContext } from "../../context/products_context";
 import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import Head from "next/head";
+import NoProductFound from "../../components/NoProductFound";
 
-const collections = () => {
-  const { fetchProducts, navigations, navigations_child, products_loading } =
+const collections = ({ seo }) => {
+  const { fetchProducts, products, navigations_child, products_loading } =
     useProductsContext();
+
   const router = useRouter();
 
   const { slug } = router.query;
@@ -34,43 +36,17 @@ const collections = () => {
       }
     }
   });
-  //Banner End
-  const [title, setTitle] = useState("");
-  const [metaKey, setMetaKey] = useState("");
-  const [metaDesc, setMetaDesc] = useState("");
 
   // Slug wise products fetching
   useEffect(() => {
     if (slug === "new_arrival") {
       fetchProducts(`${based_url}/new_arrival/product/list`);
-      if (navigations_child.length > 0) {
-        setTitle("New Arrival");
-        setMetaKey("");
-        setMetaDesc("");
-      }
     } else if (slug === "on_sale") {
       fetchProducts(`${based_url}/on_sale/product/list`);
-      if (navigations_child.length > 0) {
-        setTitle("On Sale");
-        setMetaKey("");
-        setMetaDesc("");
-      }
     } else if (slug === "featured") {
       fetchProducts(`${based_url}/featured/product/list/home`);
-      if (navigations_child.length > 0) {
-        setTitle("Featured");
-        setMetaKey("");
-        setMetaDesc("");
-      }
     } else {
       fetchProducts(`${based_url}/parent/category/${slug}/product/list`);
-      if (navigations_child.length > 0) {
-        const seo = navigations_child.find((item) => item.slug === slug);
-        const { title, meta_keywords, meta_description } = seo;
-        setTitle(title);
-        setMetaKey(meta_keywords);
-        setMetaDesc(meta_description);
-      }
     }
   }, [slug]);
 
@@ -80,10 +56,13 @@ const collections = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>{title} | The Owlet</title>
-
-        {metaKey && <meta name="keywords" content={metaKey} />}
-        {metaDesc && <meta name="description" content={metaDesc} />}
+        <title>{seo.title} | The Owlet</title>
+        {seo.meta_keywords && (
+          <meta name="keywords" content={seo.meta_keywords} />
+        )}
+        {seo.meta_description && (
+          <meta name="description" content={seo.meta_description} />
+        )}
       </Head>
       {/* <Header navigations={navigations} /> */}
       <main className="main">
@@ -94,7 +73,7 @@ const collections = () => {
             )}
             <div className="row gutter-lg">
               <Filter />
-              <Product />
+              {products.length > 0 ? <Product /> : <NoProductFound />}
             </div>
           </div>
         </div>
@@ -104,5 +83,47 @@ const collections = () => {
     </React.Fragment>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await fetch(`${based_url}/category/parent/list`);
+  const parents = await res.json();
+  if (context.query.slug === "new_arrival") {
+    const seo = {
+      meta_keywords: "sdfg,sadg,sadfg",
+      title: "New Arrival",
+      meta_description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis cursus in hac habitasse platea dictumst quisque sagittis. Viverra mauris in aliquam sem fringilla. Sodales ut etiam sit amet nisl purus in. Amet porttitor eget dolor morbi non arcu risus.",
+    };
+    return {
+      props: { seo },
+    };
+  }
+  if (context.query.slug === "on_sale") {
+    const seo = {
+      meta_keywords: "sdfg,sadg,sadfg",
+      title: "On Sale",
+      meta_description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis cursus in hac habitasse platea dictumst quisque sagittis. Viverra mauris in aliquam sem fringilla. Sodales ut etiam sit amet nisl purus in. Amet porttitor eget dolor morbi non arcu risus.",
+    };
+    return {
+      props: { seo },
+    };
+  }
+  if (context.query.slug === "featured") {
+    const seo = {
+      meta_keywords: "sdfg,sadg,sadfg",
+      title: "Featured",
+      meta_description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis cursus in hac habitasse platea dictumst quisque sagittis. Viverra mauris in aliquam sem fringilla. Sodales ut etiam sit amet nisl purus in. Amet porttitor eget dolor morbi non arcu risus.",
+    };
+    return {
+      props: { seo },
+    };
+  }
+  const seo = parents.find((item) => item.slug === context.query.slug);
+  return {
+    props: { seo },
+  };
+}
 
 export default collections;

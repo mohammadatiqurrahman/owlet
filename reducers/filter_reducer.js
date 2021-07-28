@@ -33,6 +33,7 @@ const filter_reducer = (state, action) => {
   if (action.type === UPDATE_SORT) {
     return { ...state, sort: action.payload };
   }
+
   if (action.type === SORT_PRODUCTS) {
     const { sort, filtered_products } = state;
     let tempProducts = [...filtered_products];
@@ -55,33 +56,19 @@ const filter_reducer = (state, action) => {
     }
     return { ...state, filtered_products: tempProducts };
   }
+
   if (action.type === UPDATE_FILTERS) {
     const { name, value } = action.payload;
-    // console.log(state);
     return { ...state, filters: { ...state.filters, [name]: value } };
   }
+  
   if (action.type === FILTER_PRODUCTS) {
     const { all_products } = state;
     const { text, category, size, color, price, shipping } = state.filters;
     let tempProducts = [...all_products];
-    // filtering
-    // filter with text
-    if (text) {
-      tempProducts = tempProducts.filter((product) => {
-        return product.name.toLowerCase().startsWith(text);
-      });
-    }
-
-    // filter with category
-    if (category !== "all") {
-      tempProducts = tempProducts.filter(
-        (product) => product.category === category
-      );
-    }
 
     // filter with size
     if (size !== "all") {
-      
       tempProducts = tempProducts.filter((item) => {
         const newItem = item.uniqueSizes.find((e) => {
           return e === size;
@@ -92,9 +79,7 @@ const filter_reducer = (state, action) => {
 
     // colors
     if (color !== "all") {
-    
       tempProducts = tempProducts.filter((item) => {
-      
         const newItem = item.uniqueColorCode.find((e) => {
           return e === color;
         });
@@ -104,14 +89,10 @@ const filter_reducer = (state, action) => {
 
     // price
     tempProducts = tempProducts.filter((product) => product.price <= price);
-    // shipping
-    if (shipping) {
-      tempProducts = tempProducts.filter(
-        (product) => product.shipping === true
-      );
-    }
+
     return { ...state, filtered_products: tempProducts };
   }
+  
   if (action.type === CLEAR_FILTERS) {
     return {
       ...state,

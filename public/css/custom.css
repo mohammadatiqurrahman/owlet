@@ -41,7 +41,7 @@ body {
 .header-left .header-search .input-wrapper .btn-search {
   background-color: #f27955;
   color: white;
-  border: 3px solid #e4eaec;
+  border: 3px solid #f27955;
   border-left: none;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -50,14 +50,14 @@ body {
 .mobile-menu-wrapper .mobile-menu-container .input-wrapper input {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
-  border: 3px solid #f26b3c;
+  border: 3px solid #e4eaec;
   border-right: none;
 }
 
 .mobile-menu-wrapper .mobile-menu-container .input-wrapper .btn-search {
-  background-color: #2b6777;
+  background-color: #f27955;
   color: white;
-  border: 3px solid #f26b3c;
+  border: 3px solid #f27955;
   border-left: none;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -65,6 +65,21 @@ body {
 
 .header-right .wishlist {
   color: #f27955;
+  position: relative;
+}
+.header-right .wishlist span {
+  position: absolute;
+  top: 0;
+  right: -8px;
+  background: #000;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  width: 1.9rem;
+  height: 1.9rem;
+  line-height: 1.8rem;
+  text-align: center;
 }
 .header-right .newcolor {
   color: #2b6777;
@@ -173,4 +188,9 @@ body {
 .menu li > ul,
 .menu li .megamenu {
   left: 0;
+}
+
+.mobile-menu .subCategoryOpenAndClose {
+  display: flex !important;
+  justify-content: space-between;
 }

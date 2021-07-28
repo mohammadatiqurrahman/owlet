@@ -11,9 +11,10 @@ import { useRouter } from "next/router";
 import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import { useProductsContext } from "../../context/products_context";
+import NoProductFound from "../../components/NoProductFound";
 
 const collections = () => {
-  const { fetchProducts, products_loading } = useProductsContext();
+  const { fetchProducts, products_loading, products } = useProductsContext();
 
   const router = useRouter();
   const { slug } = router.query;
@@ -32,7 +33,7 @@ const collections = () => {
             {/* <CollectionBanner /> */}
             <div className="row gutter-lg">
               <Filter />
-              <Product />
+              {products.length > 0 ? <Product /> : <NoProductFound />}
             </div>
           </div>
         </div>
@@ -42,6 +43,5 @@ const collections = () => {
     </React.Fragment>
   );
 };
-
 
 export default collections;

@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import { useProductsContext } from "../../context/products_context";
+import NoProductFound from "../../components/NoProductFound";
 
 const collections = () => {
-  const { navigations_child, products_loading, fetchProducts } =
+  const { navigations_child, products_loading, fetchProducts, products } =
     useProductsContext();
 
   //Banner start
@@ -30,7 +31,7 @@ const collections = () => {
   useEffect(() => {
     fetchProducts(`${based_url}/category/${slug}/product/list`);
   }, [slug]);
-  
+
   if (products_loading) {
     return <Loading />;
   }
@@ -44,7 +45,7 @@ const collections = () => {
             )}
             <div className="row gutter-lg">
               <Filter />
-              <Product />
+              {products.length > 0 ? <Product /> : <NoProductFound />}
             </div>
           </div>
         </div>

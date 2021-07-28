@@ -41,18 +41,17 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: SORT_PRODUCTS });
   }, [products, state.sort, state.filters]);
 
+  // Sort products by price or alphabetically
   const updateSort = (e) => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
   };
 
+  // Filter product by color, size, price
   const updateFilters = (e) => {
     e.preventDefault();
     let name = e.target.name;
     let value = e.target.value;
-    if (name === "category") {
-      value = e.target.textContent;
-    }
     if (name === "color") {
       value = e.target.dataset.color;
     }
@@ -61,9 +60,6 @@ export const FilterProvider = ({ children }) => {
     }
     if (name === "price") {
       value = Number(value);
-    }
-    if (name === "shipping") {
-      value = e.target.checked;
     }
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };

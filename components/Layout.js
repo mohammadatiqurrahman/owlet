@@ -36,7 +36,11 @@ const Layout = ({ children }) => {
       />
       {children}
       <Footer />
-      <BottomPage />
+      <BottomPage
+        navigations={navigations}
+        newArrival={newArrival}
+        onSale={onSale}
+      />
     </>
   );
 };

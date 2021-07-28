@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useProductsContext } from "../context/products_context";
 import { useCartContext } from "../context/cart_context";
-import { based_url } from "../utils/constants";
 import { useRouter } from "next/router";
 import { useUserContext } from "../context/user_context";
+import HeaderService from "../services/HeaderService";
 const Header = ({ navigations, newArrival, onSale }) => {
   const router = useRouter();
 
@@ -23,8 +23,7 @@ const Header = ({ navigations, newArrival, onSale }) => {
       (item) => item.parent_id == id
     );
     setChildrenNavigations(idWiseChildren);
-    const navSizeRes = await fetch(`${based_url}/category/${id}/size/list`);
-    const navSizeData = await navSizeRes.json();
+    const navSizeData = await HeaderService.instance.categoryOnHoverSizes(id);
 
     setNavSize(navSizeData);
   };
@@ -56,11 +55,7 @@ const Header = ({ navigations, newArrival, onSale }) => {
   const searching = () => {
     return (
       <div className="header-search hs-simple d-lg-show">
-        <form
-          action="#"
-          className="input-wrapper"
-          onSubmit={searchHandleSubmit}
-        >
+        <form className="input-wrapper" onSubmit={searchHandleSubmit}>
           <input
             type="text"
             className="form-control"
@@ -115,6 +110,7 @@ const Header = ({ navigations, newArrival, onSale }) => {
       <Link href="/wishlist">
         <a className="wishlist">
           <i className="d-icon-heart"></i>
+          <span>{wishlist && wishlist.length}</span>
         </a>
       </Link>
     );
@@ -299,7 +295,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
                         <ul>
                           {navSize.length > 0 &&
                             navSize.map((item, index) => {
-                              // console.log(item);
                               return (
                                 <li key={index}>
                                   <Link href={`/size/${item.slug}`}>
@@ -322,21 +317,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
                             style={{ height: "225px", width: "315px" }}
                           />
                         </figure>
-                        {/* <div className="banner-content y-50">
-                              <h4 className="banner-subtitle font-weight-bold text-primary ls-m">
-                                Sale.
-                              </h4>
-                              <h3 className="banner-title font-weight-bold">
-                                <span className="text-uppercase">Up to</span>70%
-                                Off
-                              </h3>
-                              <a
-                                href="shop.html"
-                                className="btn btn-link btn-underline"
-                              >
-                                shop now<i className="d-icon-arrow-right"></i>
-                              </a>
-                            </div> */}
                       </div>
                       <div className="col-md-2"></div>
                     </div>
@@ -345,9 +325,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
               );
             })}
 
-          {/* <li>
-                <Link href="/aboutus">About Us</Link>
-              </li> */}
           {newArrival && (
             <li>
               <Link href={`/collections/new_arrival`}>New Arrivals</Link>
@@ -380,21 +357,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
 
             {wishlistButton()}
             <span className="divider"></span>
-            {/* <div className="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
-              <Link href="/wishlist">
-                <a
-                  className="cart-toggle label-block link newcolor"
-                  style={{ cursor: "pointer" }}
-                >
-                  <i className="d-icon-heart">
-                    <span className="cart-count">
-                      {wishlist && wishlist.length}
-                    </span>
-                  </i>
-                </a>
-              </Link>
-            </div> */}
-            {/* <span className="divider"></span> */}
             <div className="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
               {cartButton()}
 

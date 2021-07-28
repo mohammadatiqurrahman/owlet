@@ -134,7 +134,6 @@ const cart_reducer = (state, action) => {
     const getLocalStorage = () => {
       // let cart = localStorage.getItem("cart");
       let tempWishlist = localStorage.getItem("wishlist");
-      // console.log(tempWishlist);
       if (tempWishlist) {
         return JSON.parse(localStorage.getItem("wishlist"));
       } else {
@@ -184,7 +183,6 @@ const cart_reducer = (state, action) => {
     const { total_items, total_amount, total_tax } = state.cart.reduce(
       (total, cartItem) => {
         const { amount, price, tax } = cartItem;
-        // console.log(tax);
         total.total_items += amount;
         total.total_amount += price * amount;
         total.total_tax += Math.round(((tax * price) / 100) * amount);

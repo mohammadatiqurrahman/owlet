@@ -104,6 +104,7 @@ export default class CheckoutService {
           url: `${based_url}/order/by_customer`,
           data: invoice,
         });
+        console.log(registeredUserCheckoutResponse);
         // Expecting a object from the response
         if (registeredUserCheckoutResponse.data)
           return registeredUserCheckoutResponse.data;

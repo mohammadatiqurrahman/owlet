@@ -28,6 +28,7 @@ const products_reducer = (state, action) => {
   if (action.type === GET_NAVIGATION_ERROR) {
     return { ...state, navigations_loading: false, navigations_error: true };
   }
+
   // Navigation Child state
   if (action.type === GET_NAVIGATION_CHILD_BEGIN) {
     return { ...state, navigations_child_loading: true };
@@ -52,14 +53,10 @@ const products_reducer = (state, action) => {
     return { ...state, products_loading: true };
   }
   if (action.type === GET_PRODUCTS_SUCCESS) {
-    // const featured_products = action.payload.filter(
-    //   (product) => product.featured === true
-    // );
     return {
       ...state,
       products_loading: false,
       products: action.payload,
-      // featured_products,
     };
   }
   if (action.type === GET_PRODUCTS_ERROR) {

@@ -411,7 +411,7 @@ const HomeCartWishlist = ({ slug }) => {
                     <div className="product-footer">
                       {socialShareButton()}
                       <span className="divider"></span>
-                      {addToWishlistButton()}
+                      {addToWishListButton()}
                     </div>
                   </div>
                 </div>

@@ -77,7 +77,7 @@ export const CartProvider = ({ children }) => {
   const removeItem = (id) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
-
+  // remove wishlist item
   const removeWishlistItem = (id) => {
     dispatch({ type: REMOVE_WISHLIST_ITEM, payload: id });
   };

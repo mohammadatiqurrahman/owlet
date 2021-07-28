@@ -1,9 +1,8 @@
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCartContext } from "../../context/cart_context";
-import { useUserContext } from "../../context/user_context";
 import Head from "next/head";
 import { based_url } from "../../utils/constants";
 import { useRouter } from "next/router";
@@ -552,29 +551,29 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                 </li>
 
                 {/* <li>
-                                <div className="custom-radio">
-                                  <input
-                                    type="radio"
-                                    id="local_pickup"
-                                    name="shipping_cost"
-                                    className="custom-control-input"
-                                    onChange={checkoutInputHandler}
-                                    value={0}
-                                    required
-                                    checked={
-                                      checkoutData.shipping_cost == 0
-                                        ? true
-                                        : false
-                                    }
-                                  />
-                                  <label
-                                    className="custom-control-label"
-                                    htmlFor="local_pickup"
-                                  >
-                                    Free Shipping Local pickup
-                                  </label>
-                                </div>
-                              </li> */}
+                  <div className="custom-radio">
+                    <input
+                      type="radio"
+                      id="local_pickup"
+                      name="shipping_cost"
+                      className="custom-control-input"
+                      onChange={checkoutInputHandler}
+                      value={0}
+                      required
+                      checked={
+                        checkoutData.shipping_cost == 0
+                          ? true
+                          : false
+                      }
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor="local_pickup"
+                    >
+                      Free Shipping Local pickup
+                    </label>
+                  </div>
+                </li> */}
               </ul>
             </td>
           </tr>

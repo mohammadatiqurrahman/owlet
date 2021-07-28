@@ -1,8 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGeneralContext } from "../../context/general_context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useUserContext } from "../../context/user_context";
+import DashboardService from "../../services/DashboardService";
 
 const UserProfileEditModal = () => {
-  const [ setUserProfileEditModal] = useGeneralContext();
+  const { setUserProfileEditModal } = useGeneralContext();
+  const { user, setUser } = useUserContext();
+
+  const [changeProfileStatus, setChangeProfileStatus] = useState(false);
+
+  const [account, setAccount] = useState({
+    address: user && user.customer.address,
+    name: user && user.customer.name,
+  });
+
+  const accountInputHandler = (e) => {
+    const { name, value } = e.target;
+    setAccount({ ...account, [name]: value });
+  };
+
+  const accountHandleSubmit = async (e) => {
+    e.preventDefault();
+    setChangeProfileStatus(true);
+    if (account.name && account.address) {
+      const data = await DashboardService.instance.editProfile(
+        user.customer.token,
+        account
+      );
+
+      if (data.errors) {
+        setChangeProfileStatus(false);
+        toast.error("Failed to update profile");
+      } else {
+        const newCustomer = {
+          ...user.customer,
+          name: account.name,
+          address: account.address,
+        };
+        setUser({ ...user, customer: newCustomer });
+
+        setChangeProfileStatus(false);
+        toast.success(data.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
   return (
     <React.Fragment>
       <ToastContainer />
@@ -21,10 +68,51 @@ const UserProfileEditModal = () => {
               <div className="container">
                 <div className="row">
                   <h4 className="text-uppercase text-dark mt-5">
-                    Change Password
+                    Edit Profile
                   </h4>
+                  <form
+                    style={{
+                      padding: "0px 95px 15px 95px",
+                    }}
+                    onSubmit={accountHandleSubmit}
+                  >
+                    <div style={{ textAlign: "left", color: "black" }}>
+                      Name *
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      value={account.name}
+                      required
+                      onChange={accountInputHandler}
+                      style={{ border: "1px solid #232323" }}
+                    />
+                    <div style={{ textAlign: "left", color: "black" }}>
+                      Address *
+                    </div>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      style={{ border: "1px solid #232323" }}
+                      name="address"
+                      required
+                      rows="4"
+                      cols="50"
+                      value={account.address}
+                      onChange={accountInputHandler}
+                    ></textarea>
 
-                  
+                    {!changeProfileStatus ? (
+                      <button className="btn btn-dark mt-3" type="submit">
+                        Save Changes
+                      </button>
+                    ) : (
+                      <button className="btn btn-disabled mt-3">
+                        Changing profile...
+                      </button>
+                    )}
+                  </form>
                 </div>
               </div>
 

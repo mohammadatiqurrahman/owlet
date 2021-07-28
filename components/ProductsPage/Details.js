@@ -312,7 +312,7 @@ const Details = () => {
   const productSocilaShare = () => {
     return (
       <div className="social-links mr-4">
-        <FacebookShareButton url={`/products/${slug}`}>
+        <FacebookShareButton url={`https://owlet.vercel.app/products/${slug}`}>
           <a className="social-link social-facebook fab fa-facebook-f"></a>
         </FacebookShareButton>
       </div>

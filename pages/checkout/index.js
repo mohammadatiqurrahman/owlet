@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCartContext } from "../../context/cart_context";
 import { useUserContext } from "../../context/user_context";
 import Head from "next/head";
-
+import { based_url } from "../../utils/constants";
 import { useRouter } from "next/router";
 
 import Link from "next/link";
@@ -15,7 +15,9 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const [shipToDifferent, setShipToDifferent] = useState(false);
   const router = useRouter();
   const { user } = useUserContext();
-  const { cart, total_amount, total_tax, setPlaceOrderClick } = useCartContext();
+  const { cart, total_amount, total_tax, setPlaceOrderClick } =
+    useCartContext();
+  const [noteStatus, setNoteStatus] = useState(false);
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
 
   // Prearing prducts for database
@@ -41,18 +43,40 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     });
   };
 
+  const inputHandlerAgreeWithDiffrentAddress = () => {
+    setCheckoutData({
+      ...checkoutData,
+      agreeWithDiffrentAddress: !checkoutData.agreeWithDiffrentAddress,
+    });
+  };
+
   const [checkoutError, setCheckoutError] = useState({
     shippingCostError: "",
     termsConditionError: "",
+    agreeWithDiffrentAddressError: "",
+    diff_name_error: "",
+    diff_email_error: "",
+    diff_phone_error: "",
+    diff_address_error: "",
+    diff_location_id_error: "",
+    diff_area_id_error: "",
+    diff_zip_error: "",
   });
 
   const [checkoutData, setCheckoutData] = useState({
     shipping_cost: shippingCostInDhaka,
-    ship_to_different: "",
     terms_condition: false,
     payment_type: "cash_on_delivery",
+    diff_name: "",
+    diff_email: "",
+    diff_phone: "",
+    diff_address: "",
+    diff_location_id: "",
+    diff_area_id: "",
+    diff_zip: "",
+    agreeWithDiffrentAddress: false,
+    note: "",
   });
-
   const checkoutInputHandler = (e) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;
@@ -67,24 +91,48 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     if (
       !checkoutData.shipping_cost ||
       !checkoutData.terms_condition ||
-      !checkoutData.payment_type
+      !checkoutData.payment_type ||
+      shipToDifferent
     ) {
       setPlaceOrderButtonStatus(false);
+      if (shipToDifferent) {
+        setCheckoutError({
+          ...checkoutError,
+          diff_name_error: checkoutData.diff_name
+            ? ""
+            : "The full name field is required.",
+          diff_email_error: checkoutData.diff_email
+            ? ""
+            : "The email field is required.",
+          diff_phone_error: checkoutData.diff_phone
+            ? ""
+            : "The phone field is required.",
+          diff_address_error: checkoutData.diff_address
+            ? ""
+            : "The address field is required.",
+          diff_location_id_error: checkoutData.diff_location_id
+            ? ""
+            : "The location field is required.",
+          diff_area_id_error: checkoutData.diff_area_id
+            ? ""
+            : "The area field is required.",
+          diff_zip_error: checkoutData.diff_zip
+            ? ""
+            : "The zip field is required.",
+          agreeWithDiffrentAddressError: checkoutData.agreeWithDiffrentAddress
+            ? ""
+            : "Please click on the checkbox for agree with diffrent shippin address",
+          shippingCostError: checkoutData.shipping_cost
+            ? ""
+            : "The shipping cost field is required.",
+          termsConditionError: checkoutData.terms_condition
+            ? ""
+            : "Please click on the checkbox before placing order",
+        });
+        return;
+      }
       setCheckoutError({
         ...checkoutError,
-        fullNameError: checkoutData.fullName
-          ? ""
-          : "The full name field is required.",
-        emailError: checkoutData.email ? "" : "The email field is required.",
-        phoneError: checkoutData.phone ? "" : "The phone field is required.",
-        locationError: checkoutData.location
-          ? ""
-          : "The location field is required.",
-        areaError: checkoutData.area ? "" : "The area field is required.",
-        zipError: checkoutData.zip ? "" : "The zip field is required.",
-        addressError: checkoutData.address
-          ? ""
-          : "The address field is required.",
         shippingCostError: checkoutData.shipping_cost
           ? ""
           : "The shipping cost field is required.",
@@ -102,7 +150,16 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       checkoutData.shipping_cost,
       total_amount + total_tax + parseInt(checkoutData.shipping_cost),
       checkoutData.ship_to_different,
-      checkoutData.payment_type
+      checkoutData.payment_type,
+      checkoutData.note,
+
+      checkoutData.diff_name,
+      checkoutData.diff_email,
+      checkoutData.diff_phone,
+      checkoutData.diff_address,
+      checkoutData.diff_location_id,
+      checkoutData.diff_area_id,
+      checkoutData.diff_zip
     );
 
     const orderResponse = await CheckoutService.instance.registeredUserCheckout(
@@ -114,6 +171,25 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     router.push("/order");
     setPlaceOrderButtonStatus(false);
   };
+
+  // Location wise Areas start
+  const [areas, setAreas] = useState([]);
+  const [areaStatus, setAreaStatus] = useState(false);
+  const getAreas = async () => {
+    if (checkoutData.diff_location_id) {
+      setAreaStatus(true);
+      const areaRes = await fetch(
+        `${based_url}/location/${checkoutData.diff_location_id}/area/list`
+      );
+      const areas = await areaRes.json();
+      setAreaStatus(false);
+      setAreas(areas);
+    }
+  };
+  useEffect(() => {
+    getAreas();
+  }, [checkoutData.diff_location_id]);
+  // Location wise Areas end
 
   // Show user details in billing section
   const userBillingAddress = () => {
@@ -165,11 +241,28 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
           <a
             className="text-primary collapse font-weight-bold"
             onClick={() => {
+              setShipToDifferent(!shipToDifferent);
               setCheckoutData({
                 ...checkoutData,
-                ship_to_different: "",
+                diff_name:"",
+                diff_email:"",
+                diff_phone:"",
+                diff_address:"",
+                diff_location_id:"",
+                diff_area_id:"",
+                diff_zip:"",
               });
-              setShipToDifferent(!shipToDifferent);
+              setCheckoutError({
+                ...checkoutError,
+                agreeWithDiffrentAddressError: "",
+                diff_name_error: "",
+                diff_email_error: "",
+                diff_phone_error: "",
+                diff_address_error: "",
+                diff_location_id_error: "",
+                diff_area_id_error: "",
+                diff_zip_error: "",
+              });
             }}
           >
             Ship to a different address?
@@ -180,23 +273,291 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             style={{ display: shipToDifferent ? "block" : "none" }}
           >
             <div className="col-lg-12 mb-6 mb-lg-0 pr-lg-4">
-              {/* <h3 className="title title-simple text-left text-uppercase mt-2">
-                            Shipping Details
-                          </h3> */}
-
-              <label className="mt-5">
-                Shipping different address details (Optional)
-              </label>
+              <h3 className="title title-simple text-left text-uppercase mt-2">
+                Shipping Details
+              </h3>
+              <div className="row">
+                <div className="col-xs-6">
+                  <label>First Name *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="diff_name"
+                    onChange={checkoutInputHandler}
+                    value={checkoutData.diff_name}
+                    onKeyUp={() =>
+                      checkoutError.diff_name_error &&
+                      setCheckoutError({
+                        ...checkoutError,
+                        diff_name_error: "",
+                      })
+                    }
+                  />
+                  <div
+                    style={{
+                      display: checkoutError.diff_name_error ? "block" : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_name_error
+                      ? checkoutError.diff_name_error
+                      : ""}
+                  </div>
+                </div>
+                <div className="col-xs-6">
+                  <label>Email Address *</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="diff_email"
+                    onChange={checkoutInputHandler}
+                    value={checkoutData.diff_email}
+                    onKeyUp={() =>
+                      checkoutError.diff_email_error &&
+                      setCheckoutError({
+                        ...checkoutError,
+                        diff_email_error: "",
+                      })
+                    }
+                  />
+                  <div
+                    style={{
+                      display: checkoutError.diff_email_error
+                        ? "block"
+                        : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_email_error
+                      ? checkoutError.diff_email_error
+                      : ""}
+                  </div>
+                </div>
+              </div>
+              <label className="mt-3">Address *</label>
               <textarea
-                className="form-control pb-2 pt-2 mb-0"
-                cols="30"
-                rows="5"
                 type="text"
-                name="ship_to_different"
+                className="form-control mb-0"
+                name="diff_address"
+                placeholder="House number and street name"
                 onChange={checkoutInputHandler}
-                value={checkoutData.ship_to_different}
-                placeholder="Different Address (Optional)"
+                value={checkoutData.diff_address}
+                onKeyUp={() =>
+                  checkoutError.diff_address_error &&
+                  setCheckoutError({
+                    ...checkoutError,
+                    diff_address_error: "",
+                  })
+                }
               ></textarea>
+              <div
+                style={{
+                  display: checkoutError.diff_address_error ? "block" : "none",
+                  fontSize: "80%",
+                  color: " #cb2431",
+                  marginLeft: "5px",
+                }}
+              >
+                {checkoutError.diff_address_error
+                  ? checkoutError.diff_address_error
+                  : ""}
+              </div>
+              <div className="row">
+                <div className="col-xs-6">
+                  <label className="mt-3">Location *</label>
+
+                  <select
+                    className="form-control mb-0"
+                    name="diff_location_id"
+                    onChange={checkoutInputHandler}
+                    value={checkoutData.diff_location_id}
+                    onClick={() =>
+                      checkoutError.diff_location_id_error &&
+                      setCheckoutError({
+                        ...checkoutError,
+                        diff_location_id_error: "",
+                      })
+                    }
+                  >
+                    <option>Select Location</option>
+                    {locations.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div
+                    style={{
+                      display: checkoutError.diff_location_id_error
+                        ? "block"
+                        : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_location_id_error
+                      ? checkoutError.diff_location_id_error
+                      : ""}
+                  </div>
+                </div>
+                <div className="col-xs-6">
+                  <label className="mt-3">Area *</label>
+                  {areaStatus ? (
+                    <select
+                      className="form-control mb-0"
+                      disabled
+                      style={{ backgroundColor: "#e2e2e2" }}
+                    >
+                      <option>Finding area...</option>
+                    </select>
+                  ) : areas.length > 0 ? (
+                    <select
+                      className="form-control mb-0"
+                      name="diff_area_id"
+                      onChange={checkoutInputHandler}
+                      value={checkoutData.diff_area_id}
+                      onClick={() =>
+                        checkoutError.diff_area_id &&
+                        setCheckoutError({
+                          ...checkoutError,
+                          diff_area_id: "",
+                        })
+                      }
+                    >
+                      {areas.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <select
+                      className="form-control mb-0"
+                      disabled
+                      style={{ backgroundColor: "#e2e2e2" }}
+                    ></select>
+                  )}
+                  <div
+                    style={{
+                      display: checkoutError.diff_area_id_error
+                        ? "block"
+                        : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_area_id_error
+                      ? checkoutError.diff_area_id_error
+                      : ""}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-xs-6">
+                  <label className="mt-3">ZIP *</label>
+                  <input
+                    type="text"
+                    className="form-control mb-0"
+                    name="diff_zip"
+                    onChange={checkoutInputHandler}
+                    value={checkoutData.diff_zip}
+                    onKeyUp={() =>
+                      checkoutError.diff_zip &&
+                      setCheckoutError({
+                        ...checkoutError,
+                        diff_zip: "",
+                      })
+                    }
+                  />
+                  <div
+                    style={{
+                      display: checkoutError.diff_zip_error ? "block" : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_zip_error
+                      ? checkoutError.diff_zip_error
+                      : ""}
+                  </div>
+                </div>
+                <div className="col-xs-6">
+                  <label className="mt-3">Phone *</label>
+                  <input
+                    type="text"
+                    className="form-control mb-0"
+                    name="diff_phone"
+                    onChange={checkoutInputHandler}
+                    value={checkoutData.diff_phone}
+                    onKeyUp={() =>
+                      checkoutError.diff_phone_error &&
+                      setCheckoutError({
+                        ...checkoutError,
+                        diff_phone_error: "",
+                      })
+                    }
+                  />
+                  <div
+                    style={{
+                      display: checkoutError.diff_phone_error
+                        ? "block"
+                        : "none",
+                      fontSize: "80%",
+                      color: " #cb2431",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    {checkoutError.diff_phone_error
+                      ? checkoutError.diff_phone_error
+                      : ""}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3">
+                <input
+                  type="checkbox"
+                  className="custom-checkbox"
+                  id="agreeWithDiffrentAddress"
+                  name="agreeWithDiffrentAddress"
+                  onChange={inputHandlerAgreeWithDiffrentAddress}
+                  checked={checkoutData.agreeWithDiffrentAddress ? true : false}
+                  onClick={() =>
+                    checkoutError.agreeWithDiffrentAddressError &&
+                    setCheckoutError({
+                      ...checkoutError,
+                      agreeWithDiffrentAddressError: "",
+                    })
+                  }
+                />
+                <label
+                  className="form-control-label font-weight-bold"
+                  style={{ color: "black" }}
+                  htmlFor="agreeWithDiffrentAddress"
+                >
+                  I agree with different address
+                </label>
+                <div
+                  style={{
+                    display: checkoutError.agreeWithDiffrentAddressError
+                      ? "block"
+                      : "none",
+                    fontSize: "80%",
+                    color: " #cb2431",
+                    marginLeft: "5px",
+                  }}
+                >
+                  {checkoutError.agreeWithDiffrentAddressError
+                    ? checkoutError.agreeWithDiffrentAddressError
+                    : ""}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -204,6 +565,46 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     );
   };
 
+  const writeNote = () => {
+    return (
+      <div className="card accordion mt-3">
+        <div className="alert alert-light alert-primary alert-icon mb-4 card-header">
+          <i className="fas fa-exclamation-circle"></i>
+
+          <a
+            className="text-primary collapse font-weight-bold"
+            onClick={() => {
+              setCheckoutData({
+                ...checkoutData,
+                note: "",
+              });
+              setNoteStatus(!noteStatus);
+            }}
+          >
+            Write a note (Optional)
+          </a>
+          <div
+            className="alert-body collapsed"
+            id="alert-body1"
+            style={{ display: noteStatus ? "block" : "none" }}
+          >
+            <div className="col-lg-12 mb-6 mb-lg-0 pr-lg-4 mt-4">
+              <textarea
+                className="form-control pb-2 pt-2 mb-0"
+                cols="30"
+                rows="5"
+                type="text"
+                name="note"
+                onChange={checkoutInputHandler}
+                value={checkoutData.note}
+                placeholder="Write a note (Optional)"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   // Order details and shipping cost section
   const orderDetailsWithShippingCost = () => {
     return (
@@ -443,6 +844,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                 <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                   {userBillingAddress()}
                   {shipToDifferentAddress()}
+                  {writeNote()}
                 </div>
                 <aside className="col-lg-5 sticky-sidebar-wrapper">
                   <div
