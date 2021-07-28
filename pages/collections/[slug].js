@@ -63,6 +63,9 @@ const collections = ({ seo }) => {
         {seo.meta_description && (
           <meta name="description" content={seo.meta_description} />
         )}
+        {seo.menu_image && (
+          <meta property="og:image" content={seo.menu_image} />
+        )}
       </Head>
       {/* <Header navigations={navigations} /> */}
       <main className="main">
