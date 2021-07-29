@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import React, { useState } from "react";
 import SingleProduct from "../SingleProduct";
 
@@ -29,7 +29,7 @@ const NewArrival = ({ newArrival }) => {
               New Lifestyle
               <span className="d-block ls-s text-normal">Collection</span>
             </h3>
-            <Link href={`/collections/new_arrival`}>
+            <Link href="/collections/new_arrival">
               <span
                 className="btn btn-sm btn-solid btn-rounded shop-now"
                 style={{ backgroundColor: "#2b6777", color: "white" }}

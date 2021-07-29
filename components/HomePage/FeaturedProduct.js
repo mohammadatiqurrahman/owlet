@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import React from "react";
 import SingleProduct from "../SingleProduct";
 
@@ -13,7 +13,7 @@ const FeaturedProduct = ({ featuredProduct }) => {
           className="banner banner-fixed overlay-dark"
           style={{ backgroundColor: "#8ea9b2" }}
         >
-          <Link href={`/collections/featured`}>
+          <Link href="/collections/featured">
             <figure>
               <img
                 src="/images/baby/featuredbutton.png"

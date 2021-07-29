@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import Link from "next/link";
 import React from "react";
 
 const Category = () => {
@@ -6,7 +6,7 @@ const Category = () => {
     <section className="banner-group pb-10">
       <div className="row">
         <div className="col-md-6 mb-4">
-          <Link href={`/collections/baby-boy`}>
+          <Link href="/collections/baby-boy">
             <div
               className="banner banner-fixed overlay-dark"
               data-animation-options="{'name': 'fadeInRightShorter', 'delay': '.1s'}"
@@ -48,10 +48,12 @@ const Category = () => {
                 </span>
               </h3>
               <Link
-                href={`/collections/baby-girl`}
+                href="/collections/baby-girl"
                 className="btn btn-md btn-solid btn-rounded"
               >
-                Shop now<i className="d-icon-arrow-right"></i>
+                <span>
+                  Shop now<i className="d-icon-arrow-right"></i>
+                </span>
               </Link>
             </div>
           </div>
@@ -79,7 +81,7 @@ const Category = () => {
                         }"
       >
         <div className="category">
-          <Link href={`/collections/baby-boy`}>
+          <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
                 src="/images/baby/hcp1.png"
@@ -91,7 +93,7 @@ const Category = () => {
           </Link>
           <div className="category-content">
             <h4 className="category-name text-uppercase">
-              <Link href={`/collections/baby-boy`}>Baby Boy</Link>
+              <Link href="/collections/baby-boy">Baby Boy</Link>
             </h4>
             <span className="category-count">
               <span>35</span> Products
@@ -99,7 +101,7 @@ const Category = () => {
           </div>
         </div>
         <div className="category">
-          <Link href={`/collections/baby-girl`}>
+          <Link href="/collections/baby-girl">
             <figure className="category-media">
               <img
                 src="/images/baby/hcp2.png"
@@ -111,7 +113,7 @@ const Category = () => {
           </Link>
           <div className="category-content">
             <h4 className="category-name text-uppercase">
-              <Link href={`/collections/baby-girl`}>Baby Girl</Link>
+              <Link href="/collections/baby-girl">Baby Girl</Link>
             </h4>
             <span className="category-count">
               <span>47</span> Products
@@ -119,7 +121,7 @@ const Category = () => {
           </div>
         </div>
         <div className="category">
-          <Link href={`/collections/baby-boy`}>
+          <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
                 src="/images/baby/hcp3.png"
@@ -131,7 +133,7 @@ const Category = () => {
           </Link>
           <div className="category-content">
             <h4 className="category-name text-uppercase">
-              <Link href={`/collections/baby-boy`}>Toddler Boy</Link>
+              <Link href="/collections/baby-boy">Toddler Boy</Link>
             </h4>
             <span className="category-count">
               <span>29</span> Products
