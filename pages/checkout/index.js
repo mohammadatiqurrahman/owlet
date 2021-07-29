@@ -93,10 +93,26 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       !checkoutData.shipping_cost ||
       !checkoutData.terms_condition ||
       !checkoutData.payment_type ||
-      shipToDifferent
+      (shipToDifferent && !checkoutData.diff_name) ||
+      (shipToDifferent && !checkoutData.diff_email) ||
+      (shipToDifferent && !checkoutData.diff_phone) ||
+      (shipToDifferent && !checkoutData.diff_address) ||
+      (shipToDifferent && !checkoutData.diff_location_id) ||
+      (shipToDifferent && !checkoutData.diff_area_id) ||
+      (shipToDifferent && !checkoutData.diff_zip) ||
+      (shipToDifferent && checkoutData.agreeWithDiffrentAddress === false)
     ) {
       setPlaceOrderButtonStatus(false);
-      if (shipToDifferent) {
+      if (
+        (shipToDifferent && !checkoutData.diff_name) ||
+        (shipToDifferent && !checkoutData.diff_email) ||
+        (shipToDifferent && !checkoutData.diff_phone) ||
+        (shipToDifferent && !checkoutData.diff_address) ||
+        (shipToDifferent && !checkoutData.diff_location_id) ||
+        (shipToDifferent && !checkoutData.diff_area_id) ||
+        (shipToDifferent && !checkoutData.diff_zip) ||
+        (shipToDifferent && checkoutData.agreeWithDiffrentAddress === false)
+      ) {
         setCheckoutError({
           ...checkoutError,
           diff_name_error: checkoutData.diff_name
@@ -130,6 +146,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             ? ""
             : "Please click on the checkbox before placing order",
         });
+        console.log("oodfd");
         return;
       }
       setCheckoutError({
@@ -141,9 +158,9 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
           ? ""
           : "Please click on the checkbox before placing order",
       });
+      console.log("jhi");
       return;
     }
-
     // Invoice model
     const invoice = new Invoice(
       JSON.stringify(products),
@@ -423,10 +440,10 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                       onChange={checkoutInputHandler}
                       value={checkoutData.diff_area_id}
                       onClick={() =>
-                        checkoutError.diff_area_id &&
+                        checkoutError.diff_area_id_error &&
                         setCheckoutError({
                           ...checkoutError,
-                          diff_area_id: "",
+                          diff_area_id_error: "",
                         })
                       }
                     >
@@ -469,10 +486,10 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                     onChange={checkoutInputHandler}
                     value={checkoutData.diff_zip}
                     onKeyUp={() =>
-                      checkoutError.diff_zip &&
+                      checkoutError.diff_zip_error &&
                       setCheckoutError({
                         ...checkoutError,
-                        diff_zip: "",
+                        diff_zip_error: "",
                       })
                     }
                   />
