@@ -28,7 +28,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       quantity: item.amount,
       discount: item.discount,
       tax: total_tax,
-      subtotal: total_amount,
+      subtotal: item.amount * item.price,
     };
   });
 
@@ -67,7 +67,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     payment_type: "cash_on_delivery",
     note: "",
   });
-  console.log(`${checkoutData.phone}`.length);
+
   const checkoutInputHandler = (e) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;

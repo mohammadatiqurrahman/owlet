@@ -4,7 +4,7 @@ class Invoice {
     tax,
     shipping_cost,
     total,
-    address_diff,
+    // address_diff,
     payment_type,
     note,
     diff_name,
@@ -19,7 +19,7 @@ class Invoice {
     this.tax = tax;
     this.shipping_cost = shipping_cost;
     this.total = total;
-    this.address_diff = address_diff;
+    // this.address_diff = address_diff;
     this.payment_type = payment_type;
     this.note = note;
     this.diff_name = diff_name;

@@ -17,6 +17,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const { user } = useUserContext();
   const { cart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
+  // console.log(total_amount);
   const [noteStatus, setNoteStatus] = useState(false);
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
 
@@ -31,7 +32,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       quantity: item.amount,
       discount: item.discount,
       tax: total_tax,
-      subtotal: total_amount,
+      subtotal: item.amount * item.price,
     };
   });
 
@@ -149,7 +150,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       total_tax,
       checkoutData.shipping_cost,
       total_amount + total_tax + parseInt(checkoutData.shipping_cost),
-      checkoutData.ship_to_different,
+      // checkoutData.ship_to_different,
       checkoutData.payment_type,
       checkoutData.note,
 
