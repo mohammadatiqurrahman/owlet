@@ -212,7 +212,7 @@ const Calculations = () => {
       <aside className="col-lg-4 sticky-sidebar-wrapper">
         <div className="sticky-sidebar" data-sticky-options="{'bottom': 20}">
           <div className="summary mb-4">
-            <h3 className="summary-title text-left">Cart Totals</h3>
+            <h3 className="summary-title text-left">Cart Total</h3>
             <table className="shipping">
               <tr className="summary-subtotal">
                 <td>

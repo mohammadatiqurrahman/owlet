@@ -76,6 +76,7 @@ export default class DashboardService {
       } catch (error) {
         console.log("Error in editProfile() in services/DashboardService.js");
         console.log(error);
+        return { message: "Unauthenticated" };
       }
     }
     return "";
@@ -107,6 +108,7 @@ export default class DashboardService {
           "Error in editPasswordFromDashboard() in services/DashboardService.js"
         );
         console.log(error);
+        return { message: "Unauthenticated" };
       }
     }
     return "";

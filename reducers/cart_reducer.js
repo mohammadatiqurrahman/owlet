@@ -131,7 +131,7 @@ const cart_reducer = (state, action) => {
     }
   }
   if (action.type === "LOAD_WISHLIST") {
-    const getLocalStorage = () => {
+    const getWishlistLocalStorage = () => {
       // let cart = localStorage.getItem("cart");
       let tempWishlist = localStorage.getItem("wishlist");
       if (tempWishlist) {
@@ -140,7 +140,7 @@ const cart_reducer = (state, action) => {
         return [];
       }
     };
-    return { ...state, wishlist: getLocalStorage() };
+    return { ...state, wishlist: getWishlistLocalStorage() };
   }
   if (action.type === REMOVE_CART_ITEM) {
     const tempCart = state.cart.filter((item) => item.id !== action.payload);

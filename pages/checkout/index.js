@@ -112,7 +112,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             : "The address field is required.",
           diff_location_id_error: checkoutData.diff_location_id
             ? ""
-            : "The location field is required.",
+            : "The city field is required.",
           diff_area_id_error: checkoutData.diff_area_id
             ? ""
             : "The area field is required.",
@@ -244,13 +244,13 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
               setShipToDifferent(!shipToDifferent);
               setCheckoutData({
                 ...checkoutData,
-                diff_name:"",
-                diff_email:"",
-                diff_phone:"",
-                diff_address:"",
-                diff_location_id:"",
-                diff_area_id:"",
-                diff_zip:"",
+                diff_name: "",
+                diff_email: "",
+                diff_phone: "",
+                diff_address: "",
+                diff_location_id: "",
+                diff_area_id: "",
+                diff_zip: "",
               });
               setCheckoutError({
                 ...checkoutError,
@@ -368,7 +368,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
               </div>
               <div className="row">
                 <div className="col-xs-6">
-                  <label className="mt-3">Location *</label>
+                  <label className="mt-3">City *</label>
 
                   <select
                     className="form-control mb-0"
@@ -383,7 +383,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                       })
                     }
                   >
-                    <option>Select Location</option>
+                    <option>Select City</option>
                     {locations.map((item, index) => (
                       <option key={index} value={item.id}>
                         {item.name}
@@ -668,7 +668,8 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                   </div>
                 </li>
 
-                <li>
+                {/* Outside dhaka shipping  */}
+                {/* <li>
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -691,8 +692,9 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                       .00
                     </label>
                   </div>
-                </li>
+                </li> */}
 
+                {/* Free shipping  */}
                 {/* <li>
                   <div className="custom-radio">
                     <input

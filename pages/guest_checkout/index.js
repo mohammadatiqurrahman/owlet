@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +12,7 @@ import GuestInvoice from "../../models/invoice_guest";
 import CheckoutService from "../../services/CheckoutService";
 const index = ({ locations, inDhaka, outDhaka }) => {
   const router = useRouter();
-
+  const [areaStatus, setAreaStatus] = useState(false);
   const { cart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
@@ -68,7 +67,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     payment_type: "cash_on_delivery",
     note: "",
   });
-
+  console.log(`${checkoutData.phone}`.length);
   const checkoutInputHandler = (e) => {
     const name = e.currentTarget.name;
     const value = e.currentTarget.value;
@@ -79,6 +78,17 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   // Submit order
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const emailValidation = () => {
+      var mailformat =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (checkoutData.email.match(mailformat)) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+    const email = emailValidation();
+
     setPlaceOrderButtonStatus(true);
     if (
       !checkoutData.fullName ||
@@ -90,7 +100,9 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       !checkoutData.address ||
       !checkoutData.shipping_cost ||
       !checkoutData.terms_condition ||
-      !checkoutData.payment_type
+      !checkoutData.payment_type ||
+      `${checkoutData.phone}`.length !== 11 ||
+      !email
     ) {
       setPlaceOrderButtonStatus(false);
       setCheckoutError({
@@ -98,11 +110,19 @@ const index = ({ locations, inDhaka, outDhaka }) => {
         fullNameError: checkoutData.fullName
           ? ""
           : "The Full Name field is required.",
-        emailError: checkoutData.email ? "" : "The Email field is required.",
-        phoneError: checkoutData.phone ? "" : "The Phone field is required.",
+        emailError:
+          (checkoutData.email ? "" : "The Email field is required.") ||
+          (checkoutData.email !== "" && !email
+            ? "Enter valid email address"
+            : ""),
+        phoneError:
+          (checkoutData.phone ? "" : "The Phone field is required.") ||
+          (checkoutData.phone !== "" && `${checkoutData.phone}`.length !== 11
+            ? "Phone number must be 11 digits"
+            : ""),
         locationError: checkoutData.location
           ? ""
-          : "The Location field is required.",
+          : "The City field is required.",
         areaError: checkoutData.area ? "" : "The Area field is required.",
         zipError: checkoutData.zip ? "" : "The Zip field is required.",
         addressError: checkoutData.address
@@ -165,10 +185,12 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   const [areas, setAreas] = useState([]);
   const getAreas = async () => {
     if (checkoutData.location) {
+      setAreaStatus(true);
       const areaRes = await fetch(
         `${based_url}/location/${checkoutData.location}/area/list`
       );
       const areas = await areaRes.json();
+      setAreaStatus(false);
       setAreas(areas);
     }
   };
@@ -256,7 +278,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       <div className="col-xs-6">
         <label className="mt-3">Email Address *</label>
         <input
-          type="email"
+          // type="email"
           className="form-control mb-0"
           name="email"
           id="email"
@@ -321,7 +343,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   const locationField = () => {
     return (
       <div className="col-xs-6">
-        <label className="mt-3">Location *</label>
+        <label className="mt-3">City *</label>
 
         <select
           className="form-control mb-0"
@@ -336,7 +358,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
             })
           }
         >
-          <option>Select Location</option>
+          <option>Select City</option>
           {locations.map((item, index) => (
             <option key={index} value={item.id}>
               {item.name}
@@ -361,7 +383,15 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     return (
       <div className="col-xs-6">
         <label className="mt-3">Area *</label>
-        {areas.length > 0 ? (
+        {areaStatus ? (
+          <select
+            className="form-control mb-0"
+            disabled
+            style={{ backgroundColor: "#e2e2e2" }}
+          >
+            <option>Finding area...</option>
+          </select>
+        ) : areas.length > 0 ? (
           <select
             className="form-control mb-0"
             name="area"
@@ -440,7 +470,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       <div className="col-xs-6">
         <label className="mt-3">Phone *</label>
         <input
-          type="text"
+          type="number"
           className="form-control mb-0"
           name="phone"
           onChange={checkoutInputHandler}
@@ -527,7 +557,8 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                   </div>
                 </li>
 
-                <li>
+                {/* Outside Dhaka shipping */}
+                {/* <li>
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -548,8 +579,9 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                       .00
                     </label>
                   </div>
-                </li>
+                </li> */}
 
+                {/* Free shipping  */}
                 {/* <li>
                   <div className="custom-radio">
                     <input

@@ -23,6 +23,7 @@ export default class ContextService {
       } catch (error) {
         console.log("Error in getOrders() in services/ContextService.js");
         console.log(error);
+        return { message: "Unauthenticated" };
       }
     }
     return [];

@@ -34,7 +34,9 @@ export const UserProvider = ({ children }) => {
     const orders = await ContextService.instance.getOrders(user.customer.token);
 
     if (orders.message === "Unauthenticated") {
-      setOrder([]);
+      // setOrder([]);
+      localStorage.removeItem("user");
+      router.push("/login");
     } else {
       setOrder(orders);
     }
@@ -101,7 +103,6 @@ export const UserProvider = ({ children }) => {
       setLoginButtonLoading(false);
     }
   }, [loginInfoError.loginFail]);
-
 
   const [signupButtonLoading, setSignupButtonLoading] = useState(false);
   const [signUpError, setSignUpError] = useState({
@@ -194,7 +195,7 @@ export const UserProvider = ({ children }) => {
             },
         locationError: signUpInfo.location
           ? ""
-          : "The location field is required",
+          : "The city field is required",
         areaError: signUpInfo.area ? "" : "The area field is required",
         zipError: signUpInfo.zip ? "" : "The zip field is required",
         addressError: signUpInfo.address ? "" : "The address field is required",

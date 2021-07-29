@@ -285,7 +285,7 @@ const Signup = ({ locations }) => {
   const locationInputField = () => {
     return (
       <div className="col-md-6 form-group">
-        <label className="font-weight-bold">Location *</label>
+        <label className="font-weight-bold">City *</label>
         <select
           className="form-control"
           name="location"
@@ -297,7 +297,7 @@ const Signup = ({ locations }) => {
             setSignUpError({ ...signUpError, locationError: "" })
           }
         >
-          <option>Select Location</option>
+          <option>Select City</option>
           {locations &&
             locations.map((item, index) => (
               <option key={index} value={item.id}>

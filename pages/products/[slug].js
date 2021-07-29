@@ -72,7 +72,7 @@ const products = ({ seo }) => {
           <div className="container">
             <div className="product product-single row">
               <Images mainImage={main_image} gallery={gallery_images} />
-              <Details />
+              <Details slugForFacebookShare={seo.slug} />
             </div>
             <DetailsBottom
               shipping_return_detail={shipping_return_detail}
@@ -89,11 +89,9 @@ const products = ({ seo }) => {
 };
 
 export async function getServerSideProps(context) {
-  // const res = await fetch(`${based_url}/product/${context.query.slug}`);
   const seo = await ProductsService.instance.getProductForSeo(
     context.query.slug
   );
-
   return {
     props: { seo },
   };

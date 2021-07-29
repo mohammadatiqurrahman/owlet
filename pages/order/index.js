@@ -7,6 +7,7 @@ import Link from "next/link";
 
 const index = () => {
   const { placeOrderClick } = useCartContext();
+
   useEffect(() => {
     if (placeOrderClick) {
       toast.success(`${placeOrderClick.message}`);
@@ -79,13 +80,14 @@ const index = () => {
                     return (
                       <tr key={index}>
                         <td className="product-name mr-2">
-                          {item.name} - {item.color} - {item.size}
-                          <span>
+                          {item.name} - {item.color} - {item.size} x{" "}
+                          {item.quantity}
+                          {/* <span>
                             <i className="fas fa-times mr-2"></i>{" "}
                             {item.quantity}
-                          </span>
+                          </span> */}
                         </td>
-                        <td className="product-price">BDT {item.price}0</td>
+                        <td className="product-price">BDT {item.price}.00</td>
                       </tr>
                     );
                   }
@@ -96,7 +98,7 @@ const index = () => {
                   <h4 className="summary-subtitle">Shipping Cost:</h4>
                 </td>
                 <td className="summary-subtotal-price">
-                  {placeOrderClick && placeOrderClick.order.shipping}.00
+                  {placeOrderClick && placeOrderClick.order.shipping}
                 </td>
               </tr>
               <tr className="summary-subtotal">

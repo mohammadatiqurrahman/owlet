@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
-const Details = () => {
+const Details = ({ slugForFacebookShare }) => {
   const router = useRouter();
   const { pathname, slug } = router;
   const { single_product: product, handleCart } = useProductsContext();
@@ -312,7 +312,9 @@ const Details = () => {
   const productSocilaShare = () => {
     return (
       <div className="social-links mr-4">
-        <FacebookShareButton url={`https://owlet.vercel.app/products/${slug}`}>
+        <FacebookShareButton
+          url={`https://owlet.vercel.app/products/${slugForFacebookShare}`}
+        >
           <a className="social-link social-facebook fab fa-facebook-f"></a>
         </FacebookShareButton>
       </div>

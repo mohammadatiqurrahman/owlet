@@ -4,7 +4,9 @@ import { useUserContext } from "../../context/user_context";
 import DashboardService from "../../services/DashboardService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 const ChangePasswordModal = () => {
+  const router = useRouter();
   const { user } = useUserContext();
   const [changePasswordStatus, setChangePasswordStatus] = useState(false);
   const { setChangePasswordModal } = useGeneralContext();
@@ -52,6 +54,12 @@ const ChangePasswordModal = () => {
         changePassword
       );
 
+    if (updateResponse.message) {
+      localStorage.removeItem("user");
+      setChangePasswordModal(false);
+      router.push("/login");
+      return;
+    }
     setChangePasswordStatus(false);
     toast.success(updateResponse.message);
   };

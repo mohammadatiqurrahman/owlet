@@ -4,13 +4,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserContext } from "../../context/user_context";
 import DashboardService from "../../services/DashboardService";
+import { useRouter } from "next/router";
 
 const UserProfileEditModal = () => {
+  const router = useRouter();
   const { setUserProfileEditModal } = useGeneralContext();
   const { user, setUser } = useUserContext();
 
   const [changeProfileStatus, setChangeProfileStatus] = useState(false);
-
+  const [unauthenticated, setUnauthenticated] = useState(false);
   const [account, setAccount] = useState({
     address: user && user.customer.address,
     name: user && user.customer.name,
@@ -30,6 +32,13 @@ const UserProfileEditModal = () => {
         account
       );
 
+      if (data.message === "Unauthenticated") {
+        localStorage.removeItem("user");
+        setUnauthenticated(true);
+        setUserProfileEditModal(false);
+        router.push("/login");
+        return;
+      }
       if (data.errors) {
         setChangeProfileStatus(false);
         toast.error("Failed to update profile");
@@ -48,7 +57,12 @@ const UserProfileEditModal = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    if (unauthenticated === false) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+      router.push("/login");
+    }
   }, [user]);
   return (
     <React.Fragment>

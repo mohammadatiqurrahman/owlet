@@ -83,7 +83,7 @@ const Footer = () => {
               <a href="#">Returns</a>
             </li>
             <li>
-              <a href="#">Custom Service</a>
+              <a href="#">Customer Service</a>
             </li>
             <li>
               <a href="#">Terms &amp; Conditions</a>

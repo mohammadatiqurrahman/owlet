@@ -26,7 +26,7 @@ const index = ({ locations }) => {
       </Head>
     );
   };
-  
+
   // Returning Customer
   const returningCustomer = () => {
     return (
@@ -117,7 +117,7 @@ const index = ({ locations }) => {
                       </div>
                     </div>
                     <div className="form-footer">
-                      <div className="form-checkbox">
+                      {/* <div className="form-checkbox">
                         <input
                           type="checkbox"
                           className="custom-checkbox"
@@ -130,7 +130,7 @@ const index = ({ locations }) => {
                         >
                           Remember me
                         </label>
-                      </div>
+                      </div> */}
                       <Link href="/forget_password">
                         <a className="lost-link">Lost your password?</a>
                       </Link>
@@ -179,6 +179,7 @@ const index = ({ locations }) => {
           borderRadius: "15px",
           backgroundColor: "rgb(249 248 246)",
           padding: "30px",
+          borderBottom: "2px solid #d0cfcc",
         }}
       >
         <h3>Guest Checkout</h3>
@@ -310,7 +311,6 @@ const index = ({ locations }) => {
               <h2 className="text-center mt-5">Checkout</h2>
               <div className="col-md-6 mb-3">{returningCustomer()}</div>
               <div className="col-md-6">
-              
                 {newCustomer()}
 
                 {guestCheckout()}

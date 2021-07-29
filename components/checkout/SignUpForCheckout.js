@@ -212,7 +212,7 @@ const SignUpForCheckout = ({ locations, handleSignUpForm, signUpForm }) => {
   const locationInputField = () => {
     return (
       <div className="mb-4 mb-md-0">
-        <label htmlFor="location">Location *</label>
+        <label htmlFor="location">City *</label>
         <select
           className="form-control"
           name="location"
@@ -223,7 +223,7 @@ const SignUpForCheckout = ({ locations, handleSignUpForm, signUpForm }) => {
             setSignUpError({ ...signUpError, locationError: "" })
           }
         >
-          <option>Select Location</option>
+          <option>Select City</option>
           {locations.map((item, index) => (
             <option key={index} value={item.id}>
               {item.name}
