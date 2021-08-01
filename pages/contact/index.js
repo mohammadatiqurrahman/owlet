@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { based_url } from "../../utils/constants";
 import { ToastContainer, toast } from "react-toastify";
 import Head from "next/head";
 import "react-toastify/dist/ReactToastify.css";

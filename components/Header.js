@@ -327,16 +327,21 @@ const Header = ({ navigations, newArrival, onSale }) => {
 
           {newArrival && (
             <li>
-              <Link href={`/collections/new_arrival`}>New Arrivals</Link>
+              <Link href="/collections/new_arrival">New Arrivals</Link>
             </li>
           )}
           {onSale && (
             <li>
-              <Link href={`/collections/on_sale`} className="hot-deal">
+              <Link href="/collections/on_sale" className="hot-deal">
                 On Sale
               </Link>
             </li>
           )}
+          <li>
+            <Link href="/order_tracking" className="hot-deal">
+              Order Tracking
+            </Link>
+          </li>
         </ul>
       </nav>
     );

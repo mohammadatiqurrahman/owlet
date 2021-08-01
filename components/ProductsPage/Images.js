@@ -17,8 +17,8 @@ const Images = () => {
       <div className="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
         <figure className="product-image">
           {activeImage && (
-            <img
-              src={
+            <Zoom
+              img={
                 activeImage
                   ? activeImage
                   : "/images/dummy-images/product-preview.jpeg"

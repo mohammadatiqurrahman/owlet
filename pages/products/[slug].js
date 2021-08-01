@@ -56,8 +56,12 @@ const products = ({ seo }) => {
     <React.Fragment>
       {/* <Header navigations={navigations} /> */}
       <Head>
-        <title>{seo.title} | The Owlet</title>
-        {seo.title && <meta property="og:title" content={seo.title} />}
+        {seo.title && (
+          <>
+            <title>{seo.title} | The Owlet</title>
+            <meta property="og:title" content={seo.title} />
+          </>
+        )}
         {seo.meta_keywords && (
           <meta name="keywords" content={seo.meta_keywords} />
         )}

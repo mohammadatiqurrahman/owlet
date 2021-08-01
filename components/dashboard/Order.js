@@ -15,6 +15,7 @@ const Order = () => {
     setPaginatedOrder(paginate(order));
   }, [order]);
 
+  // Pagination of orders
   const prevPage = () => {
     page >= 1 && setPage(page - 1);
   };
@@ -24,6 +25,7 @@ const Order = () => {
   const numericPage = (pageIndex) => {
     setPage(pageIndex);
   };
+
   const getOrderStatusColor = (status) => {
     let backgroundColor;
     if (status === "confirmed") {

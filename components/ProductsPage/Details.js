@@ -5,7 +5,7 @@ import { useProductsContext } from "../../context/products_context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-import Head from "next/head";
+
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 const Details = ({ slugForFacebookShare }) => {
   const router = useRouter();
@@ -73,18 +73,7 @@ const Details = ({ slugForFacebookShare }) => {
     });
   };
 
-  const titleAndMeta = () => {
-    return (
-      <Head>
-        <title>{title}</title>
 
-        {meta_keywords && <meta name="keywords" content={meta_keywords} />}
-        {meta_description && (
-          <meta name="description" content={meta_description} />
-        )}
-      </Head>
-    );
-  };
 
   const productPrice = () => {
     return (
@@ -358,7 +347,7 @@ const Details = ({ slugForFacebookShare }) => {
   };
   return (
     <React.Fragment>
-      {titleAndMeta()}
+   
       <div className="col-md-6">
         <div className="product-details">
           <h1 className="product-name">{title}</h1>
