@@ -14,13 +14,11 @@ const Custom404 = () => {
             height="131"
           />
           <h4 className="mt-7 mb-0 ls-m text-uppercase">
-            Ooopps.! That page can’t be found.
+            Oops! It's looking like you flew the wrong way!
           </h4>
-          <p className="text-grey font-primary ls-m">
-            It looks like nothing was found at this location.
-          </p>
+
           <Link href="/">
-            <a className="btn btn-primary btn-rounded mb-4">Go home</a>
+            <a className="btn btn-primary btn-rounded mb-4">Go To Homepage</a>
           </Link>
         </section>
       </div>

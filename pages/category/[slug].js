@@ -24,15 +24,26 @@ const collections = ({ seo }) => {
     <React.Fragment>
       <Head>
         <title>{seo.title} | The Owlet</title>
+        {seo.title && <meta property="og:title" content={seo.title} />}
         {seo.meta_keywords && (
           <meta name="keywords" content={seo.meta_keywords} />
         )}
         {seo.meta_description && (
-          <meta name="description" content={seo.meta_description} />
+          <>
+            <meta name="description" content={seo.meta_description} />
+            <meta
+              property="og:description"
+              content="How much does culture influence creative thinking?"
+            />
+          </>
         )}
         {seo.menu_image && (
-          <meta property="og:image" content={seo.menu_image} />
+          <>
+            <meta property="og:image" content={seo.menu_image} />
+            <meta property="og:image" content={seo.menu_image} />
+          </>
         )}
+        <meta property="og:url" content={`/category/${seo.slug}`} />
       </Head>
       <main className="main">
         <div className="page-content mb-10 pb-3">
@@ -53,7 +64,7 @@ export async function getServerSideProps(context) {
   const parents = await CollectionsPageService.instance.getCategoryList();
 
   const seo = parents.find((item) => item.slug === context.query.slug);
- 
+
   return {
     props: { seo },
   };

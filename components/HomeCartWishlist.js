@@ -311,7 +311,7 @@ const HomeCartWishlist = ({ slug }) => {
             </button>
           </div>
         </div>
-        {stock == 0 ? <div style={{ color: "red" }}>out of stock!</div> : null}
+        {stock == 0 ? <div style={{ color: "red" }}>Out of stock!</div> : null}
       </>
     );
   };
