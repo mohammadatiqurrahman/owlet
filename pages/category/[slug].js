@@ -31,15 +31,11 @@ const collections = ({ seo }) => {
         {seo.meta_description && (
           <>
             <meta name="description" content={seo.meta_description} />
-            <meta
-              property="og:description"
-              content="How much does culture influence creative thinking?"
-            />
+            <meta property="og:description" content={seo.meta_description} />
           </>
         )}
         {seo.menu_image && (
           <>
-            <meta property="og:image" content={seo.menu_image} />
             <meta property="og:image" content={seo.menu_image} />
           </>
         )}

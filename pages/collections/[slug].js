@@ -36,15 +36,20 @@ const collections = ({ seo }) => {
     <React.Fragment>
       <Head>
         <title>{seo.title} | The Owlet</title>
+        {seo.title && <meta property="og:title" content={seo.title} />}
         {seo.meta_keywords && (
           <meta name="keywords" content={seo.meta_keywords} />
         )}
         {seo.meta_description && (
-          <meta name="description" content={seo.meta_description} />
+          <>
+            <meta name="description" content={seo.meta_description} />
+            <meta property="og:description" content={seo.meta_description} />
+          </>
         )}
         {seo.menu_image && (
           <meta property="og:image" content={seo.menu_image} />
         )}
+        <meta property="og:url" content={`/collections/${seo.slug}`} />
       </Head>
       {/* <Header navigations={navigations} /> */}
       <main className="main">
