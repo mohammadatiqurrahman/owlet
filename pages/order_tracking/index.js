@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Link from "next/link";
+
 import OrderTrackingService from "../../services/OrderTrackingService";
 const index = () => {
   // Input fields
@@ -16,8 +16,8 @@ const index = () => {
 
   const [buttonStatus, setButtonStatus] = useState(false);
 
-  const [invoice, setInvoice] = useState([]);
-  // console.log(invoice.length > 0 && JSON.parse(invoice[0].products));
+  const [invoice, setInvoice] = useState(null);
+
   // Storing form input
   const orderInputHandler = (e) => {
     const name = e.currentTarget.name;
@@ -30,6 +30,7 @@ const index = () => {
     e.preventDefault();
     setButtonStatus(true);
     if (!order.orderNumber) {
+      setButtonStatus(false);
       setOrderError({
         ...orderError,
         orderNumberError: order.orderNumber
@@ -45,7 +46,7 @@ const index = () => {
     // console.log(orderResponse);
     setButtonStatus(false);
     setInvoice(orderResponse);
-    if (orderResponse.length == 0) {
+    if (!orderResponse) {
       toast.error("Order not found!");
       return;
     }
@@ -61,18 +62,17 @@ const index = () => {
       <div className="order-results">
         <div className="overview-item">
           <span>Order number:</span>
-          <strong>{invoice[0].reference}</strong>
+          <strong>{invoice.reference}</strong>
         </div>
         <div className="overview-item">
           <span>Status:</span>
           <strong>
-            {invoice[0].status.charAt(0).toUpperCase() +
-              invoice[0].status.slice(1)}
+            {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
           </strong>
         </div>
         <div className="overview-item">
           <span>Date:</span>
-          <strong>{invoice[0].date}</strong>
+          <strong>{invoice.date}</strong>
         </div>
         {/* <div className="overview-item">
           <span>Email:</span>
@@ -80,12 +80,12 @@ const index = () => {
         </div> */}
         <div className="overview-item">
           <span>Total:</span>
-          <strong>BDT {invoice[0].total}</strong>
+          <strong>BDT {invoice.total}</strong>
         </div>
         <div className="overview-item">
           <span>Payment method:</span>
           <strong>
-            {invoice[0].payment_method === "cash_on_delivery"
+            {invoice.payment_method === "cash_on_delivery"
               ? "Cash On Delivery"
               : "Online Payment"}
           </strong>
@@ -111,15 +111,11 @@ const index = () => {
               </tr>
             </thead>
             <tbody>
-              {JSON.parse(invoice[0].products).map((item, index) => {
+              {JSON.parse(invoice.products).map((item, index) => {
                 return (
                   <tr key={index}>
                     <td className="product-name mr-2">
                       {item.name} - {item.color} - {item.size} x {item.quantity}
-                      {/* <span>
-                            <i className="fas fa-times mr-2"></i>{" "}
-                            {item.quantity}
-                          </span> */}
                     </td>
                     <td className="product-price">BDT {item.price}</td>
                   </tr>
@@ -131,21 +127,21 @@ const index = () => {
                   <h4 className="summary-subtitle">Shipping Cost:</h4>
                 </td>
                 <td className="summary-subtotal-price">
-                  {invoice[0].shipping_cost}
+                  {invoice.shipping_cost}
                 </td>
               </tr>
               <tr className="summary-subtotal">
                 <td>
                   <h4 className="summary-subtitle">Tax:</h4>
                 </td>
-                <td className="summary-subtotal-price">{invoice[0].tax}</td>
+                <td className="summary-subtotal-price">{invoice.tax}</td>
               </tr>
               <tr className="summary-subtotal">
                 <td>
                   <h4 className="summary-subtitle">Total:</h4>
                 </td>
                 <td>
-                  <p className="summary-total-price">BDT {invoice[0].total}</p>
+                  <p className="summary-total-price">BDT {invoice.total}</p>
                 </td>
               </tr>
             </tbody>
@@ -164,14 +160,18 @@ const index = () => {
         </h2>
         <div className="address-info pb-8 mb-6">
           <p className="address-detail pb-2">
-            {invoice && invoice.order.name}
+            {invoice.diff_name ? invoice.diff_name : invoice.customer_name}
 
             <br />
-            {invoice && invoice.order.address}
+            {invoice.diff_email ? invoice.diff_email : invoice.customer_email}
             <br />
-            {invoice && invoice.order.phone}
+            {invoice.diff_phone ? invoice.diff_phone : invoice.customer_phone}
+            <br />
+            {invoice.diff_address
+              ? invoice.diff_address
+              : invoice.customer_address}
           </p>
-          <p className="email">{invoice && invoice.order.email}</p>
+          <p className="email">{invoice.note ? invoice.note : ""}</p>
         </div>
       </>
     );
@@ -179,7 +179,7 @@ const index = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>Order Confirmation | The Owlet</title>
+        <title>Order Tracking | The Owlet</title>
       </Head>
       <ToastContainer />
       <main className="main order">
@@ -220,17 +220,17 @@ const index = () => {
                   display: orderError.orderNumberError ? "block" : "none",
 
                   color: " #cb2431",
-                  margin: "0 auto",
                 }}
+                className="title title-center mt-2"
               >
                 {orderError.orderNumberError ? orderError.orderNumberError : ""}
               </div>
             </div>
 
-            {invoice.length > 0 && orderResult()}
+            {invoice && orderResult()}
 
-            {invoice.length > 0 && orderDetails()}
-            {/* {billingAddress()} */}
+            {invoice && orderDetails()}
+            {invoice && billingAddress()}
           </div>
         </div>
       </main>

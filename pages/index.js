@@ -26,9 +26,14 @@ const index = ({
     <React.Fragment>
       <Head>
         <title>Home Page | The Owlet</title>
-
+        <meta property="og:title" content="Home Page | The Owlet" />
         <meta name="keywords" content={metaKeyword} />
         <meta name="description" content={metaDescription} />
+        <meta property="og:description" content={metaDescription} />
+        {homeImageStatus && (
+          <meta property="og:image" content={homePageBanner} />
+        )}
+        <meta property="og:url" content="/" />
       </Head>
       {/* <div classNameName="page-wrapper"> */}
       {/* <TopHeader /> */}

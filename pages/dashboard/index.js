@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Order from "../../components/dashboard/Order";
+import Head from "next/head";
 import { useUserContext } from "../../context/user_context";
 import { useRouter } from "next/router";
 import AccountDetails from "../../components/dashboard/AccountDetails";
@@ -124,6 +125,9 @@ const Dashboard = ({ locations }) => {
   };
   return (
     <React.Fragment>
+      <Head>
+        <title>dashboard | The Owlet</title>
+      </Head>
       <main className="main account">
         {changePasswordModal && <ChangePasswordModal />}
         {userProfileEditModal && <UserProfileEditModal />}

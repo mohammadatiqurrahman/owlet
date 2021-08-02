@@ -19,9 +19,8 @@ export default class OrderTrackingService {
           },
           data: JSON.stringify({ invoice: order.orderNumber }),
         });
-        // Expecting a list from the response
-        if (Array.isArray(getOrderStatusResponse.data))
-          return getOrderStatusResponse.data;
+        // Expecting an object from the response
+        if (getOrderStatusResponse.data) return getOrderStatusResponse.data;
       } catch (error) {
         console.log(
           "Error in getOrderStatus() in services/OrderTrackingService.js"
@@ -29,6 +28,6 @@ export default class OrderTrackingService {
         console.log(error);
       }
     }
-    return [];
+    return null;
   }
 }
