@@ -4,16 +4,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCartContext } from "../../context/cart_context";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
+import Loading from "../../components/Loading";
 const index = () => {
   const { placeOrderClick } = useCartContext();
-
+  const router = useRouter();
   useEffect(() => {
     if (placeOrderClick) {
       toast.success(`${placeOrderClick.message}`);
+    } else {
+      router.push("/");
     }
-  }, [placeOrderClick]);
-
+  }, []);
+  if (!placeOrderClick) {
+    return <Loading />;
+  }
   // Order Result
   const orderResult = () => {
     return (

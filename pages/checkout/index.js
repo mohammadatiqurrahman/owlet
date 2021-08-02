@@ -209,6 +209,24 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   }, [checkoutData.diff_location_id]);
   // Location wise Areas end
 
+  if (cart.length === 0) {
+    return (
+      <div className="container mt-7 mb-2">
+        <div className="row justify-content-center">
+          <h3 className="text-center">Your Cart Is Empty</h3>
+          <Link href="/">
+            <a
+              className="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4 "
+              style={{ width: "300px" }}
+            >
+              <i className="d-icon-arrow-left"></i>Continue Shopping
+            </a>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   // Show user details in billing section
   const userBillingAddress = () => {
     return (
