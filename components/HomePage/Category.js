@@ -47,14 +47,21 @@ const Category = () => {
                   Sale Up to <b className="ls-normal">70% off</b>
                 </span>
               </h3>
-              <Link
+              {/* <Link
                 href="/collections/baby-girl"
                 className="btn btn-md btn-solid btn-rounded"
               >
                 <span>
                   Shop now<i className="d-icon-arrow-right"></i>
                 </span>
-              </Link>
+              </Link> */}
+              <a class="btn btn-md btn-solid btn-rounded">
+                <Link href="/collections/baby-girl">
+                  <span>
+                    Shop now<i className="d-icon-arrow-right"></i>
+                  </span>
+                </Link>
+              </a>
             </div>
           </div>
         </div>

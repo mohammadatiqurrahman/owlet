@@ -155,7 +155,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
         <div className="products scrollable">
           {cart &&
             cart.map((item, index) => {
-              // console.log(item);
               return (
                 <div className="product product-cart" key={index}>
                   <figure className="product-media">

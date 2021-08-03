@@ -5,7 +5,7 @@ import SingleProduct from "../SingleProduct";
 const RelatedProducts = ({ relatedProducts }) => {
   const productImageAndLabel = (item) => {
     return (
-      <figure className="product-media">
+      <figure style={{ cursor: "pointer" }}>
         <Link href={`/products/${item.slug}`}>
           <img
             src={`${

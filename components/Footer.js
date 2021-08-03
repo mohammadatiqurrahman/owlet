@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
         <div className="footer-center">
           <p className="copyright">
-            Riode eCommerce &copy; 2021. All Rights Reserved
+            Owlet eCommerce &copy; 2021. All Rights Reserved
           </p>
         </div>
         <div className="footer-right">
@@ -121,7 +121,7 @@ const Footer = () => {
 
             <a
               href="#"
-              className="social-link social-linkedin fab fa-linkedin-in"
+              className="social-link social-linkedin fab fa-instagram font-weight-bold"
             ></a>
           </div>
         </div>

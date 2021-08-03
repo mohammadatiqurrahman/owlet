@@ -17,7 +17,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const { user } = useUserContext();
   const { cart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
-  // console.log(total_amount);
+
   const [noteStatus, setNoteStatus] = useState(false);
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
 
@@ -146,7 +146,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             ? ""
             : "Please click on the checkbox before placing order",
         });
-        console.log("oodfd");
+   
         return;
       }
       setCheckoutError({
@@ -158,7 +158,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
           ? ""
           : "Please click on the checkbox before placing order",
       });
-      console.log("jhi");
+ 
       return;
     }
     // Invoice model
@@ -654,7 +654,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
         <tbody>
           {cart.length > 0 &&
             cart.map((item, index) => {
-              // console.log(item);
+       
               const { amount, name, size, color, tax, price } = item;
               return (
                 <tr key={index}>

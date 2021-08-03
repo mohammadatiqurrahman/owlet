@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import TopHeader from "../components/TopHeader";
 const Layout = ({ children }) => {
   const { navigations } = useProductsContext();
-  // console.log(navigations);
   const [newArrival, setNewArrival] = useState(false);
   const [onSale, setOnSale] = useState(false);
   const getSpecialNav = async () => {
@@ -21,7 +20,6 @@ const Layout = ({ children }) => {
   };
 
   const router = useRouter();
-  // console.log(router);
   const { pathname } = router;
   useEffect(() => {
     getSpecialNav();

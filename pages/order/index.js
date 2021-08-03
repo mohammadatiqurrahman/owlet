@@ -39,10 +39,10 @@ const index = () => {
           <span>Date:</span>
           <strong>{placeOrderClick && placeOrderClick.order.date}</strong>
         </div>
-        <div className="overview-item">
+        {/* <div className="overview-item">
           <span>Email:</span>
           <strong>{placeOrderClick && placeOrderClick.order.email}</strong>
-        </div>
+        </div> */}
         <div className="overview-item">
           <span>Total:</span>
           <strong>

@@ -43,7 +43,7 @@ const index = () => {
     const orderResponse = await OrderTrackingService.instance.getOrderStatus(
       order
     );
-    // console.log(orderResponse);
+
     setButtonStatus(false);
     setInvoice(orderResponse);
     if (!orderResponse) {
@@ -204,11 +204,24 @@ const index = () => {
                     setOrderError({ ...orderError, orderNumberError: "" })
                   }
                   required=""
-                  style={{ border: "2px solid gainsboro" }}
+                  style={{ border: "2px solid gainsboro", borderRight: "none" }}
                 />
 
                 {!buttonStatus ? (
-                  <button className="btn btn-dark" type="submit">
+                  <button
+                    style={{
+                      color: "#fff",
+                      borderColor: "#f27955",
+                      borderBottom: "none",
+                      borderRight: "none",
+                      backgroundColor: "#f27955",
+                      borderRadius: "0 2.4rem 2.4rem 0",
+                      fontWeight: "bold",
+                      padding: "0 15px",
+                      fontSize: "18px",
+                    }}
+                    type="submit"
+                  >
                     Submit
                   </button>
                 ) : (

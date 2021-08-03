@@ -31,7 +31,7 @@ const index = () => {
     setForgetPasswordError({ ...forgetPasswordError, emailLoading: true });
     const emailError =
       await ForgetPasswordService.instance.checkForgetPasswordMail(emailValue);
-    console.log(emailError);
+
     setForgetPasswordError({
       ...forgetPasswordError,
       emailError,

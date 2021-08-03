@@ -8,7 +8,7 @@ const index = () => {
     // clearCart,
     removeWishlistItem,
   } = useCartContext();
-  // console.log(wishlist);
+ 
   if (wishlist.length === 0) {
     return (
       <React.Fragment>

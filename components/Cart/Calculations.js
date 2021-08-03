@@ -55,7 +55,6 @@ const Calculations = () => {
           </thead>
           <tbody>
             {cart.map((item) => {
-              // console.log(item);
               const {
                 id,
                 image,

@@ -10,7 +10,6 @@ const Filter = () => {
 
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
   };
   //Filter by price end
 
@@ -29,10 +28,8 @@ const Filter = () => {
     clearFilters,
     all_products,
   } = useFilterContext();
-  // console.log(color);
   const sizes = getUniqueValues(all_products, "size");
   const { colorCode, colorName } = getUniqueValues(all_products, "colors");
-  // console.log(colorName);
   return (
     <aside className="col-lg-3 sidebar sidebar-fixed shop-sidebar sticky-sidebar-wrapper">
       <div

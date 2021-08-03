@@ -194,3 +194,8 @@ body {
   display: flex !important;
   justify-content: space-between;
 }
+
+.footer .footer-bottom .footer-right .social-links a:hover {
+  color: white;
+}
+

@@ -509,7 +509,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
         <tbody>
           {cart.length > 0 &&
             cart.map((item, index) => {
-              // console.log(item);
+
               const { amount, name, size, color, tax, price } = item;
               return (
                 <tr key={index}>

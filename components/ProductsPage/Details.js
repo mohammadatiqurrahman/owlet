@@ -11,11 +11,8 @@ const Details = ({ slugForFacebookShare }) => {
   const router = useRouter();
   const { pathname, slug } = router;
   const { single_product: product, handleCart } = useProductsContext();
-  // console.log(single_product);
-  // console.log(product);
-  const { addToCart, addToWishlist, cart } = useCartContext();
 
-  // console.log(cart);
+  const { addToCart, addToWishlist, cart } = useCartContext();
 
   const {
     id,
@@ -30,9 +27,8 @@ const Details = ({ slugForFacebookShare }) => {
     meta_description,
     meta_keywords,
   } = product;
-  // console.log(newVariants);
-  // Sizes
 
+  // Sizes
   const [sizes, setSizes] = useState([]);
   const colorSize = [].concat.apply(
     [],
@@ -40,19 +36,17 @@ const Details = ({ slugForFacebookShare }) => {
   );
 
   // Amount
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(0);
   const [stock, setStock] = useState(1);
 
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedColorName, setSelectedColorName] = useState("");
-  // console.log(selectedColorName);
+
   const [selectedSize, setSelectedSize] = useState("");
 
   const [colorNote, setColorNote] = useState(false);
   const [sizeNote, setSizeNote] = useState(false);
   const [enabledQuantity, setEnabledQuantity] = useState(false);
-
-  // console.log(selectedColor, selectedSize);
 
   const increase = () => {
     setAmount((oldAmount) => {
@@ -66,14 +60,16 @@ const Details = ({ slugForFacebookShare }) => {
   const decrease = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount - 1;
+      if (stock == 0) {
+        tempAmount = 0;
+        return tempAmount;
+      }
       if (tempAmount <= 1) {
         tempAmount = 1;
       }
       return tempAmount;
     });
   };
-
-
 
   const productPrice = () => {
     return (
@@ -119,8 +115,6 @@ const Details = ({ slugForFacebookShare }) => {
           <div className="product-variations">
             {newVariants &&
               newVariants.map((item, index) => {
-                // console.log(item);
-
                 return (
                   <a
                     className={`color ${
@@ -169,7 +163,6 @@ const Details = ({ slugForFacebookShare }) => {
             <div className="product-form-group">
               <div className="product-variations">
                 {colorSize.map((item, index) => {
-                  // console.log(sizes);
                   return (
                     <a
                       className={`size ${
@@ -180,7 +173,7 @@ const Details = ({ slugForFacebookShare }) => {
                         const singleProduct = sizes.find(
                           (product) => product[item]
                         );
-                        // console.log(singleProduct);
+
                         const singleProductQuantity =
                           singleProduct[item].quantity;
                         setStock(singleProductQuantity);
@@ -264,7 +257,9 @@ const Details = ({ slugForFacebookShare }) => {
               ></button>
             </div>
             <button
-              className="btn-product btn-cart"
+              className={
+                stock == 0 ? "btn btn-disabled" : "btn-product btn-cart"
+              }
               onClick={() => {
                 if (selectedColor && selectedSize) {
                   if (amount !== 0) {
@@ -347,7 +342,6 @@ const Details = ({ slugForFacebookShare }) => {
   };
   return (
     <React.Fragment>
-   
       <div className="col-md-6">
         <div className="product-details">
           <h1 className="product-name">{title}</h1>
