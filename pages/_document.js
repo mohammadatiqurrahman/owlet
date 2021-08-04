@@ -16,9 +16,7 @@ class MyDocument extends Document {
             content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
           /> */}
 
-          {/* <title>Shop The Owlet</title> */}
-
-          <meta name="author" content="D-THEMES" />
+          <meta name="author" content="OWLET" />
 
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
@@ -31,7 +29,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
 
-          <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
+          <link rel="icon" type="image/png" href="/images/favicon.png" />
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"

@@ -11,33 +11,18 @@ const NewArrival = ({ newArrival }) => {
       >
         <div
           className="banner banner-fixed overlay-dark"
-          style={{ backgroundColor: "#2f2f2f" }}
+          style={{ backgroundColor: "#2f2f2f", cursor: "pointer" }}
         >
-          <figure>
-            <img
-              src="/images/baby/featured.png"
-              alt="banner"
-              width="380"
-              height="705"
-            />
-          </figure>
-          <div className="banner-content">
-            <h4 className="banner-subtitle ls-s font-weight-normal">
-              Featured
-            </h4>
-            <h3 className="banner-title ls-m text-uppercase font-weight-bold">
-              New Lifestyle
-              <span className="d-block ls-s text-normal">Collection</span>
-            </h3>
-            <Link href="/collections/new_arrival">
-              <span
-                className="btn btn-sm btn-solid btn-rounded shop-now"
-                style={{ backgroundColor: "#2b6777", color: "white" }}
-              >
-                Shop now
-              </span>
-            </Link>
-          </div>
+          <Link href="/collections/new_arrival">
+            <figure>
+              <img
+                src="/images/baby/featured.jpeg"
+                alt="banner"
+                width="380"
+                height="705"
+              />
+            </figure>
+          </Link>
         </div>
       </div>
     );

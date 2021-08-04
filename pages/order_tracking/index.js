@@ -35,7 +35,7 @@ const index = () => {
         ...orderError,
         orderNumberError: order.orderNumber
           ? ""
-          : "The order tracking field is required.",
+          : "The Invoice Number is required.",
       });
       return;
     }
@@ -74,10 +74,7 @@ const index = () => {
           <span>Date:</span>
           <strong>{invoice.date}</strong>
         </div>
-        {/* <div className="overview-item">
-          <span>Email:</span>
-          <strong>{invoice[0].email}</strong>
-        </div> */}
+
         <div className="overview-item">
           <span>Total:</span>
           <strong>BDT {invoice.total}</strong>
@@ -186,7 +183,7 @@ const index = () => {
         <div className="page-content pt-7 pb-10 mb-10">
           <div className="container mt-3">
             <div className="container">
-              <h2 className="title title-center">Track your order</h2>
+              <h2 className="title title-center">Track Your Order</h2>
               <form
                 className="input-wrapper input-wrapper-round input-wrapper-inline ml-lg-auto"
                 style={{ margin: "0 auto" }}
@@ -194,9 +191,9 @@ const index = () => {
               >
                 <input
                   type="text"
-                  className="form-control font-primary font-italic form-solid"
+                  className="form-control font-primary form-solid"
                   name="orderNumber"
-                  placeholder="Order Number"
+                  placeholder="Enter Invoice Number"
                   onChange={orderInputHandler}
                   value={order.orderNumber}
                   onKeyUp={() =>

@@ -17,7 +17,7 @@ const Images = () => {
       <div className="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
         <figure className="product-image">
           {/* Zoom effect  */}
-          {activeImage && (
+          {/* {activeImage && (
             <Zoom
               img={
                 activeImage
@@ -26,10 +26,10 @@ const Images = () => {
               }
               zoomScale={3}
               width={441}
-              height={500}
+              height={496}
             />
-          )}
-          {/* {activeImage && (
+          )} */}
+          {activeImage && (
             <img
               src={
                 activeImage
@@ -41,7 +41,7 @@ const Images = () => {
               width="800"
               height="900"
             />
-          )} */}
+          )}
         </figure>
       </div>
     );

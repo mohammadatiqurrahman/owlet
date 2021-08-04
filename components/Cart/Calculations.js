@@ -45,13 +45,15 @@ const Calculations = () => {
       <>
         <table className="shop-table cart-table">
           <thead>
-            <th>Product</th>
-            <th></th>
-            <th>Variants</th>
-            <th>Price</th>
-            <th>quantity</th>
-            <th>Tax</th>
-            <th>Subtotal</th>
+            <tr>
+              <th>Product</th>
+              <th></th>
+              <th>Variants</th>
+              <th>Price</th>
+              <th>quantity</th>
+              <th>Tax</th>
+              <th>Subtotal</th>
+            </tr>
           </thead>
           <tbody>
             {cart.map((item) => {
@@ -213,37 +215,41 @@ const Calculations = () => {
           <div className="summary mb-4">
             <h3 className="summary-title text-left">Cart Total</h3>
             <table className="shipping">
-              <tr className="summary-subtotal">
-                <td>
-                  <h4 className="summary-subtitle">
-                    Subtotal{" "}
-                    <span className="font-weight-normal">(w/o Tax)</span>
-                  </h4>
-                </td>
-                <td>
-                  <p className="summary-subtotal-price">BDT {total_amount}</p>
-                </td>
-              </tr>
-              <tr className="summary-subtotal">
-                <td>
-                  <h4 className="summary-subtitle">Tax</h4>
-                </td>
-                <td>
-                  <p className="summary-subtotal-price">BDT {total_tax}</p>
-                </td>
-              </tr>
+              <tbody>
+                <tr className="summary-subtotal">
+                  <td>
+                    <h4 className="summary-subtitle">
+                      Subtotal{" "}
+                      <span className="font-weight-normal">(w/o Tax)</span>
+                    </h4>
+                  </td>
+                  <td>
+                    <p className="summary-subtotal-price">BDT {total_amount}</p>
+                  </td>
+                </tr>
+                <tr className="summary-subtotal">
+                  <td>
+                    <h4 className="summary-subtitle">Tax</h4>
+                  </td>
+                  <td>
+                    <p className="summary-subtotal-price">BDT {total_tax}</p>
+                  </td>
+                </tr>
+              </tbody>
             </table>
             <table className="total">
-              <tr className="summary-subtotal">
-                <td>
-                  <h4 className="summary-subtitle">Total</h4>
-                </td>
-                <td>
-                  <p className="summary-total-price ls-s">
-                    BDT {total_amount + total_tax}
-                  </p>
-                </td>
-              </tr>
+              <tbody>
+                <tr className="summary-subtotal">
+                  <td>
+                    <h4 className="summary-subtitle">Total</h4>
+                  </td>
+                  <td>
+                    <p className="summary-total-price ls-s">
+                      BDT {total_amount + total_tax}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
             </table>
             {cart.length > 0 && (
               <Link href={`${user ? "/checkout" : "/before_checkout"}`}>

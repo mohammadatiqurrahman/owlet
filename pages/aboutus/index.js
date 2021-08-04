@@ -7,16 +7,14 @@ const bannerAndHeadline = () => {
   return (
     <div
       className="page-header pl-4 pr-4"
-      style={{ backgroundImage: "url(/images/page-header/about-us.jpg)" }}
+      style={{ background: "white", height: "100px" }}
     >
-      <h3 className="page-subtitle font-weight-bold">Welcome To Owlet</h3>
-      <h1 className="page-title font-weight-bold lh-1 text-white text-capitalize">
+      <h1
+        className="page-title font-weight-bold lh-1 text-white text-capitalize mt-5"
+        style={{ color: "black !important" }}
+      >
         About Us
       </h1>
-      <p className="page-desc text-white mb-0">
-        Lorem quis bibendum auctor, nisi elit consequat ipsum,
-        <br /> nec sagittis sem nibh id elit.
-      </p>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export default class ShippingPolicyService {
     while (retry++ < 2) {
       try {
         const getShippingPolicyDetailsResponse = await axios.get(
-          based_url + "/page/return_policy"
+          based_url + "/page/shipping_policy"
         );
         // Expecting a string from the response
         if (getShippingPolicyDetailsResponse.data)
