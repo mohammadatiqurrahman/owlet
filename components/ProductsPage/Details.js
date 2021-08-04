@@ -46,7 +46,6 @@ const Details = ({ slugForFacebookShare }) => {
 
   const [colorNote, setColorNote] = useState(false);
   const [sizeNote, setSizeNote] = useState(false);
-  const [enabledQuantity, setEnabledQuantity] = useState(false);
 
   const increase = () => {
     setAmount((oldAmount) => {

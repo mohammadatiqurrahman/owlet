@@ -9,20 +9,27 @@ const DetailsBottom = ({ shipping_return_detail, additional_information }) => {
       <div className="tab-content">
         <div className="tab-pane active in" id="product-tab-description">
           <div className="row mt-6">
-            <div className="col-md-12 mb-8">
-              <h5 className="description-title mb-4 font-weight-semi-bold ls-m">
-                Additional Information
-              </h5>
+            {additional_information && (
+              <div className="col-md-12 mb-8">
+                <h5 className="description-title mb-4 font-weight-semi-bold ls-m">
+                  Additional Information
+                </h5>
 
-              <div
-                dangerouslySetInnerHTML={{ __html: additional_information }}
-              />
-            </div>
-
-            <h5 className="description-title mb-3 font-weight-semi-bold ls-m">
-              Shipping & Returns
-            </h5>
-            <div dangerouslySetInnerHTML={{ __html: shipping_return_detail }} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: additional_information }}
+                />
+              </div>
+            )}
+            {shipping_return_detail && (
+              <>
+                <h5 className="description-title mb-3 font-weight-semi-bold ls-m">
+                  Shipping & Returns
+                </h5>
+                <div
+                  dangerouslySetInnerHTML={{ __html: shipping_return_detail }}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

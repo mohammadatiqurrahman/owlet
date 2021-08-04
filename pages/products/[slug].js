@@ -20,6 +20,7 @@ const products = ({ seo }) => {
     fetchSingleProduct,
   } = useProductsContext();
   const { navigations } = useProductsContext();
+
   const router = useRouter();
   const { slug } = router.query;
 
@@ -39,7 +40,7 @@ const products = ({ seo }) => {
   };
   useEffect(() => {
     getRelatedProductsRes();
-  }, [product]);
+  }, [navigations, product, slug]);
   useEffect(() => {
     fetchSingleProduct(`${based_url}/product/${slug}`);
   }, [slug]);

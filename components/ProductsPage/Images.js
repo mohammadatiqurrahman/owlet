@@ -16,6 +16,7 @@ const Images = () => {
     return (
       <div className="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
         <figure className="product-image">
+          {/* Zoom effect  */}
           {activeImage && (
             <Zoom
               img={
@@ -25,9 +26,22 @@ const Images = () => {
               }
               zoomScale={3}
               width={441}
-              height={496}
+              height={500}
             />
           )}
+          {/* {activeImage && (
+            <img
+              src={
+                activeImage
+                  ? activeImage
+                  : "/images/dummy-images/product-preview.jpeg"
+              }
+              data-zoom-image="images/demos/demo24/product/product-1-800x900.jpg"
+              alt="Blue Pinafore Denim Dress"
+              width="800"
+              height="900"
+            />
+          )} */}
         </figure>
       </div>
     );
@@ -38,7 +52,11 @@ const Images = () => {
       <div className="product-thumbs">
         {main_image && (
           <div
-            className="product-thumb active"
+            className={
+              activeImage == main_image
+                ? "product-thumb active"
+                : "product-thumb"
+            }
             onClick={() => setActiveImage(main_image)}
           >
             <img
@@ -54,7 +72,11 @@ const Images = () => {
             return (
               item.path !== null && (
                 <div
-                  className="product-thumb active"
+                  className={
+                    activeImage == item.path
+                      ? "product-thumb active"
+                      : "product-thumb"
+                  }
                   key={index}
                   onClick={() => setActiveImage(item.path)}
                 >
@@ -79,10 +101,10 @@ const Images = () => {
   const imageGallerySlideButton = () => {
     return (
       <>
-        <button className="thumb-up disabled">
+        <button className="thumb-up">
           <i className="fas fa-chevron-left"></i>
         </button>
-        <button className="thumb-down disabled">
+        <button className="thumb-down">
           <i className="fas fa-chevron-right"></i>
         </button>
       </>

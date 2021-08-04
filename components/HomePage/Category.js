@@ -55,7 +55,7 @@ const Category = () => {
                   Shop now<i className="d-icon-arrow-right"></i>
                 </span>
               </Link> */}
-              <a class="btn btn-md btn-solid btn-rounded">
+              <a className="btn btn-md btn-solid btn-rounded">
                 <Link href="/collections/baby-girl">
                   <span>
                     Shop now<i className="d-icon-arrow-right"></i>

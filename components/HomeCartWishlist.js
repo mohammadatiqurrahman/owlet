@@ -21,7 +21,7 @@ const HomeCartWishlist = ({ slug }) => {
 
   useEffect(() => {
     fetchSingleProduct(`${based_url}/product/${slug}`);
-  }, [slug]);
+  }, [HomeCartWishlistStatus, slug]);
 
   const notify = () => toast.success("Successfully added to the wishlist");
   const { addToCart, addToWishlist, cart } = useCartContext();
@@ -47,7 +47,7 @@ const HomeCartWishlist = ({ slug }) => {
     sizes.map((item) => Object.keys(item))
   );
 
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(0);
   const [stock, setStock] = useState(1);
 
   const [selectedColor, setSelectedColor] = useState("");
@@ -69,6 +69,10 @@ const HomeCartWishlist = ({ slug }) => {
   const decrease = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount - 1;
+      if (stock == 0) {
+        tempAmount = 0;
+        return tempAmount;
+      }
       if (tempAmount <= 1) {
         tempAmount = 1;
       }
@@ -281,7 +285,7 @@ const HomeCartWishlist = ({ slug }) => {
               ></button>
             </div>
             <button
-              className="btn-product btn-cart"
+              className={stock == 0 ? "btn btn-disabled":"btn-product btn-cart"}
               onClick={() => {
                 if (selectedColor && selectedSize) {
                   if (amount !== 0) {

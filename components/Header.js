@@ -11,6 +11,11 @@ const Header = ({ navigations, newArrival, onSale }) => {
   const { handleCart, fetchNavigationsChild, navigations_child } =
     useProductsContext();
   const { user } = useUserContext();
+  const [menuHeaderImage, setMenuHeaderImage] = useState(null);
+
+  const menuHeaderImageHandler = (image) => {
+    setMenuHeaderImage(image);
+  };
 
   const [childrenNavigations, setChildrenNavigations] = useState([]);
 
@@ -253,7 +258,12 @@ const Header = ({ navigations, newArrival, onSale }) => {
                   key={navigation.id}
                   // onMouseOver={() => hoverHandler(navigation.id)}
                 >
-                  <span onMouseOver={() => hoverHandler(navigation.id)}>
+                  <span
+                    onMouseOver={() => {
+                      hoverHandler(navigation.id);
+                      menuHeaderImageHandler(navigation.menu_image);
+                    }}
+                  >
                     <Link href={`/collections/${navigation.slug}`}>
                       {navigation.title}
                     </Link>
@@ -269,9 +279,14 @@ const Header = ({ navigations, newArrival, onSale }) => {
                         <div className="row">
                           {childrenNavigations.length > 0 &&
                             childrenNavigations.map((item) => {
+                              // console.log(item);
                               return (
                                 <div className="col-md-6 m-0 p-0" key={item.id}>
-                                  <ul>
+                                  <ul
+                                    onMouseOver={() =>
+                                      menuHeaderImageHandler(item.menu_image)
+                                    }
+                                  >
                                     <li>
                                       <Link href={`/category/${item.slug}`}>
                                         {item.title}
@@ -309,8 +324,9 @@ const Header = ({ navigations, newArrival, onSale }) => {
                         <figure>
                           <img
                             src={
-                              navigation.menu_image ||
-                              "/images/dummy-images/mega-menu.jpg"
+                              menuHeaderImage
+                                ? menuHeaderImage
+                                : "/images/dummy-images/mega-menu.jpg"
                             }
                             alt="Menu banner"
                             style={{ height: "225px", width: "315px" }}

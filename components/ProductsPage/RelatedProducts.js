@@ -60,22 +60,21 @@ const RelatedProducts = ({ relatedProducts }) => {
   };
   return (
     <React.Fragment>
-      {relatedProducts && (
-        <section className="related-products">
+      {relatedProducts.length > 0 && (
+        <section className="related-products" style={{ marginTop: "15px" }}>
           <h2 className="title">Related Products</h2>
           <div className="product-grid row">
             <div className="row">
-              {relatedProducts.length > 0 &&
-                relatedProducts.map((item, index) => {
-                  return (
-                    <div key={index} className="col-md-3 col-6">
-                      <div className="product product-variable text-center">
-                        {productImageAndLabel(item)}
-                        {productDetails(item)}
-                      </div>
+              {relatedProducts.map((item, index) => {
+                return (
+                  <div key={index} className="col-md-3 col-6">
+                    <div className="product product-variable text-center">
+                      {productImageAndLabel(item)}
+                      {productDetails(item)}
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
