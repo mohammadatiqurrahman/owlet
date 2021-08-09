@@ -10,8 +10,8 @@ const bannerAndHeadline = () => {
       style={{ background: "white", height: "100px" }}
     >
       <h1
-        className="page-title font-weight-bold lh-1 text-white text-capitalize mt-5"
-        style={{ color: "black !important" }}
+        className="page-title font-weight-bold lh-1 text-capitalize mt-5"
+        style={{ color: "black" }}
       >
         About Us
       </h1>
@@ -36,7 +36,7 @@ const Aboutus = ({ details }) => {
       <Head>
         <title>About Us | The Owlet</title>
       </Head>
-      <main className="main">
+      <main className="main mb-5">
         {bannerAndHeadline()}
         {aboutDetails(details)}
       </main>

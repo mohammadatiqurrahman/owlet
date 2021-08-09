@@ -199,6 +199,24 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   }, [checkoutData.location]);
   // Location wise Areas end
 
+  if (cart.length === 0) {
+    return (
+      <div className="container mt-7 mb-2">
+        <div className="row justify-content-center">
+          <h3 className="text-center">Your Cart Is Empty</h3>
+          <Link href="/">
+            <a
+              className="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4 "
+              style={{ width: "300px" }}
+            >
+              <i className="d-icon-arrow-left"></i>Continue Shopping
+            </a>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const writeNote = () => {
     return (
       <div className="card accordion mt-5">
@@ -509,7 +527,6 @@ const index = ({ locations, inDhaka, outDhaka }) => {
         <tbody>
           {cart.length > 0 &&
             cart.map((item, index) => {
-
               const { amount, name, size, color, tax, price } = item;
               return (
                 <tr key={index}>

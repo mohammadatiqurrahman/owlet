@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Zoom from "react-img-zoom";
 import { useProductsContext } from "../../context/products_context";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import InnerImageZoom from "react-inner-image-zoom";
 
 const Images = () => {
   const { single_product: product } = useProductsContext();
@@ -29,7 +31,9 @@ const Images = () => {
               height={496}
             />
           )} */}
-          {activeImage && (
+
+          {/* Only click and view */}
+          {/* {activeImage && (
             <img
               src={
                 activeImage
@@ -40,6 +44,18 @@ const Images = () => {
               alt="Blue Pinafore Denim Dress"
               width="800"
               height="900"
+            />
+          )} */}
+
+          {/* effect from Salman vai */}
+          {activeImage && (
+            <InnerImageZoom
+              src={activeImage}
+              width={580}
+              height={652}
+              zoomType="hover"
+              zoomPreload={true}
+              fullscreenOnMobile={false}
             />
           )}
         </figure>

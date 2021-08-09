@@ -11,7 +11,10 @@ const index = () => {
           className="page-header pl-4 pr-4"
           style={{ backgroundImage: "url(/images/page-header/about-us.jpg)" }}
         >
-          <h1 className="page-title font-weight-bold lh-1 text-white text-capitalize">
+          <h1
+            className="page-title font-weight-bold lh-1 text-capitalize"
+            style={{ color: "black" }}
+          >
             Privacy Policy
           </h1>
           <p className="page-desc text-white mb-0">

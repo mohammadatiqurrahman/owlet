@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFilterContext } from "../../context/filter_context";
 import { getUniqueValues, formatPrice } from "../../utils/helpers";
-
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
 import Slider from "@material-ui/core/Slider";
 const Filter = () => {
   const {
@@ -23,9 +24,23 @@ const Filter = () => {
   const sizes = getUniqueValues(all_products, "size");
   const { colorCode, colorName } = getUniqueValues(all_products, "colors");
 
+  // const [value, setValue] = useState({ max: 1, min: 0 });
+  // useEffect(() => {
+  //   setValue({ ...value, max: max_price, min: min_price });
+  // }, [max_price, min_price]);
+
   const filterMenuForMobile = () => {
     return (
       <>
+        {/* <InputRange
+          maxValue={value.max}
+          minValue={value.min}
+          value={value}
+          onChange={(value) => {
+            setValue({ ...value, max: value.max, min: value.min });
+            console.log(value);
+          }}
+        /> */}
         <div
           className="sidebar-overlay"
           onClick={() => document.body.classList.remove("sidebar-active")}
@@ -183,7 +198,7 @@ const Filter = () => {
     );
   };
 
-  const resetProductFilter = ()=>{
+  const resetProductFilter = () => {
     return (
       <div className="widget widget-collapsible">
         <div className="widget-body mt-3">
@@ -193,7 +208,7 @@ const Filter = () => {
         </div>
       </div>
     );
-  }
+  };
   return (
     <aside className="col-lg-3 sidebar sidebar-fixed shop-sidebar sticky-sidebar-wrapper">
       {filterMenuForMobile()}
