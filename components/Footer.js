@@ -54,13 +54,6 @@ const Footer = () => {
             <li>
               <Link href="/contact">Contact Us</Link>
             </li>
-
-            <li>
-              <Link href="/return_policy">Return Policy</Link>
-            </li>
-            <li>
-              <Link href="/shipping_policy">Shipping Policy</Link>
-            </li>
           </ul>
         </div>
       </div>
@@ -80,13 +73,19 @@ const Footer = () => {
               <a href="#">Money-back Guarantee!</a>
             </li>
             <li>
-              <a href="#">Returns</a>
-            </li>
-            <li>
               <a href="#">Customer Service</a>
             </li>
             <li>
-              <a href="#">Terms &amp; Conditions</a>
+              <a href="/terms_and_condition">Terms &amp; Conditions</a>
+            </li>
+            <li>
+              <Link href="/return_policy">Return Policy</Link>
+            </li>
+            <li>
+              <Link href="/shipping_policy">Shipping Policy</Link>
+            </li>
+            <li>
+              <Link href="/privacy_policy">Privacy Policy</Link>
             </li>
           </ul>
         </div>

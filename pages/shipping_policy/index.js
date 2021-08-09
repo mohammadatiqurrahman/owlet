@@ -29,7 +29,7 @@ const index = ({ details }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   // const aboutRes = await fetch(`${based_url}/page/shipping_policy`);
   // const details = await aboutRes.json();
   const details =

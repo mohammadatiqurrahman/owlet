@@ -44,7 +44,7 @@ const Aboutus = ({ details }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const details = await AboutUsService.instance.getAboutUs();
 
   return {

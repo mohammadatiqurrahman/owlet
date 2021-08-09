@@ -8,7 +8,7 @@ const Returnpolicy = ({ details }) => {
       <Head>
         <title>Return Policy | The Owlet</title>
       </Head>
-      <main className="main">
+      <main className="main mb-5">
         <div
           className="page-header pl-4 pr-4"
           style={{ background: "white", height: "100px" }}
@@ -30,7 +30,7 @@ const Returnpolicy = ({ details }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   // const aboutRes = await fetch(`${based_url}/page/return_policy`);
   // const details = await aboutRes.json();
   const details = await ReturnPolicyService.instance.getReturnPolicyDetails();

@@ -222,7 +222,7 @@ const index = () => {
                     Submit
                   </button>
                 ) : (
-                  <button className="btn btn-disabled">Finding...</button>
+                  <button className="btn btn-disabled">Searching...</button>
                 )}
               </form>
               <div

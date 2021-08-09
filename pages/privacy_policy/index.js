@@ -9,19 +9,14 @@ const index = () => {
       <main className="main">
         <div
           className="page-header pl-4 pr-4"
-          style={{ backgroundImage: "url(/images/page-header/about-us.jpg)" }}
+          style={{ background: "white", height: "100px" }}
         >
           <h1
-            className="page-title font-weight-bold lh-1 text-capitalize"
+            className="page-title font-weight-bold lh-1 text-capitalize mt-5"
             style={{ color: "black" }}
           >
             Privacy Policy
           </h1>
-          <p className="page-desc text-white mb-0">
-            Customer commitment to data protection and privacy
-            <br /> Protecting personal data and your privacy is of greatest
-            concern for The Owlet Group.
-          </p>
         </div>
         <div className="page-content">
           <div className="container mt-5">

@@ -36,7 +36,7 @@ const Details = ({ slugForFacebookShare }) => {
   );
 
   // Amount
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [stock, setStock] = useState(1);
 
   const [selectedColor, setSelectedColor] = useState("");
@@ -50,8 +50,13 @@ const Details = ({ slugForFacebookShare }) => {
   const increase = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
+      if (stock == 0) {
+        toast.error("Out of stock!");
+        return;
+      }
       if (tempAmount > stock) {
         tempAmount = stock;
+        toast.error("Maximum quantity reached!");
       }
       return tempAmount;
     });
@@ -255,36 +260,40 @@ const Details = ({ slugForFacebookShare }) => {
                 }}
               ></button>
             </div>
-            <button
-              className={
-                stock == 0 ? "btn btn-disabled" : "btn-product btn-cart"
-              }
-              onClick={() => {
-                if (selectedColor && selectedSize) {
-                  if (amount !== 0) {
-                    handleCart("open");
-                    addToCart(
-                      id,
-                      selectedColor,
-                      selectedSize,
-                      selectedColorName,
-                      stock,
-                      amount,
-                      product
-                    );
+            {stock == 0 ? (
+              <button className="btn btn-disabled">
+                <i className="d-icon-bag mb-1"></i> Add To Cart
+              </button>
+            ) : (
+              <button
+                className="btn-product btn-cart"
+                onClick={() => {
+                  if (selectedColor && selectedSize) {
+                    if (amount !== 0) {
+                      handleCart("open");
+                      addToCart(
+                        id,
+                        selectedColor,
+                        selectedSize,
+                        selectedColorName,
+                        stock,
+                        amount,
+                        product
+                      );
+                    }
+                  } else if (selectedColor) {
+                    setSizeNote(true);
+                  } else if (selectedSize) {
+                    setColorNote(true);
+                  } else {
+                    setColorNote(true);
                   }
-                } else if (selectedColor) {
-                  setSizeNote(true);
-                } else if (selectedSize) {
-                  setColorNote(true);
-                } else {
-                  setColorNote(true);
-                }
-              }}
-            >
-              <i className="d-icon-bag mb-1"></i>
-              Add To Cart
-            </button>
+                }}
+              >
+                <i className="d-icon-bag mb-1"></i>
+                Add To Cart
+              </button>
+            )}
           </div>
         </div>
         {stock == 0 ? <div style={{ color: "red" }}>Out of stock!</div> : null}
