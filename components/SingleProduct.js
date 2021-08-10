@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import HomeCartWishlist from "../components/HomeCartWishlist";
 import { useCartContext } from "../context/cart_context";
 const SingleProduct = ({ item }) => {
+  // console.log(item);
   const { HomeCartWishlistStatus, setHomeCartWishlistStatus } =
     useCartContext();
   const [slugForHomeCart, setSlugForHomeCart] = useState(null);

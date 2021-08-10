@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import { useProductsContext } from "../../context/products_context";
 import NoProductFound from "../../components/NoProductFound";
 import CollectionsPageService from "../../services/CollectionsPageService";
+import CollectionSkeleton from "../../components/Skeleton/CollectionSkeleton";
 
 const collections = ({ seo }) => {
   const { navigations_child, products_loading, fetchProducts, products } =
@@ -17,9 +18,12 @@ const collections = ({ seo }) => {
     fetchProducts(`${based_url}/category/${slug}/product/list`);
   }, [slug]);
 
-  if (products_loading) {
-    return <Loading />;
-  }
+  // if (products_loading) {
+  //   return <Loading />;
+  // }
+   if (products_loading) {
+     return <CollectionSkeleton />;
+   }
   return (
     <React.Fragment>
       <Head>

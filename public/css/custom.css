@@ -2,6 +2,17 @@ body {
   background-color: rgb(255 255 255);
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c8d8e4;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f27955;
+}
+
 /* Top Navbar */
 .top-navbar {
   background-color: #f4a261;
@@ -198,4 +209,3 @@ body {
 .footer .footer-bottom .footer-right .social-links a:hover {
   color: white;
 }
-

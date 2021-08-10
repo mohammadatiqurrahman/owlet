@@ -12,6 +12,7 @@ import { based_url } from "../../utils/constants";
 import Loading from "../../components/Loading";
 import { useProductsContext } from "../../context/products_context";
 import NoProductFound from "../../components/NoProductFound";
+import CollectionSkeleton from "../../components/Skeleton/CollectionSkeleton";
 
 const collections = () => {
   const { fetchProducts, products_loading, products } = useProductsContext();
@@ -21,9 +22,12 @@ const collections = () => {
   useEffect(() => {
     fetchProducts(`${based_url}/size/${slug}/product/list`);
   }, [slug]);
-  if (products_loading) {
-    return <Loading />;
-  }
+  // if (products_loading) {
+  //   return <Loading />;
+  // }
+   if (products_loading) {
+     return <CollectionSkeleton />;
+   }
   return (
     <React.Fragment>
       {/* <Header navigations={navigations} /> */}

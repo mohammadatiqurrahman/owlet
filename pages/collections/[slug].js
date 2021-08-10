@@ -8,10 +8,12 @@ import Head from "next/head";
 import NoProductFound from "../../components/NoProductFound";
 import CollectionsPageService from "../../services/CollectionsPageService";
 
+import CollectionSkeleton from "../../components/Skeleton/CollectionSkeleton";
+
 const collections = ({ seo }) => {
   const { fetchProducts, products, navigations_child, products_loading } =
     useProductsContext();
-
+  // console.log(products_loading);
   const router = useRouter();
 
   const { slug } = router.query;
@@ -29,8 +31,11 @@ const collections = ({ seo }) => {
     }
   }, [slug]);
 
+  // if (products_loading) {
+  //   return <Loading />;
+  // }
   if (products_loading) {
-    return <Loading />;
+    return <CollectionSkeleton />;
   }
   return (
     <React.Fragment>
