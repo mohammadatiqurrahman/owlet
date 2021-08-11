@@ -6,11 +6,11 @@ body {
   width: 12px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c8d8e4;
+  background: #f27955;
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #f27955;
+  background: #c8d8e4;
 }
 
 /* Top Navbar */
