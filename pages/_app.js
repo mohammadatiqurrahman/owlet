@@ -4,6 +4,7 @@ import { FilterProvider } from "../context/filter_context";
 import { CartProvider } from "../context/cart_context";
 import { UserProvider } from "../context/user_context";
 import { GeneralProvider } from "../context/general_context";
+import { WishlistProvider } from "../context/wishlist_context";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -11,11 +12,13 @@ function MyApp({ Component, pageProps }) {
       <ProductsProvider>
         <FilterProvider>
           <CartProvider>
-            <GeneralProvider>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </GeneralProvider>
+            <WishlistProvider>
+              <GeneralProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </GeneralProvider>
+            </WishlistProvider>
           </CartProvider>
         </FilterProvider>
       </ProductsProvider>

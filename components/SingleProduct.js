@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import HomeCartWishlist from "../components/HomeCartWishlist";
 import { useCartContext } from "../context/cart_context";
 const SingleProduct = ({ item }) => {
   // console.log(item);
-  const { HomeCartWishlistStatus, setHomeCartWishlistStatus } =
-    useCartContext();
-  const [slugForHomeCart, setSlugForHomeCart] = useState(null);
+  const {
+    HomeCartWishlistStatus,
+    setHomeCartWishlistStatus,
+    addToWishlist,
+    setSlugForHomeCart,
+  } = useCartContext();
+
+  // const [slugForHomeCart, setSlugForHomeCart] = useState(null);
   const router = useRouter();
 
   const productImage = () => {
@@ -65,8 +71,7 @@ const SingleProduct = ({ item }) => {
       <a
         style={{ cursor: "pointer" }}
         onClick={() => {
-          setHomeCartWishlistStatus(true);
-          setSlugForHomeCart(item.slug);
+          addToWishlist(item);
         }}
         className="btn-product-icon btn-wishlist"
         title="Add to wishlist"
@@ -110,11 +115,24 @@ const SingleProduct = ({ item }) => {
         {productImage()}
         {productLabel()}
         <div className="product-action-vertical">
-          {addToCartButton()}
-          {addToWishListButton()}
+          {/* {addToCartButton()} */}
+          {/* {addToWishListButton()} */}
+        </div>
+        <div className="product-action">
+          <a
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setHomeCartWishlistStatus(true);
+              setSlugForHomeCart(item.slug);
+            }}
+            className="btn-product btn-quickview"
+            title="Quick View"
+          >
+            Quick View
+          </a>
         </div>
       </figure>
-      {HomeCartWishlistStatus && <HomeCartWishlist slug={slugForHomeCart} />}
+      {HomeCartWishlistStatus && <HomeCartWishlist />}
       {productNameAndPrice()}
     </div>
   );

@@ -7,12 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { useWishlistContext } from "../../context/wishlist_context";
 const Details = ({ slugForFacebookShare }) => {
   const router = useRouter();
   const { pathname, slug } = router;
   const { single_product: product, handleCart } = useProductsContext();
 
-  const { addToCart, addToWishlist, cart } = useCartContext();
+  const { addToCart, cart } = useCartContext();
+  const { addToWishlist } = useWishlistContext();
 
   const {
     id,
@@ -320,26 +322,16 @@ const Details = ({ slugForFacebookShare }) => {
           className="btn-product btn-wishlist"
           style={{ border: "none", cursor: "pointer" }}
           onClick={() => {
-            if (selectedColor && selectedSize) {
-              if (amount !== 0) {
-                addToWishlist(
-                  id,
-                  selectedColor,
-                  selectedSize,
-                  selectedColorName,
-                  stock,
-                  amount,
-                  product
-                );
-                toast.success("Successfully added to the wishlist");
-              }
-            } else if (selectedColor) {
-              setSizeNote(true);
-            } else if (selectedSize) {
-              setColorNote(true);
-            } else {
-              setColorNote(true);
-            }
+            // if (selectedColor && selectedSize) {
+            addToWishlist(product);
+            // toast.success("Successfully added to the wishlist");
+            // } else if (selectedColor) {
+            //   setSizeNote(true);
+            // } else if (selectedSize) {
+            //   setColorNote(true);
+            // } else {
+            //   setColorNote(true);
+            // }
           }}
         >
           <i className="d-icon-heart"></i>Add To Wishlist

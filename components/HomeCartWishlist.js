@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useCartContext } from "../context/cart_context";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import Loading from "../components/Loading";
-const HomeCartWishlist = ({ slug }) => {
+import { useWishlistContext } from "../context/wishlist_context";
+const HomeCartWishlist = () => {
   const {
     single_product_loading: loading,
     single_product_error: error,
@@ -16,15 +17,16 @@ const HomeCartWishlist = ({ slug }) => {
     fetchSingleProduct,
     handleCart,
   } = useProductsContext();
-  const { setHomeCartWishlistStatus, HomeCartWishlistStatus } =
+  const { setHomeCartWishlistStatus, slugForHomeCart, HomeCartWishlistStatus } =
     useCartContext();
 
   useEffect(() => {
-    fetchSingleProduct(`${based_url}/product/${slug}`);
-  }, [HomeCartWishlistStatus, slug]);
+    fetchSingleProduct(`${based_url}/product/${slugForHomeCart}`);
+  }, [slugForHomeCart]);
 
   const notify = () => toast.success("Successfully added to the wishlist");
-  const { addToCart, addToWishlist, cart } = useCartContext();
+  const { addToCart, cart } = useCartContext();
+  const { addToWishlist } = useWishlistContext();
 
   const {
     id,
@@ -285,7 +287,9 @@ const HomeCartWishlist = ({ slug }) => {
               ></button>
             </div>
             <button
-              className={stock == 0 ? "btn btn-disabled":"btn-product btn-cart"}
+              className={
+                stock == 0 ? "btn btn-disabled" : "btn-product btn-cart"
+              }
               onClick={() => {
                 if (selectedColor && selectedSize) {
                   if (amount !== 0) {
@@ -323,7 +327,9 @@ const HomeCartWishlist = ({ slug }) => {
   const socialShareButton = () => {
     return (
       <div className="social-links mr-4">
-        <FacebookShareButton url={`/products/${slug}`}>
+        <FacebookShareButton
+          url={`https://owlet.vercel.app/products/${slugForHomeCart}`}
+        >
           <a className="social-link social-facebook fab fa-facebook-f"></a>
         </FacebookShareButton>
       </div>
@@ -337,26 +343,7 @@ const HomeCartWishlist = ({ slug }) => {
           className="btn-product btn-wishlist"
           style={{ border: "none", cursor: "pointer" }}
           onClick={() => {
-            if (selectedColor && selectedSize) {
-              if (amount !== 0) {
-                addToWishlist(
-                  id,
-                  selectedColor,
-                  selectedSize,
-                  selectedColorName,
-                  stock,
-                  amount,
-                  product
-                );
-                notify();
-              }
-            } else if (selectedColor) {
-              setSizeNote(true);
-            } else if (selectedSize) {
-              setColorNote(true);
-            } else {
-              setColorNote(true);
-            }
+            addToWishlist(product);
           }}
         >
           <i className="d-icon-heart"></i>Add To Wishlist

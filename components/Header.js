@@ -5,6 +5,7 @@ import { useCartContext } from "../context/cart_context";
 import { useRouter } from "next/router";
 import { useUserContext } from "../context/user_context";
 import HeaderService from "../services/HeaderService";
+import { useWishlistContext } from "../context/wishlist_context";
 const Header = ({ navigations, newArrival, onSale }) => {
   const router = useRouter();
 
@@ -19,8 +20,9 @@ const Header = ({ navigations, newArrival, onSale }) => {
 
   const [childrenNavigations, setChildrenNavigations] = useState([]);
 
-  const { wishlist, cart, removeItem, total_amount, total_tax } =
-    useCartContext();
+  const { cart, removeItem, total_amount, total_tax } = useCartContext();
+
+  const { wishlist } = useWishlistContext();
 
   const [navSize, setNavSize] = useState([]);
   const hoverHandler = async (id) => {

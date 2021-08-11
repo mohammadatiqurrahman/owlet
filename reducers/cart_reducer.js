@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
   ADD_TO_CART,
   ADD_TO_WISHLIST,
@@ -76,58 +77,16 @@ const cart_reducer = (state, action) => {
     return { ...state, cart: getLocalStorage() };
   }
   if (action.type === ADD_TO_WISHLIST) {
-    const {
-      id,
-      selectedColor,
-      selectedColorName,
-      selectedSize,
-      stock,
-      amount,
-      product,
-    } = action.payload;
+    const { product } = action.payload;
 
-    const tempItem = state.wishlist.find(
-      (item) => item.id === id + selectedColor + selectedSize
-    );
+    const tempItem = state.wishlist.find((item) => item.slug === product.slug);
+    // console.log(tempItem);
     if (tempItem) {
-      const tempWishlist = state.wishlist.map((wishlistItem) => {
-        if (wishlistItem.id === id + selectedColor + selectedSize) {
-          let newAmount = wishlistItem.amount + amount;
-          if (newAmount > wishlistItem.max) {
-            newAmount = wishlistItem.max;
-          }
-
-          return { ...wishlistItem, amount: newAmount };
-        } else {
-          return wishlistItem;
-        }
-      });
-      return { ...state, wishlist: tempWishlist };
+      toast.error("Already exits in your wishlist");
+      return { ...state, wishlist: [...state.wishlist] };
     } else {
-      const newItem = {
-        id: id + selectedColor + selectedSize,
-        name: product.title,
-        color: selectedColor,
-        colorName: selectedColorName,
-        size: selectedSize,
-        amount,
-        image: product.main_image,
-        price: product.sale_percentage
-          ? Math.round(
-              JSON.parse(product.price) -
-                (JSON.parse(product.sale_percentage) *
-                  JSON.parse(product.price)) /
-                  100
-            )
-          : product.price && JSON.parse(product.price),
-        real_price: product.price,
-        tax: product.tax,
-        discount: product.sale_percentage,
-        max: stock,
-        product_id: product.id,
-        slug: product.slug,
-      };
-      return { ...state, wishlist: [...state.wishlist, newItem] };
+      toast.success("Successfully added to the wishlist");
+      return { ...state, wishlist: [...state.wishlist, product] };
     }
   }
   if (action.type === "LOAD_WISHLIST") {
