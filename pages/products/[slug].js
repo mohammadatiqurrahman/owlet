@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import ContentLoader, { Facebook } from "react-content-loader";
 import Head from "next/head";
 import {
   Details,
@@ -50,8 +51,38 @@ const products = ({ seo }) => {
     additional_information,
     shipping_return_detail,
   } = product;
+  // if (loading) {
+  //   return <Loading />;
+  // }
   if (loading) {
-    return <Loading />;
+    return (
+      <main className="main single-product mt-6">
+        <div className="page-content mb-10">
+          <div className="container">
+            <div className="product product-single row">
+              <ContentLoader viewBox="0 0 380 90">
+                {/* Only SVG shapes */}
+                <rect x="0" y="0" rx="0" ry="0" width="30" height="30" />
+                <rect x="35" y="0" rx="0" ry="0" width="70" height="90" />
+                <rect x="110" y="0" rx="4" ry="4" width="100%" height="13" />
+                <rect x="110" y="25" rx="3" ry="3" width="100%" height="10" />
+                <rect x="110" y="40" rx="3" ry="3" width="100%" height="10" />
+                <rect x="110" y="55" rx="3" ry="3" width="100%" height="10" />
+              </ContentLoader>
+            </div>
+            <ContentLoader viewBox="0 0 380 90">
+              {/* Only SVG shapes */}
+              {/* <rect x="0" y="0" rx="0" ry="0" width="30" height="30" />
+              <rect x="35" y="0" rx="0" ry="0" width="70" height="90" /> */}
+              <rect x="0" y="20" rx="4" ry="4" width="100%" height="13" />
+              <rect x="0" y="40" rx="3" ry="3" width="100%" height="10" />
+              <rect x="0" y="60" rx="3" ry="3" width="100%" height="10" />
+              <rect x="0" y="80" rx="3" ry="3" width="100%" height="10" />
+            </ContentLoader>
+          </div>
+        </div>
+      </main>
+    );
   }
   return (
     <React.Fragment>

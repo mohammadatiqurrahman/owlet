@@ -49,7 +49,7 @@ const HomeCartWishlist = () => {
     sizes.map((item) => Object.keys(item))
   );
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [stock, setStock] = useState(1);
 
   const [selectedColor, setSelectedColor] = useState("");
@@ -62,8 +62,13 @@ const HomeCartWishlist = () => {
   const increase = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
+      if (stock == 0) {
+        toast.error("Out of stock!");
+        return;
+      }
       if (tempAmount > stock) {
         tempAmount = stock;
+        toast.error("Maximum quantity reached!");
       }
       return tempAmount;
     });

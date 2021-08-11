@@ -296,6 +296,13 @@ const BottomPage = ({ navigations, newArrival, onSale }) => {
                 document.body.classList.remove("mmenu-active");
               }}
             >
+              <Link href="/order_tracking">Order Tracking</Link>
+            </li>
+            <li
+              onClick={() => {
+                document.body.classList.remove("mmenu-active");
+              }}
+            >
               <Link href="/login">
                 <a className="btn btn-primary">
                   {user && user.customer.name
