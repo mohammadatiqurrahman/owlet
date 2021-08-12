@@ -290,6 +290,9 @@ export const UserProvider = ({ children }) => {
     setSignUpError({ ...signUpError, phoneError: "" });
   };
 
+
+  const [loginActive, setLoginActive] = useState(true);
+  const [signUpActive, setSignUpActive] = useState(false);
   return (
     <UserContext.Provider
       value={{
@@ -312,6 +315,10 @@ export const UserProvider = ({ children }) => {
         onKeyDownEmail,
         onKeyDownPhone,
         signupButtonLoading,
+        loginActive,
+        setLoginActive,
+        signUpActive,
+        setSignUpActive,
       }}
     >
       {children}

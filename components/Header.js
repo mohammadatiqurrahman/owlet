@@ -6,24 +6,37 @@ import { useRouter } from "next/router";
 import { useUserContext } from "../context/user_context";
 import HeaderService from "../services/HeaderService";
 import { useWishlistContext } from "../context/wishlist_context";
+import DashboardService from "../services/DashboardService";
 const Header = ({ navigations, newArrival, onSale }) => {
   const router = useRouter();
 
   const { handleCart, fetchNavigationsChild, navigations_child } =
     useProductsContext();
-  const { user } = useUserContext();
+  const { user, setUser, setLoginActive, setSignUpActive } = useUserContext();
   const [menuHeaderImage, setMenuHeaderImage] = useState(null);
 
   const menuHeaderImageHandler = (image) => {
     setMenuHeaderImage(image);
   };
 
+  const [userMouseHover, setUserMouseHover] = useState(false);
+
   const [childrenNavigations, setChildrenNavigations] = useState([]);
 
   const { cart, removeItem, total_amount, total_tax } = useCartContext();
 
   const { wishlist } = useWishlistContext();
+  const logout = async () => {
+    if (user) {
+      const logoutRes = await DashboardService.instance.logoutUser(
+        user.customer.token
+      );
 
+      localStorage.removeItem("user");
+      setUser(null);
+      router.push("/login");
+    }
+  };
   const [navSize, setNavSize] = useState([]);
   const hoverHandler = async (id) => {
     const idWiseChildren = navigations_child.filter(
@@ -100,14 +113,104 @@ const Header = ({ navigations, newArrival, onSale }) => {
   const showLoggedUserName = () => {
     return (
       <Link href="/login">
-        <a className="login mr-lg-6 mr-4">
-          <i className="d-icon-user"></i> &nbsp;
-          {user && (
-            <h5 style={{ margin: "auto 0" }}>
-              {user.customer.name.split(" ")[0]}
-            </h5>
-          )}
-        </a>
+        <div>
+          <a
+            className="login mr-lg-6 mr-4 userProfile"
+            onMouseOver={() => {
+              setUserMouseHover(true);
+            }}
+            onMouseLeave={() => {
+              setUserMouseHover(false);
+            }}
+          >
+            <i className="d-icon-user"></i> &nbsp;{" "}
+            {/* <span style={{ fontSize: "15px" }}>My Account</span> */}
+            {user ? (
+              <h5 style={{ margin: "auto 0" }}>
+                {user.customer.name.split(" ")[0]}
+              </h5>
+            ) : (
+              <h5 style={{ margin: "auto 0" }}>My Account</h5>
+            )}
+          </a>
+          <div
+            className={`${userMouseHover ? "userMenu userActive" : "userMenu"}`}
+            onMouseOver={() => {
+              setUserMouseHover(true);
+            }}
+            onMouseLeave={() => {
+              setUserMouseHover(false);
+            }}
+            // style={{ margin: "0 auto" }}
+          >
+            {user ? (
+              <>
+                <p
+                  style={{ fontWeight: "normal", textAlign: "center" }}
+                  className="mt-4"
+                >
+                  <Link href="/login">
+                    <span
+                      style={{ color: "#f27955", cursor: "pointer" }}
+                      onClick={() => {
+                        setLoginActive(false);
+                        setSignUpActive(true);
+                      }}
+                    >
+                      My Account
+                    </span>
+                  </Link>
+                </p>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    logout();
+                  }}
+                  style={{
+                    margin: "0px 0px 18px 55px",
+                    background: "#f27955",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <button
+                    className="btn"
+                    style={{
+                      margin: "18px 0px 0px 55px",
+                      background: "#f27955",
+                      color: "white",
+                    }}
+                  >
+                    Sign in
+                  </button>
+                </Link>
+                <p
+                  style={{ fontWeight: "normal", textAlign: "center" }}
+                  className="mt-4"
+                >
+                  Don't have an account?{" "}
+                  <Link href="/login">
+                    <span
+                      style={{ color: "#f27955", cursor: "pointer" }}
+                      onClick={() => {
+                        setLoginActive(false);
+                        setSignUpActive(true);
+                      }}
+                    >
+                      Sign up
+                    </span>
+                  </Link>
+                </p>
+              </>
+            )}
+          </div>
+        </div>
       </Link>
     );
   };

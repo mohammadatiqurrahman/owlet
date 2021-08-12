@@ -4,17 +4,14 @@ import { useCartContext } from "../../context/cart_context";
 import { useProductsContext } from "../../context/products_context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { useWishlistContext } from "../../context/wishlist_context";
 const Details = ({ slugForFacebookShare }) => {
-  const router = useRouter();
-  const { pathname, slug } = router;
   const { single_product: product, handleCart } = useProductsContext();
 
   const { addToCart, cart } = useCartContext();
-  const { addToWishlist } = useWishlistContext();
+  const { addToWishlist, wishlist } = useWishlistContext();
 
   const {
     id,
@@ -48,6 +45,10 @@ const Details = ({ slugForFacebookShare }) => {
 
   const [colorNote, setColorNote] = useState(false);
   const [sizeNote, setSizeNote] = useState(false);
+
+  const wishlistStatus = wishlist.find(
+    (item) => item.slug === slugForFacebookShare
+  );
 
   const increase = () => {
     setAmount((oldAmount) => {
@@ -334,7 +335,16 @@ const Details = ({ slugForFacebookShare }) => {
             // }
           }}
         >
-          <i className="d-icon-heart"></i>Add To Wishlist
+          {/* {wishlist.find((item) => item.slug == slugForFacebookShare)} */}
+          {wishlistStatus ? (
+            <span style={{ color: "#f27955" }}>
+              <i className="d-icon-heart"></i> Already In Wishlist
+            </span>
+          ) : (
+            <span>
+              <i className="d-icon-heart"></i> Add To Wishlist
+            </span>
+          )}
         </button>
         <ToastContainer />
       </div>

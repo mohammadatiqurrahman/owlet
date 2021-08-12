@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useUserContext } from "../../context/user_context";
 
 import Login from "./Login";
 import Signup from "./Signup";
 
 const LoginSign = ({ locations }) => {
-  const [loginActive, setLoginActive] = useState(true);
-  const [signUpActive, setSignUpActive] = useState(false);
+  const { loginActive, setLoginActive, signUpActive, setSignUpActive } =
+    useUserContext();
 
   const loginAndRegisterButton = () => {
     return (
