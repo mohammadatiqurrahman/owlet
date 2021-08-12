@@ -26,7 +26,9 @@ const HomeCartWishlist = () => {
 
   const notify = () => toast.success("Successfully added to the wishlist");
   const { addToCart, cart } = useCartContext();
-  const { addToWishlist } = useWishlistContext();
+  const { addToWishlist, wishlist } = useWishlistContext();
+
+  const wishlistStatus = wishlist.find((item) => item.slug === slugForHomeCart);
 
   const {
     id,
@@ -351,7 +353,15 @@ const HomeCartWishlist = () => {
             addToWishlist(product);
           }}
         >
-          <i className="d-icon-heart"></i>Add To Wishlist
+          {wishlistStatus ? (
+            <span style={{ color: "#f27955" }}>
+              <i class="fas fa-heart"></i> Already In Wishlist
+            </span>
+          ) : (
+            <span>
+              <i className="d-icon-heart"></i> Add To Wishlist
+            </span>
+          )}
         </button>
         <ToastContainer />
       </div>

@@ -103,7 +103,7 @@ const index = () => {
 
                       <td className="product-add-to-cart">
                         <Link href={`/products/${slug}`}>
-                          <a className="btn-product btn-primary">
+                          <a className="btn btn-primary">
                             <span>View Product</span>
                           </a>
                         </Link>

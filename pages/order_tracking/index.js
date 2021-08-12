@@ -114,7 +114,9 @@ const index = () => {
                     <td className="product-name mr-2">
                       {item.name} - {item.color} - {item.size} x {item.quantity}
                     </td>
-                    <td className="product-price">BDT {item.price}</td>
+                    <td className="product-price">
+                      BDT {item.price * item.quantity}
+                    </td>
                   </tr>
                 );
               })}

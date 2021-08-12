@@ -92,7 +92,9 @@ const index = () => {
                             {item.quantity}
                           </span> */}
                         </td>
-                        <td className="product-price">BDT {item.price}.00</td>
+                        <td className="product-price">
+                          BDT {item.price * item.quantity}.00
+                        </td>
                       </tr>
                     );
                   }
@@ -103,7 +105,7 @@ const index = () => {
                   <h4 className="summary-subtitle">Shipping Cost:</h4>
                 </td>
                 <td className="summary-subtotal-price">
-                  {placeOrderClick && placeOrderClick.order.shipping}
+                  {placeOrderClick && placeOrderClick.order.shipping}.00
                 </td>
               </tr>
               <tr className="summary-subtotal">
