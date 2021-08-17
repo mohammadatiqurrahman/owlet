@@ -80,7 +80,7 @@ export const getStaticProps = async () => {
       metaDescription,
       metaKeyword,
     },
-    // revalidate: 10,
+    revalidate: 10,
   };
 };
 

@@ -186,6 +186,10 @@ const Header = ({ navigations, newArrival, onSale }) => {
                       background: "#f27955",
                       color: "white",
                     }}
+                    onClick={() => {
+                      setLoginActive(true);
+                      setSignUpActive(false);
+                    }}
                   >
                     Sign in
                   </button>
@@ -194,7 +198,7 @@ const Header = ({ navigations, newArrival, onSale }) => {
                   style={{ fontWeight: "normal", textAlign: "center" }}
                   className="mt-4"
                 >
-                  Don't have an account?{" "}
+                  Don't have an account yet?{" "}
                   <Link href="/login">
                     <span
                       style={{ color: "#f27955", cursor: "pointer" }}

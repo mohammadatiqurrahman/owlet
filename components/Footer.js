@@ -69,9 +69,7 @@ const Footer = () => {
             <li>
               <a href="#">Payment Methods</a>
             </li>
-            <li>
-              <a href="#">Money-back Guarantee!</a>
-            </li>
+
             <li>
               <a href="#">Customer Service</a>
             </li>

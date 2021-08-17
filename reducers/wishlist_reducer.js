@@ -11,7 +11,7 @@ const wishlist_reducer = (state, action) => {
       toast.error("Already in wishlist");
       return { ...state, wishlist: [...state.wishlist] };
     } else {
-      toast.success("Successfully added to the wishlist");
+      toast.success("Successfully added to your wishlist");
       return { ...state, wishlist: [...state.wishlist, product] };
     }
   }

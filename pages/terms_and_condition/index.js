@@ -15,13 +15,11 @@ const index = () => {
             className="page-title font-weight-bold lh-1 text-capitalize mt-5"
             style={{ color: "black" }}
           >
-            Terms and Condition
+            Terms and Conditions
           </h1>
         </div>
         <div className="page-content">
           <div className="container mt-5">
-            <h2>WHAT ARE THE TERMS AND CONDITIONS?</h2>
-            <h4>Last updated: 10/22/2020</h4>
             <p>
               Welcome to www.shoptheowlet.com (“Web Site”). This Web Site is
               owned and operated by the owlet Group (“Company” “owlet”)
