@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import SingleProduct from "../SingleProduct";
 
 const RelatedProducts = ({ relatedProducts }) => {
   const productImageAndLabel = (item) => {
@@ -66,6 +65,7 @@ const RelatedProducts = ({ relatedProducts }) => {
           <div className="product-grid row">
             <div className="row">
               {relatedProducts.map((item, index) => {
+                
                 return (
                   <div key={index} className="col-md-3 col-6">
                     <div className="product product-variable text-center">

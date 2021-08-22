@@ -338,7 +338,7 @@ const Details = ({ slugForFacebookShare }) => {
           {/* {wishlist.find((item) => item.slug == slugForFacebookShare)} */}
           {wishlistStatus ? (
             <span style={{ color: "#f27955" }}>
-              <i class="fas fa-heart"></i> Already In Wishlist
+              <i className="fas fa-heart"></i> Already In Wishlist
             </span>
           ) : (
             <span>

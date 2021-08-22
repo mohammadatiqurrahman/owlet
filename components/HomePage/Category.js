@@ -3,7 +3,7 @@ import React from "react";
 
 const Category = () => {
   return (
-    <section className="banner-group pb-10">
+    <section className="banner-group pb-10 mt-1">
       <div className="row">
         <div className="col-md-6 mb-4">
           <div

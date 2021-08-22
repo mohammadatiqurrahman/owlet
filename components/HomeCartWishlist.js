@@ -3,7 +3,6 @@ import { useProductsContext } from "../context/products_context";
 import { useRouter } from "next/router";
 import { based_url } from "../utils/constants";
 import { ToastContainer, toast } from "react-toastify";
-import Zoom from "react-img-zoom";
 import "react-toastify/dist/ReactToastify.css";
 import { useCartContext } from "../context/cart_context";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -355,7 +354,7 @@ const HomeCartWishlist = () => {
         >
           {wishlistStatus ? (
             <span style={{ color: "#f27955" }}>
-              <i class="fas fa-heart"></i> Already In Wishlist
+              <i className="fas fa-heart"></i> Already In Wishlist
             </span>
           ) : (
             <span>

@@ -12,6 +12,7 @@ import { based_url } from "../../utils/constants";
 import Head from "next/head";
 import Loading from "../../components/Loading";
 import { useProductsContext } from "../../context/products_context";
+import CollectionSkeleton from "../../components/Skeleton/CollectionSkeleton";
 
 const collections = () => {
   const { fetchProducts, products_loading } = useProductsContext();
@@ -21,8 +22,11 @@ const collections = () => {
   useEffect(() => {
     fetchProducts(`${based_url}/product/search/${slug}`);
   }, [slug]);
-  if (products_loading) {
-    return <Loading />;
+  // if (products_loading) {
+  //   return <Loading />;
+  // }
+  if(products_loading){
+    return <CollectionSkeleton />
   }
   return (
     <React.Fragment>

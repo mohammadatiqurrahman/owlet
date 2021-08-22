@@ -182,8 +182,9 @@ const Header = ({ navigations, newArrival, onSale }) => {
                   <button
                     className="btn"
                     style={{
-                      margin: "18px 0px 0px 55px",
+                      margin: "18px 0px 0px 75px",
                       background: "#f27955",
+                      padding: "15px 20px",
                       color: "white",
                     }}
                     onClick={() => {
@@ -196,7 +197,7 @@ const Header = ({ navigations, newArrival, onSale }) => {
                 </Link>
                 <p
                   style={{ fontWeight: "normal", textAlign: "center" }}
-                  className="mt-4"
+                  className="mt-2"
                 >
                   Don't have an account yet?{" "}
                   <Link href="/login">

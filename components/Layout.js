@@ -27,13 +27,15 @@ const Layout = ({ children }) => {
   return (
     <>
       {pathname === "/" && <TopHeader />}
-      <Header
-        navigations={navigations}
-        newArrival={newArrival}
-        onSale={onSale}
-      />
-      {children}
-      <Footer />
+      <div classNameName="page-wrapper">
+        <Header
+          navigations={navigations}
+          newArrival={newArrival}
+          onSale={onSale}
+        />
+        {children}
+        <Footer />
+      </div>
       <BottomPage
         navigations={navigations}
         newArrival={newArrival}

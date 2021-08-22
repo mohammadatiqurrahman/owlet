@@ -105,7 +105,7 @@ const index = () => {
                   <h4 className="summary-subtitle">Shipping Cost:</h4>
                 </td>
                 <td className="summary-subtotal-price">
-                  {placeOrderClick && placeOrderClick.order.shipping}.00
+                  {placeOrderClick && placeOrderClick.order.shipping}
                 </td>
               </tr>
               <tr className="summary-subtotal">

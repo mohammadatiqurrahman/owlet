@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Zoom from "react-img-zoom";
 import { useProductsContext } from "../../context/products_context";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import InnerImageZoom from "react-inner-image-zoom";
@@ -18,39 +17,15 @@ const Images = () => {
     return (
       <div className="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
         <figure className="product-image">
-          {/* Zoom effect  */}
-          {/* {activeImage && (
-            <Zoom
-              img={
-                activeImage
-                  ? activeImage
-                  : "/images/dummy-images/product-preview.jpeg"
-              }
-              zoomScale={3}
-              width={441}
-              height={496}
-            />
-          )} */}
 
-          {/* Only click and view */}
-          {/* {activeImage && (
-            <img
+          {/* effect from Salman vai */}
+          {activeImage && (
+            <InnerImageZoom
               src={
                 activeImage
                   ? activeImage
                   : "/images/dummy-images/product-preview.jpeg"
               }
-              data-zoom-image="images/demos/demo24/product/product-1-800x900.jpg"
-              alt="Blue Pinafore Denim Dress"
-              width="800"
-              height="900"
-            />
-          )} */}
-
-          {/* effect from Salman vai */}
-          {activeImage && (
-            <InnerImageZoom
-              src={activeImage}
               width={580}
               height={652}
               zoomType="hover"

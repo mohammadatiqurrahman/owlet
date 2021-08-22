@@ -35,8 +35,9 @@ const products = ({ seo }) => {
     if (parentSlug) {
       const relatedProducts =
         await ProductsService.instance.relatedProductlList(parentSlug.slug);
-
-      setRelatedProducts(relatedProducts);
+      const x = relatedProducts.filter((item) => item.slug !== slug);
+      const y = x.slice(0, 4);
+      setRelatedProducts(y);
     }
   };
   useEffect(() => {
@@ -72,8 +73,6 @@ const products = ({ seo }) => {
             </div>
             <ContentLoader viewBox="0 0 380 90">
               {/* Only SVG shapes */}
-              {/* <rect x="0" y="0" rx="0" ry="0" width="30" height="30" />
-              <rect x="35" y="0" rx="0" ry="0" width="70" height="90" /> */}
               <rect x="0" y="20" rx="4" ry="4" width="100%" height="13" />
               <rect x="0" y="40" rx="3" ry="3" width="100%" height="10" />
               <rect x="0" y="60" rx="3" ry="3" width="100%" height="10" />

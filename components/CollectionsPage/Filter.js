@@ -81,10 +81,16 @@ const Filter = () => {
             if (item === "all") {
               return (
                 <div
-                  className="product-variations"
+                  // className="product-variations"
                   style={{
                     display: "inline-block",
                     margin: "0px 5px",
+                    border:
+                      size === "all"
+                        ? "1px solid #f27955"
+                        : "1px solid #e1e1e1",
+                    padding: "3px 5px",
+                    cursor: "pointer",
                   }}
                   key={index}
                 >
@@ -92,7 +98,7 @@ const Filter = () => {
                     name="size"
                     onClick={updateFilters}
                     data-size="all"
-                    className={`pt-1 ${size === "all" ? "active" : ""}`}
+                    // className={`pt-1 ${size === "all" ? "active" : ""}`}
                   >
                     All
                   </a>
@@ -101,13 +107,20 @@ const Filter = () => {
             }
             return (
               <div
-                className="product-variations"
-                style={{ display: "inline-block", margin: "0px 2px" }}
+                // className="product-variations"
+                style={{
+                  display: "inline-block",
+                  margin: "0px 2px",
+                  border:
+                    size === item ? "1px solid #f27955" : "1px solid #e1e1e1",
+                  padding: "3px 5px",
+                  cursor: "pointer",
+                }}
                 key={index}
               >
                 <a
                   name="size"
-                  className={`pt-1 ${size === item ? "active" : ""}`}
+                  // className={`pt-1 ${size === item ? "active" : ""}`}
                   data-size={item}
                   onClick={updateFilters}
                 >
