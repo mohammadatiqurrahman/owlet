@@ -74,7 +74,8 @@ const Filter = () => {
     return (
       <div className="widget widget-collapsible">
         <h3 className="widget-title">
-          Sizes<span className="toggle-btn"></span>
+          Sizes
+          {/* <span className="toggle-btn"></span> */}
         </h3>
         <div className="widget-body">
           {sizes.map((item, index) => {
@@ -110,7 +111,7 @@ const Filter = () => {
                 // className="product-variations"
                 style={{
                   display: "inline-block",
-                  margin: "0px 2px",
+                  margin: "2px 2px",
                   border:
                     size === item ? "1px solid #f27955" : "1px solid #e1e1e1",
                   padding: "3px 5px",
@@ -138,7 +139,8 @@ const Filter = () => {
     return (
       <div className="widget widget-collapsible">
         <h3 className="widget-title">
-          Colors<span className="toggle-btn"></span>
+          Colors
+          {/* <span className="toggle-btn"></span> */}
         </h3>
 
         <div className="widget-body">
@@ -189,7 +191,8 @@ const Filter = () => {
     return (
       <div className="widget widget-collapsible">
         <h3 className="widget-title">
-          Filter by Price<span className="toggle-btn"></span>
+          Filter by Price
+          {/* <span className="toggle-btn"></span> */}
         </h3>
 
         <div className="widget-body">

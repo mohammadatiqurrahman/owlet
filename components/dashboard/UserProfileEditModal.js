@@ -52,6 +52,7 @@ const UserProfileEditModal = () => {
 
         setChangeProfileStatus(false);
         toast.success(data.message);
+        setUserProfileEditModal(false);
       }
     }
   };

@@ -5,14 +5,15 @@ const Footer = () => {
     return (
       <div className="col-lg-4 col-md-4">
         <div className="widget widget-about">
-          <a href="demo24.html" className="logo-footer">
+          <Link href="/">
             <img
               src="/images/demos/demo24/owlet.svg"
               alt="logo-footer"
               width="154"
               height="43"
+              style={{ cursor: "pointer" }}
             />
-          </a>
+          </Link>
           <div className="widget-contact-info widget-collapsible">
             <ul className="contact-info">
               <li className="info phone">

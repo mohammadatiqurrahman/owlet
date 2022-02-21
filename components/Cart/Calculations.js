@@ -67,6 +67,7 @@ const Calculations = () => {
                 tax,
                 amount,
                 real_price,
+                discount,
               } = item;
 
               return (
@@ -126,7 +127,8 @@ const Calculations = () => {
                       <span className="amount"> {price}</span>
                     </span>
                     <br />
-                    <del>{Math.floor(real_price)}</del>
+                    {/* <del>{Math.floor(real_price)}</del> */}
+                    {discount ? <del>{Math.floor(real_price)}</del> : ""}
                   </td>
                   <td className="product-quantity">
                     <div className="input-group">

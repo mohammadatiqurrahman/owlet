@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
   return (
     <>
       {pathname === "/" && <TopHeader />}
-      <div classNameName="page-wrapper">
+      <div>
         <Header
           navigations={navigations}
           newArrival={newArrival}

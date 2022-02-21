@@ -29,6 +29,7 @@ const SingleProduct = ({ item }) => {
             alt="product"
             width="247"
             height="278"
+            style={{ height: "315px" }}
           />
         </a>
       </Link>

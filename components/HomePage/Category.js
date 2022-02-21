@@ -11,7 +11,7 @@ const Category = () => {
             data-animation-options="{'name': 'fadeInRightShorter', 'delay': '.1s'}"
             style={{ backgroundColor: "#eff0f4", cursor: "pointer" }}
           >
-            <Link href="/collections/baby-boy">
+            <Link href="/collections/new_arrival">
               <figure>
                 <img
                   src="/images/baby/hcpu1text.png"
@@ -29,7 +29,7 @@ const Category = () => {
             data-animation-options="{'name': 'fadeInLeftShorter', 'delay': '.2s'}"
             style={{ backgroundColor: "#eff0f4", cursor: "pointer" }}
           >
-            <Link href="/collections/baby-girl">
+            <Link href="/collections/on_sale">
               <figure>
                 <img
                   src="/images/baby/hcpu2.jpeg"
@@ -43,7 +43,7 @@ const Category = () => {
         </div>
       </div>
       <div className="categories owl-carousel owl-nav-full owl-theme row cols-lg-3 cols-sm-2 cols-1 mb-4">
-        <div className="category">
+        <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
@@ -58,12 +58,12 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-boy">Baby Boy</Link>
             </h4>
-            <span className="category-count">
+            {/* <span className="category-count">
               <span>35</span> Products
-            </span>
+            </span> */}
           </div>
         </div>
-        <div className="category">
+        <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-girl">
             <figure className="category-media">
               <img
@@ -78,12 +78,12 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-girl">Baby Girl</Link>
             </h4>
-            <span className="category-count">
+            {/* <span className="category-count">
               <span>47</span> Products
-            </span>
+            </span> */}
           </div>
         </div>
-        <div className="category">
+        <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
@@ -98,9 +98,9 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-boy">Toddler Boy</Link>
             </h4>
-            <span className="category-count">
+            {/* <span className="category-count">
               <span>29</span> Products
-            </span>
+            </span> */}
           </div>
         </div>
       </div>
