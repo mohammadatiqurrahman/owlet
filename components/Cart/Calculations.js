@@ -2,6 +2,8 @@ import React from "react";
 import { useCartContext } from "../../context/cart_context";
 import Link from "next/link";
 import { useUserContext } from "../../context/user_context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Calculations = () => {
   const { user } = useUserContext();
@@ -74,7 +76,10 @@ const Calculations = () => {
                 <tr key={id}>
                   <td className="product-thumbnail">
                     <figure>
-                      <a href="product-simple.html">
+                      <Link href={`/products/${item.slug}`}>
+
+                      
+                      <a>
                         <img
                           src={
                             image
@@ -86,11 +91,12 @@ const Calculations = () => {
                           alt="product"
                         />
                       </a>
+                      </Link>
                     </figure>
                   </td>
                   <td className="product-name">
                     <div className="product-name-section">
-                      <a href="product-simple.html">{name}</a>
+                      <Link href={`/products/${item.slug}`}>{name}</Link>
                     </div>
                   </td>
                   <td className="product-subtotal">
@@ -266,11 +272,13 @@ const Calculations = () => {
     );
   };
   return (
+    
     <div className="container-fluid mt-7 mb-2">
+       <ToastContainer />
       <div className="row">
         <div className="col-lg-8 col-md-12 pr-lg-4">
           {shopTable()}
-          {couponSection()}
+          {/* {couponSection()} */}
         </div>
         {cartCalculation()}
       </div>

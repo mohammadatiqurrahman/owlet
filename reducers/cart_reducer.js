@@ -42,6 +42,7 @@ const cart_reducer = (state, action) => {
       const newItem = {
         id: id + selectedColor + selectedSize,
         name: product.title,
+        slug: product.slug,
         color: selectedColor,
         colorName: selectedColorName,
         size: selectedSize,
@@ -122,6 +123,7 @@ const cart_reducer = (state, action) => {
           let newAmount = item.amount + 1;
           if (newAmount > item.max) {
             newAmount = item.max;
+            toast.error("Maximum quantity reached!");
           }
           return { ...item, amount: newAmount };
         }
