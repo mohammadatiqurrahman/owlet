@@ -72,9 +72,6 @@ const Footer = () => {
             </li>
 
             <li>
-              <a href="#">Customer Service</a>
-            </li>
-            <li>
               <Link href="/terms_and_condition">Terms &amp; Conditions</Link>
             </li>
             <li>
@@ -96,14 +93,14 @@ const Footer = () => {
     return (
       <div className="footer-bottom">
         <div className="footer-left">
-          <figure className="payment">
+          {/* <figure className="payment">
             <img
               src="/images/payment.png"
               alt="payment"
               width="159"
               height="29"
             />
-          </figure>
+          </figure> */}
         </div>
         <div className="footer-center">
           <p className="copyright">
@@ -113,7 +110,8 @@ const Footer = () => {
         <div className="footer-right">
           <div className="social-links">
             <a
-              href="#"
+              href="https://www.facebook.com/theowletbd/"
+              target="_blank"
               className="social-link social-facebook fab fa-facebook-f"
             ></a>
 

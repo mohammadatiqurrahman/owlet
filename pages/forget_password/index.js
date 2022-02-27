@@ -200,10 +200,7 @@ const index = () => {
                             Request New Password
                           </button>
                         ) : (
-                          <button
-                            className="btn btn-dark btn-block btn-rounded"
-                            disabled="disabled"
-                          >
+                          <button className="btn btn-disabled btn-block btn-rounded">
                             Sending mail ...
                           </button>
                         )}
