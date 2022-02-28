@@ -19,7 +19,7 @@ const index = () => {
           </h1>
         </div>
         <div className="page-content">
-          <div className="container mt-5">
+          <div className="container mt-5 pb-5">
             <p>
               Welcome to www.shoptheowlet.com (“Web Site”). This Web Site is
               owned and operated by the owlet Group (“Company” “owlet”)

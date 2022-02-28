@@ -21,7 +21,7 @@ const Returnpolicy = ({ details }) => {
           </h1>
         </div>
         <div className="page-content">
-          <div className="container mt-5">
+          <div className="container mt-5 pb-5">
             <div dangerouslySetInnerHTML={{ __html: details }} />
           </div>
         </div>

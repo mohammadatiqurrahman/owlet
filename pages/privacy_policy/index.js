@@ -19,7 +19,7 @@ const index = () => {
           </h1>
         </div>
         <div className="page-content">
-          <div className="container mt-5">
+          <div className="container mt-5 pb-5">
             <h4>Principles</h4>
             <ul>
               <li>

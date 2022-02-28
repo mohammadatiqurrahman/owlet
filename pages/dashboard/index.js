@@ -146,7 +146,7 @@ const Dashboard = ({ locations }) => {
     </React.Fragment>
   );
 };
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const locations = await DashboardService.instance.getLocationList();
 
   return {

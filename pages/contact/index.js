@@ -259,7 +259,7 @@ const index = () => {
       <main className="main">
         <div className="page-content mt-10 pt-7">
           <section className="contact-section">
-            <div className="container">
+            <div className="container pb-5">
               <div className="row">
                 {address()}
                 <div className="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">

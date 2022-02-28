@@ -13,7 +13,7 @@ import CheckoutService from "../../services/CheckoutService";
 const index = ({ locations, inDhaka, outDhaka }) => {
   const router = useRouter();
   const [areaStatus, setAreaStatus] = useState(false);
-  const { cart, total_amount, total_tax, setPlaceOrderClick } =
+  const { cart, clearCart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
   const [noteStatus, setNoteStatus] = useState(false);
@@ -157,6 +157,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       guest_invoice
     );
     setPlaceOrderClick(orderResponse);
+    clearCart();
     router.push("/order");
     setPlaceOrderButtonStatus(false);
   };
@@ -818,7 +819,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const locationRes = await fetch(`${based_url}/location/list`);
   const locations = await locationRes.json();
 

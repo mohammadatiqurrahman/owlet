@@ -15,7 +15,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const [shipToDifferent, setShipToDifferent] = useState(false);
   const router = useRouter();
   const { user } = useUserContext();
-  const { cart, total_amount, total_tax, setPlaceOrderClick } =
+  const { cart, clearCart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
 
   const [noteStatus, setNoteStatus] = useState(false);
@@ -146,7 +146,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             ? ""
             : "Please click on the checkbox before placing order",
         });
-   
+
         return;
       }
       setCheckoutError({
@@ -158,7 +158,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
           ? ""
           : "Please click on the checkbox before placing order",
       });
- 
+
       return;
     }
     // Invoice model
@@ -186,6 +186,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     );
 
     setPlaceOrderClick(orderResponse);
+    clearCart();
     router.push("/order");
     setPlaceOrderButtonStatus(false);
   };
@@ -654,7 +655,6 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
         <tbody>
           {cart.length > 0 &&
             cart.map((item, index) => {
-       
               const { amount, name, size, color, tax, price } = item;
               return (
                 <tr key={index}>
@@ -921,7 +921,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   // Receving loction
   const locations = await CheckoutService.instance.getLocationList();
 

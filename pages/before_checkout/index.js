@@ -323,7 +323,7 @@ const index = ({ locations }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const locations = await BeforeCheckoutService.instance.getLocationList();
   return {
     props: {

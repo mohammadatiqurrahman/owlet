@@ -68,7 +68,7 @@ const Footer = () => {
           <h4 className="widget-title">Customer Service</h4>
           <ul className="widget-body">
             <li>
-              <a href="#">Payment Methods</a>
+              <Link href="/payment_methods">Payment Methods</Link>
             </li>
 
             <li>
