@@ -17,8 +17,12 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     useCartContext();
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
   const [noteStatus, setNoteStatus] = useState(false);
+  const [selectShippingArea, setSelectShippingArea] = useState("");
+  // console.log(selectShippingArea);
+
   // Preparing products for database
   const products = cart.map((item) => {
+    // console.log(item);
     return {
       id: item.product_id,
       name: item.name,
@@ -27,7 +31,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       price: item.price,
       quantity: item.amount,
       discount: item.discount,
-      tax: total_tax,
+      tax: item.tax,
       subtotal: item.amount * item.price,
     };
   });
@@ -62,7 +66,8 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     area: "",
     zip: "",
     address: "",
-    shipping_cost: inDhaka,
+    shipping_cost: "",
+    // shipping_cost: selectShippingArea == "Dhaka" ? inDhaka : outDhaka,
     terms_condition: false,
     payment_type: "cash_on_delivery",
     note: "",
@@ -193,12 +198,23 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       const areas = await areaRes.json();
       setAreaStatus(false);
       setAreas(areas);
+      const selectedAreaForShippingCost = locations.find(
+        (item) => item.id == checkoutData.location
+      );
+      setSelectShippingArea(selectedAreaForShippingCost.name);
     }
   };
   useEffect(() => {
     getAreas();
   }, [checkoutData.location]);
   // Location wise Areas end
+
+  useEffect(() => {
+    setCheckoutData({
+      ...checkoutData,
+      shipping_cost: selectShippingArea == "Dhaka" ? inDhaka : outDhaka,
+    });
+  }, [selectShippingArea]);
 
   if (cart.length === 0) {
     return (
@@ -546,17 +562,27 @@ const index = ({ locations, inDhaka, outDhaka }) => {
             <td className="product-name">Tax </td>
             <td className="product-total text-body">BDT {total_tax}.00</td>
           </tr>
-          <tr>
+          {/* <tr style={{ display: selectShippingArea ? "block" : "none" }}>
             <td className="product-name">Shipping Cost </td>
             <td className="product-total text-body">
               BDT {Math.round(checkoutData.shipping_cost)}.00
             </td>
-          </tr>
-          <tr className="sumnary-shipping shipping-row-last">
+          </tr> */}
+          <tr
+            className="sumnary-shipping"
+            style={{ display: selectShippingArea ? "block" : "none" }}
+          >
             <td colSpan="2">
               <h4 className="summary-subtitle">Shipping Cost</h4>
               <ul>
-                <li>
+                <li
+                  style={{
+                    display:
+                      selectShippingArea == "Dhaka" && parseInt(inDhaka) !== 0
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -576,7 +602,14 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                 </li>
 
                 {/* Outside Dhaka shipping */}
-                {/* <li>
+                <li
+                  style={{
+                    display:
+                      selectShippingArea !== "Dhaka" && parseInt(outDhaka) !== 0
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -597,10 +630,18 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                       .00
                     </label>
                   </div>
-                </li> */}
+                </li>
 
                 {/* Free shipping  */}
-                {/* <li>
+                <li
+                  style={{
+                    display:
+                      (selectShippingArea == "Dhaka" && inDhaka == 0) ||
+                      (selectShippingArea !== "Dhaka" && outDhaka == 0)
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -610,20 +651,16 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                       onChange={checkoutInputHandler}
                       value={0}
                       required
-                      checked={
-                        checkoutData.shipping_cost == 0
-                          ? true
-                          : false
-                      }
+                      checked={checkoutData.shipping_cost == 0 ? true : false}
                     />
                     <label
                       className="custom-control-label"
                       htmlFor="local_pickup"
                     >
-                      Free Shipping Local pickup
+                      Free Shipping!
                     </label>
                   </div>
-                </li> */}
+                </li>
               </ul>
             </td>
           </tr>

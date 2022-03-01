@@ -31,7 +31,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       price: item.price,
       quantity: item.amount,
       discount: item.discount,
-      tax: total_tax,
+      tax: item.tax,
       subtotal: item.amount * item.price,
     };
   });
