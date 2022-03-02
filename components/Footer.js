@@ -104,7 +104,8 @@ const Footer = () => {
         </div>
         <div className="footer-center">
           <p className="copyright">
-            Owlet eCommerce &copy; 2021. All Rights Reserved
+            Owlet eCommerce &copy; {new Date().getFullYear()}. All Rights
+            Reserved
           </p>
         </div>
         <div className="footer-right">
