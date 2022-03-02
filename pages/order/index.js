@@ -7,11 +7,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Loading from "../../components/Loading";
 const index = () => {
-  const { placeOrderClick } = useCartContext();
+  const { placeOrderClick, clearCart } = useCartContext();
   const router = useRouter();
   useEffect(() => {
     if (placeOrderClick) {
       toast.success(`${placeOrderClick.message}`);
+      clearCart();
     } else {
       router.push("/");
     }

@@ -15,11 +15,13 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const [shipToDifferent, setShipToDifferent] = useState(false);
   const router = useRouter();
   const { user } = useUserContext();
+  // console.log(user && user.customer);
   const { cart, clearCart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
 
-  const [noteStatus, setNoteStatus] = useState(false);
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
+  const [noteStatus, setNoteStatus] = useState(false);
+  const [selectShippingArea, setSelectShippingArea] = useState("");
 
   // Prearing prducts for database
   const products = cart.map((item) => {
@@ -65,7 +67,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   });
 
   const [checkoutData, setCheckoutData] = useState({
-    shipping_cost: shippingCostInDhaka,
+    shipping_cost: 0,
     terms_condition: false,
     payment_type: "cash_on_delivery",
     diff_name: "",
@@ -186,7 +188,7 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
     );
 
     setPlaceOrderClick(orderResponse);
-    clearCart();
+    // clearCart();
     router.push("/order");
     setPlaceOrderButtonStatus(false);
   };
@@ -203,12 +205,42 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       const areas = await areaRes.json();
       setAreaStatus(false);
       setAreas(areas);
+      const selectedAreaForShippingCost = locations.find(
+        (item) => item.id == checkoutData.diff_location_id
+      );
+      setSelectShippingArea(selectedAreaForShippingCost.name);
     }
   };
   useEffect(() => {
     getAreas();
   }, [checkoutData.diff_location_id]);
   // Location wise Areas end
+
+  useEffect(() => {
+    if (selectShippingArea) {
+      setCheckoutData({
+        ...checkoutData,
+        shipping_cost:
+          selectShippingArea == "Dhaka"
+            ? shippingCostInDhaka
+            : shippingCostOutDhaka,
+      });
+    }
+    if (user && !selectShippingArea) {
+      const userLocationShippingCost = locations.find(
+        (item) => item.id == user.customer.location_id
+      );
+      // console.log(userLocationShippingCost);
+      setSelectShippingArea(userLocationShippingCost.name);
+      // setCheckoutData({
+      //   ...checkoutData,
+      //   shipping_cost:
+      //     userLocationShippingCost.name == "Dhaka"
+      //       ? shippingCostInDhaka
+      //       : shippingCostOutDhaka,
+      // });
+    }
+  }, [selectShippingArea, user]);
 
   if (cart.length === 0) {
     return (
@@ -673,17 +705,33 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
             <td className="product-name">Tax </td>
             <td className="product-total text-body">BDT {total_tax}.00</td>
           </tr>
-          <tr>
+          {/* <tr>
             <td className="product-name">Shipping Cost </td>
             <td className="product-total text-body">
               BDT {Math.round(checkoutData.shipping_cost)}.00
             </td>
-          </tr>
-          <tr className="sumnary-shipping shipping-row-last">
+          </tr> */}
+          <tr
+            className="sumnary-shipping"
+            style={{
+              display:
+                selectShippingArea || checkoutData.shipping_cost
+                  ? "block"
+                  : "none",
+            }}
+          >
             <td colSpan="2">
               <h4 className="summary-subtitle">Shipping Cost</h4>
               <ul>
-                <li>
+                <li
+                  style={{
+                    display:
+                      selectShippingArea == "Dhaka" &&
+                      parseInt(shippingCostInDhaka) !== 0
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -705,7 +753,15 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                 </li>
 
                 {/* Outside dhaka shipping  */}
-                {/* <li>
+                <li
+                  style={{
+                    display:
+                      selectShippingArea !== "Dhaka" &&
+                      parseInt(shippingCostOutDhaka) !== 0
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -728,10 +784,20 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                       .00
                     </label>
                   </div>
-                </li> */}
+                </li>
 
                 {/* Free shipping  */}
-                {/* <li>
+                <li
+                  style={{
+                    display:
+                      (selectShippingArea == "Dhaka" &&
+                        shippingCostInDhaka == 0) ||
+                      (selectShippingArea !== "Dhaka" &&
+                        shippingCostOutDhaka == 0)
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <div className="custom-radio">
                     <input
                       type="radio"
@@ -741,20 +807,16 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
                       onChange={checkoutInputHandler}
                       value={0}
                       required
-                      checked={
-                        checkoutData.shipping_cost == 0
-                          ? true
-                          : false
-                      }
+                      checked={checkoutData.shipping_cost == 0 ? true : false}
                     />
                     <label
                       className="custom-control-label"
                       htmlFor="local_pickup"
                     >
-                      Free Shipping Local pickup
+                      Free Shipping!
                     </label>
                   </div>
-                </li> */}
+                </li>
               </ul>
             </td>
           </tr>

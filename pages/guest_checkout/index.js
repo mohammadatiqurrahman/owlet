@@ -66,7 +66,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     area: "",
     zip: "",
     address: "",
-    shipping_cost: "",
+    shipping_cost: 0,
     // shipping_cost: selectShippingArea == "Dhaka" ? inDhaka : outDhaka,
     terms_condition: false,
     payment_type: "cash_on_delivery",
@@ -162,9 +162,9 @@ const index = ({ locations, inDhaka, outDhaka }) => {
       guest_invoice
     );
     setPlaceOrderClick(orderResponse);
-    clearCart();
     router.push("/order");
     setPlaceOrderButtonStatus(false);
+    // clearCart();
   };
 
   // Show and hide Login/Registration field start
@@ -210,10 +210,12 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   // Location wise Areas end
 
   useEffect(() => {
-    setCheckoutData({
-      ...checkoutData,
-      shipping_cost: selectShippingArea == "Dhaka" ? inDhaka : outDhaka,
-    });
+    if (selectShippingArea) {
+      setCheckoutData({
+        ...checkoutData,
+        shipping_cost: selectShippingArea == "Dhaka" ? inDhaka : outDhaka,
+      });
+    }
   }, [selectShippingArea]);
 
   if (cart.length === 0) {
