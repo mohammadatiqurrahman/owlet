@@ -17,20 +17,15 @@ const Images = () => {
     return (
       <div className="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1">
         <figure className="product-image">
-
           {/* effect from Salman vai */}
           {activeImage && (
-            <InnerImageZoom
+            <img
               src={
                 activeImage
                   ? activeImage
                   : "/images/dummy-images/product-preview.jpeg"
               }
-              width={580}
-              height={652}
-              zoomType="hover"
-              zoomPreload={true}
-              fullscreenOnMobile={false}
+              style={{ objectFit: "fill", height: "800px", width: "100%" }}
             />
           )}
         </figure>
@@ -53,8 +48,7 @@ const Images = () => {
             <img
               src={main_image}
               alt="product thumbnail"
-              width="109"
-              height="122"
+             style={{height:"150px", width:"100%", objectFit: 'fill'}}
             />
           </div>
         )}

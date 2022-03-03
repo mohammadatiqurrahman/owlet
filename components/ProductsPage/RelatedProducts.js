@@ -15,6 +15,7 @@ const RelatedProducts = ({ relatedProducts }) => {
             alt="product"
             width="247"
             height="278"
+            style={{ height: "315px" }}
           />
         </Link>
         <div className="product-label-group">
@@ -65,7 +66,6 @@ const RelatedProducts = ({ relatedProducts }) => {
           <div className="product-grid row">
             <div className="row">
               {relatedProducts.map((item, index) => {
-                
                 return (
                   <div key={index} className="col-md-3 col-6">
                     <div className="product product-variable text-center">
