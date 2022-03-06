@@ -105,8 +105,7 @@ const HomeCartWishlist = () => {
                 src={main_image}
                 data-zoom-image="images/product/product-1-1-800x900.jpg"
                 alt="Blue Pinafore Denim Dress"
-                width="580"
-                height="580"
+                style={{ height: "315px", objectFit: "fill" }}
               />
             </figure>
           </div>

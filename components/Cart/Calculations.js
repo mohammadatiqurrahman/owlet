@@ -77,20 +77,21 @@ const Calculations = () => {
                   <td className="product-thumbnail">
                     <figure>
                       <Link href={`/products/${item.slug}`}>
-
-                      
-                      <a>
-                        <img
-                          src={
-                            image
-                              ? image
-                              : "/images/dummy-images/cart-image.jpg"
-                          }
-                          width="100"
-                          height="100"
-                          alt="product"
-                        />
-                      </a>
+                        <a>
+                          <img
+                            src={
+                              image
+                                ? image
+                                : "/images/dummy-images/cart-image.jpg"
+                            }
+                            style={{
+                              height: "120px",
+                              width: "100%",
+                              objectFit: "fill",
+                            }}
+                            alt="product"
+                          />
+                        </a>
                       </Link>
                     </figure>
                   </td>

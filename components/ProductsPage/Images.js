@@ -25,7 +25,7 @@ const Images = () => {
                   ? activeImage
                   : "/images/dummy-images/product-preview.jpeg"
               }
-              style={{ objectFit: "fill", height: "800px", width: "100%" }}
+              style={{ objectFit: "fill", height: "500px", width: "100%" }}
             />
           )}
         </figure>
@@ -48,7 +48,7 @@ const Images = () => {
             <img
               src={main_image}
               alt="product thumbnail"
-             style={{height:"150px", width:"100%", objectFit: 'fill'}}
+              style={{ height: "100px", width: "100%", objectFit: "fill" }}
             />
           </div>
         )}
@@ -72,8 +72,11 @@ const Images = () => {
                         : "/images/dummy-images/product-preview.jpeg"
                     }
                     alt="product thumbnail"
-                    width="109"
-                    height="122"
+                    style={{
+                      height: "100px",
+                      width: "100%",
+                      objectFit: "fill",
+                    }}
                   />
                 </div>
               )

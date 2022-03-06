@@ -73,8 +73,11 @@ const index = () => {
                                 ? main_image
                                 : "/images/dummy-images/cart-image.jpg"
                             }
-                            width="100"
-                            height="100"
+                            style={{
+                              height: "120px",
+                              width: "100%",
+                              objectFit: "fill",
+                            }}
                             alt="product"
                           />
                         </figure>
