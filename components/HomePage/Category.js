@@ -7,7 +7,7 @@ const Category = () => {
 
   return (
     <section className="banner-group pb-10 mt-1">
-      <div className="row">
+      {/* <div className="row">
         <div className="col-md-6 mb-4">
           <div
             className="banner banner-fixed overlay-dark"
@@ -44,7 +44,7 @@ const Category = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="categories owl-carousel owl-nav-full owl-theme row cols-lg-3 cols-sm-2 cols-1 mb-4">
         {navigations.length > 0 &&
           navigations.map((item, index) => {
