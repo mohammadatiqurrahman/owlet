@@ -15,7 +15,6 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
   const [shipToDifferent, setShipToDifferent] = useState(false);
   const router = useRouter();
   const { user } = useUserContext();
-  // console.log(user && user.customer);
   const { cart, clearCart, total_amount, total_tax, setPlaceOrderClick } =
     useCartContext();
 
@@ -230,7 +229,6 @@ const index = ({ locations, shippingCostInDhaka, shippingCostOutDhaka }) => {
       const userLocationShippingCost = locations.find(
         (item) => item.id == user.customer.location_id
       );
-      // console.log(userLocationShippingCost);
       setSelectShippingArea(userLocationShippingCost.name);
       // setCheckoutData({
       //   ...checkoutData,

@@ -18,11 +18,9 @@ const index = ({ locations, inDhaka, outDhaka }) => {
   const [placeOrderButtonStatus, setPlaceOrderButtonStatus] = useState(false);
   const [noteStatus, setNoteStatus] = useState(false);
   const [selectShippingArea, setSelectShippingArea] = useState("");
-  // console.log(selectShippingArea);
 
   // Preparing products for database
   const products = cart.map((item) => {
-    // console.log(item);
     return {
       id: item.product_id,
       name: item.name,

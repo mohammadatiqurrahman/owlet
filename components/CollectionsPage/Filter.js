@@ -38,7 +38,6 @@ const Filter = () => {
           value={value}
           onChange={(value) => {
             setValue({ ...value, max: value.max, min: value.min });
-            console.log(value);
           }}
         /> */}
         <div

@@ -5,6 +5,27 @@ import { based_url } from "../utils/constants";
 export default class HomePageService {
   static instance = HomePageService.instance || new HomePageService();
 
+  // Home page settings
+  async getHomePageAllSettings() {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const homePageAllSettingsResponse = await axios.get(
+          based_url + "/home/page/setting"
+        );
+        // Expecting Home page settings from the response
+        if (homePageAllSettingsResponse.data)
+          return homePageAllSettingsResponse.data;
+      } catch (error) {
+        console.log(
+          "Error in homePageAllSettings() in services/HomePageService.js"
+        );
+        console.log(error);
+      }
+    }
+    return {};
+  }
+
   // Navigations
   async getNavigationUrlList() {
     let retry = 0;

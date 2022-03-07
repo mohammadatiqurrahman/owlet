@@ -20,6 +20,7 @@ const NewArrival = ({ newArrival }) => {
                 alt="banner"
                 width="380"
                 height="705"
+                style={{ objectFit: "fill" }}
               />
             </figure>
           </Link>

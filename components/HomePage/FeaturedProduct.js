@@ -11,7 +11,7 @@ const FeaturedProduct = ({ featuredProduct }) => {
       >
         <div
           className="banner banner-fixed overlay-dark"
-          style={{ backgroundColor: "#8ea9b2", cursor:"pointer" }}
+          style={{ backgroundColor: "#8ea9b2", cursor: "pointer" }}
         >
           <Link href="/collections/featured">
             <figure>
@@ -20,6 +20,7 @@ const FeaturedProduct = ({ featuredProduct }) => {
                 alt="banner"
                 width="380"
                 height="705"
+                style={{ objectFit: "fill" }}
               />
             </figure>
           </Link>

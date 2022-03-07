@@ -21,17 +21,27 @@ const index = ({
   homeImageStatus,
   metaDescription,
   metaKeyword,
+  homePageAllSettings,
 }) => {
   return (
     <React.Fragment>
       <Head>
         <title>Home Page | The Owlet</title>
         <meta property="og:title" content="Home Page | The Owlet" />
-        <meta name="keywords" content={metaKeyword} />
-        <meta name="description" content={metaDescription} />
-        <meta property="og:description" content={metaDescription} />
-        {homeImageStatus && (
-          <meta property="og:image" content={homePageBanner} />
+        <meta name="keywords" content={homePageAllSettings.meta_keyword} />
+        <meta
+          name="description"
+          content={homePageAllSettings.meta_description}
+        />
+        <meta
+          property="og:description"
+          content={homePageAllSettings.meta_description}
+        />
+        {homePageAllSettings.show_banner_image == "1" && (
+          <meta
+            property="og:image"
+            content={homePageAllSettings.banner_image}
+          />
         )}
         <meta property="og:url" content="/" />
       </Head>
@@ -41,7 +51,9 @@ const index = ({
       <main className="main home">
         <div className="page-content">
           <div className="container">
-            {homeImageStatus && <Banner homePageBanner={homePageBanner} />}
+            {homePageAllSettings.show_banner_image == "1" && (
+              <Banner homePageBanner={homePageAllSettings.banner_image} />
+            )}
             <Category />
             <NewArrival newArrival={newArrival} />
             <FeaturedProduct featuredProduct={featuredProduct} />
@@ -60,25 +72,29 @@ export const getStaticProps = async () => {
 
   const featuredProduct = await HomePageService.instance.getFeaturedList();
 
-  const homeImageStatus =
-    await HomePageService.instance.getHomePageBannerStatus();
+  // const homeImageStatus =
+  //   await HomePageService.instance.getHomePageBannerStatus();
 
-  const homePageBanner = await HomePageService.instance.getHomePageBanner();
+  // const homePageBanner = await HomePageService.instance.getHomePageBanner();
 
-  const metaKeyword = await HomePageService.instance.getHomePageMetaKeywords();
+  // const metaKeyword = await HomePageService.instance.getHomePageMetaKeywords();
 
-  const metaDescription =
-    await HomePageService.instance.getHomePageMetaDescription();
+  // const metaDescription =
+  //   await HomePageService.instance.getHomePageMetaDescription();
+
+  const homePageAllSettings =
+    await HomePageService.instance.getHomePageAllSettings();
 
   return {
     props: {
       // navigations,
       newArrival,
       featuredProduct,
-      homeImageStatus,
-      homePageBanner,
-      metaDescription,
-      metaKeyword,
+      // homeImageStatus,
+      // homePageBanner,
+      // metaDescription,
+      // metaKeyword,
+      homePageAllSettings,
     },
     revalidate: 10,
   };

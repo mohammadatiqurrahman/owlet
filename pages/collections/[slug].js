@@ -13,7 +13,6 @@ import CollectionSkeleton from "../../components/Skeleton/CollectionSkeleton";
 const collections = ({ seo }) => {
   const { fetchProducts, products, navigations_child, products_loading } =
     useProductsContext();
-  // console.log(products_loading);
   const router = useRouter();
 
   const { slug } = router.query;

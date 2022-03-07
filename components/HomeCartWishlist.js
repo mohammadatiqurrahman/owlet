@@ -200,6 +200,7 @@ const HomeCartWishlist = () => {
                 {colorSize.map((item, index) => {
                   return (
                     <a
+                      style={{ width: "auto" }}
                       className={`size ${
                         selectedSize === item ? "active" : ""
                       }`}

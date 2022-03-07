@@ -117,7 +117,8 @@ const Footer = () => {
             ></a>
 
             <a
-              href="#"
+              href="https://www.instagram.com/theowlet.bd/"
+              target="_blank"
               className="social-link social-linkedin fab fa-instagram font-weight-bold"
             ></a>
           </div>

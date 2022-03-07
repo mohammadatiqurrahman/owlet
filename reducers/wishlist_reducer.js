@@ -6,7 +6,6 @@ const wishlist_reducer = (state, action) => {
     const { product } = action.payload;
 
     const tempItem = state.wishlist.find((item) => item.slug === product.slug);
-    // console.log(tempItem);
     if (tempItem) {
       toast.error("Already in wishlist");
       return { ...state, wishlist: [...state.wishlist] };

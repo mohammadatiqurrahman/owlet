@@ -81,7 +81,6 @@ const cart_reducer = (state, action) => {
     const { product } = action.payload;
 
     const tempItem = state.wishlist.find((item) => item.slug === product.slug);
-    // console.log(tempItem);
     if (tempItem) {
       toast.error("Already exits in your wishlist");
       return { ...state, wishlist: [...state.wishlist] };

@@ -1,7 +1,10 @@
 import Link from "next/link";
 import React from "react";
+import { useProductsContext } from "../../context/products_context";
 
 const Category = () => {
+  const { navigations } = useProductsContext();
+
   return (
     <section className="banner-group pb-10 mt-1">
       <div className="row">
@@ -43,7 +46,40 @@ const Category = () => {
         </div>
       </div>
       <div className="categories owl-carousel owl-nav-full owl-theme row cols-lg-3 cols-sm-2 cols-1 mb-4">
-        <div className="category" style={{ cursor: "pointer" }}>
+        {navigations.length > 0 &&
+          navigations.map((item, index) => {
+            console.log(item.image);
+            return (
+              <div
+                key={index}
+                className="category"
+                style={{ cursor: "pointer" }}
+              >
+                <Link href={`/collections/${item.slug}`}>
+                  <figure className="category-media">
+                    <img
+                      src={`${
+                        item.menu_image
+                          ? item.menu_image
+                          : "/images/dummy-images/product-preview.jpeg"
+                      }`}
+                      alt="category"
+                      style={{ height: "280px", width: "100%" }}
+                    />
+                  </figure>
+                </Link>
+                <div className="category-content">
+                  <h4 className="category-name text-uppercase">
+                    <Link href="/collections/baby-boy">{item.title}</Link>
+                  </h4>
+                  {/* <span className="category-count">
+              <span>35</span> Products
+            </span> */}
+                </div>
+              </div>
+            );
+          })}
+        {/* <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
@@ -58,12 +94,12 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-boy">Baby Boy</Link>
             </h4>
-            {/* <span className="category-count">
+            <span className="category-count">
               <span>35</span> Products
-            </span> */}
+            </span>
           </div>
-        </div>
-        <div className="category" style={{ cursor: "pointer" }}>
+        </div> */}
+        {/* <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-girl">
             <figure className="category-media">
               <img
@@ -78,12 +114,12 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-girl">Baby Girl</Link>
             </h4>
-            {/* <span className="category-count">
+            <span className="category-count">
               <span>47</span> Products
-            </span> */}
+            </span>
           </div>
-        </div>
-        <div className="category" style={{ cursor: "pointer" }}>
+        </div> */}
+        {/* <div className="category" style={{ cursor: "pointer" }}>
           <Link href="/collections/baby-boy">
             <figure className="category-media">
               <img
@@ -98,11 +134,11 @@ const Category = () => {
             <h4 className="category-name text-uppercase">
               <Link href="/collections/baby-boy">Toddler Boy</Link>
             </h4>
-            {/* <span className="category-count">
+            <span className="category-count">
               <span>29</span> Products
-            </span> */}
+            </span>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

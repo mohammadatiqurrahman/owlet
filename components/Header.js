@@ -7,7 +7,7 @@ import { useUserContext } from "../context/user_context";
 import HeaderService from "../services/HeaderService";
 import { useWishlistContext } from "../context/wishlist_context";
 import DashboardService from "../services/DashboardService";
-const Header = ({ navigations, newArrival, onSale }) => {
+const Header = ({ navigations, newArrival, onSale, mainlogo }) => {
   const router = useRouter();
 
   const { handleCart, fetchNavigationsChild, navigations_child } =
@@ -99,8 +99,9 @@ const Header = ({ navigations, newArrival, onSale }) => {
         <Link href="/">
           <a className="logo mr-0">
             <img
-              src="/images/demos/demo24/owlet.svg"
-              alt="logo"
+              // src="/images/demos/demo24/owlet.svg"
+              src={mainlogo ? mainlogo : "/images/demos/demo24/owlet.svg"}
+              alt="shoptheowlet"
               width="154"
               height="43"
             />
@@ -389,7 +390,6 @@ const Header = ({ navigations, newArrival, onSale }) => {
                         <div className="row">
                           {childrenNavigations.length > 0 &&
                             childrenNavigations.map((item) => {
-                              // console.log(item);
                               return (
                                 <div className="col-md-6 m-0 p-0" key={item.id}>
                                   <ul
