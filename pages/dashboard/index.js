@@ -126,7 +126,7 @@ const Dashboard = ({ locations }) => {
   return (
     <React.Fragment>
       <Head>
-        <title>dashboard | The Owlet</title>
+        <title>Dashboard | The Owlet</title>
       </Head>
       <main className="main account">
         {changePasswordModal && <ChangePasswordModal />}

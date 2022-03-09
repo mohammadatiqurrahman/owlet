@@ -48,7 +48,6 @@ const Category = () => {
       <div className="categories owl-carousel owl-nav-full owl-theme row cols-lg-3 cols-sm-2 cols-1 mb-4">
         {navigations.length > 0 &&
           navigations.map((item, index) => {
-            console.log(item.image);
             return (
               <div
                 key={index}

@@ -30,7 +30,9 @@ const Layout = ({ children }) => {
   }, []);
   return (
     <>
-      {pathname === "/" && <TopHeader />}
+      {homeSettings.top_discount_banner_status == "1" && pathname === "/" && (
+        <TopHeader title={homeSettings.top_discount_banner_text} />
+      )}
       <div>
         <Header
           navigations={navigations}
