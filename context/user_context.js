@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
     if (user) {
       getOrders();
     }
-  }, [user]);
+  }, [user, router.pathname === "/dashboard"]);
 
   const [order, setOrder] = useState([]);
   const getOrders = async () => {
@@ -193,9 +193,7 @@ export const UserProvider = ({ children }) => {
                 errors: { phone: ["The phone field is required "] },
               },
             },
-        locationError: signUpInfo.location
-          ? ""
-          : "The city field is required",
+        locationError: signUpInfo.location ? "" : "The city field is required",
         areaError: signUpInfo.area ? "" : "The area field is required",
         zipError: signUpInfo.zip ? "" : "The zip field is required",
         addressError: signUpInfo.address ? "" : "The address field is required",
@@ -289,7 +287,6 @@ export const UserProvider = ({ children }) => {
     clearTimeout(timeout);
     setSignUpError({ ...signUpError, phoneError: "" });
   };
-
 
   const [loginActive, setLoginActive] = useState(true);
   const [signUpActive, setSignUpActive] = useState(false);

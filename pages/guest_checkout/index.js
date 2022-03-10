@@ -440,6 +440,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
               })
             }
           >
+            <option>Select Area</option>
             {areas.map((item, index) => (
               <option key={index} value={item.id}>
                 {item.name}
