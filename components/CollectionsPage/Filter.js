@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useFilterContext } from "../../context/filter_context";
 import { getUniqueValues, formatPrice } from "../../utils/helpers";
-import InputRange from "react-input-range";
-import "react-input-range/lib/css/index.css";
-import Slider from "@material-ui/core/Slider";
+// import InputRange from "react-input-range";
+// import "react-input-range/lib/css/index.css";
+// import Slider from "@material-ui/core/Slider";
 const Filter = () => {
   const {
     filters: {

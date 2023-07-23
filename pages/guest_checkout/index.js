@@ -10,6 +10,7 @@ import LoginForCheckout from "../../components/checkout/LoginForCheckout";
 import SignUpForCheckout from "../../components/checkout/SignUpForCheckout";
 import GuestInvoice from "../../models/invoice_guest";
 import CheckoutService from "../../services/CheckoutService";
+import axios from "axios";
 const index = ({ locations, inDhaka, outDhaka }) => {
   const router = useRouter();
   const [areaStatus, setAreaStatus] = useState(false);
@@ -93,76 +94,112 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     const email = emailValidation();
 
     setPlaceOrderButtonStatus(true);
-    if (
-      !checkoutData.fullName ||
-      !checkoutData.email ||
-      !checkoutData.phone ||
-      !checkoutData.location ||
-      !checkoutData.area ||
-      !checkoutData.zip ||
-      !checkoutData.address ||
-      !checkoutData.shipping_cost ||
-      !checkoutData.terms_condition ||
-      !checkoutData.payment_type ||
-      `${checkoutData.phone}`.length !== 11 ||
-      !email
-    ) {
-      setPlaceOrderButtonStatus(false);
-      setCheckoutError({
-        ...checkoutError,
-        fullNameError: checkoutData.fullName
-          ? ""
-          : "The Full Name field is required.",
-        emailError:
-          (checkoutData.email ? "" : "The Email field is required.") ||
-          (checkoutData.email !== "" && !email
-            ? "Enter valid email address"
-            : ""),
-        phoneError:
-          (checkoutData.phone ? "" : "The Phone field is required.") ||
-          (checkoutData.phone !== "" && `${checkoutData.phone}`.length !== 11
-            ? "Phone number must be 11 digits"
-            : ""),
-        locationError: checkoutData.location
-          ? ""
-          : "The City field is required.",
-        areaError: checkoutData.area ? "" : "The Area field is required.",
-        zipError: checkoutData.zip ? "" : "The Zip field is required.",
-        addressError: checkoutData.address
-          ? ""
-          : "The Address field is required.",
-        shippingCostError: checkoutData.shipping_cost
-          ? ""
-          : "The Shipping cost field is required.",
-        termsConditionError: checkoutData.terms_condition
-          ? ""
-          : "Please click on the checkbox before placing order.",
-      });
-      return;
-    }
-    const guest_invoice = new GuestInvoice(
-      checkoutData.fullName,
-      checkoutData.email,
-      checkoutData.phone,
-      checkoutData.location,
-      checkoutData.area,
-      checkoutData.zip,
-      checkoutData.address,
-      JSON.stringify(products),
-      total_tax,
-      checkoutData.shipping_cost,
-      total_amount + total_tax + parseInt(checkoutData.shipping_cost),
-      checkoutData.payment_type,
-      checkoutData.note
-    );
+    // if (
+    //   !checkoutData.fullName ||
+    //   !checkoutData.email ||
+    //   !checkoutData.phone ||
+    //   !checkoutData.location ||
+    //   !checkoutData.area ||
+    //   !checkoutData.zip ||
+    //   !checkoutData.address ||
+    //   !checkoutData.shipping_cost ||
+    //   !checkoutData.terms_condition ||
+    //   !checkoutData.payment_type ||
+    //   `${checkoutData.phone}`.length !== 11 ||
+    //   !email
+    // ) {
+    //   setPlaceOrderButtonStatus(false);
+    //   setCheckoutError({
+    //     ...checkoutError,
+    //     fullNameError: checkoutData.fullName
+    //       ? ""
+    //       : "The Full Name field is required.",
+    //     emailError:
+    //       (checkoutData.email ? "" : "The Email field is required.") ||
+    //       (checkoutData.email !== "" && !email
+    //         ? "Enter valid email address"
+    //         : ""),
+    //     phoneError:
+    //       (checkoutData.phone ? "" : "The Phone field is required.") ||
+    //       (checkoutData.phone !== "" && `${checkoutData.phone}`.length !== 11
+    //         ? "Phone number must be 11 digits"
+    //         : ""),
+    //     locationError: checkoutData.location
+    //       ? ""
+    //       : "The City field is required.",
+    //     areaError: checkoutData.area ? "" : "The Area field is required.",
+    //     zipError: checkoutData.zip ? "" : "The Zip field is required.",
+    //     addressError: checkoutData.address
+    //       ? ""
+    //       : "The Address field is required.",
+    //     shippingCostError: checkoutData.shipping_cost
+    //       ? ""
+    //       : "The Shipping cost field is required.",
+    //     termsConditionError: checkoutData.terms_condition
+    //       ? ""
+    //       : "Please click on the checkbox before placing order.",
+    //   });
+    //   return;
+    // }
+    if(checkoutData.payment_type === "cash_on_delivery"){
+        const guest_invoice = new GuestInvoice(
+        checkoutData.fullName,
+        checkoutData.email,
+        checkoutData.phone,
+        checkoutData.location,
+        checkoutData.area,
+        checkoutData.zip,
+        checkoutData.address,
+        JSON.stringify(products),
+        total_tax,
+        checkoutData.shipping_cost,
+        total_amount + total_tax + parseInt(checkoutData.shipping_cost),
+        checkoutData.payment_type,
+        checkoutData.note
+      );
 
-    const orderResponse = await CheckoutService.instance.guestCheckout(
-      guest_invoice
-    );
-    setPlaceOrderClick(orderResponse);
-    router.push("/order");
-    setPlaceOrderButtonStatus(false);
-    // clearCart();
+      const orderResponse = await CheckoutService.instance.guestCheckout(
+        guest_invoice
+      );
+      setPlaceOrderClick(orderResponse);
+      router.push("/order");
+      setPlaceOrderButtonStatus(false);
+      // clearCart();
+    }else{
+      const guest_invoice = new GuestInvoice(
+        checkoutData.fullName,
+        checkoutData.email,
+        checkoutData.phone,
+        checkoutData.location,
+        checkoutData.area,
+        checkoutData.zip,
+        checkoutData.address,
+        JSON.stringify(products),
+        total_tax,
+        checkoutData.shipping_cost,
+        total_amount + total_tax + parseInt(checkoutData.shipping_cost),
+        checkoutData.payment_type,
+        checkoutData.note
+      );
+      try {
+        const guestCheckoutResponse = await axios({
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          url: `${based_url}/pay-via-ajax`,
+          data: guest_invoice,
+        });
+        // Expecting a object from the response
+        // if (guestCheckoutResponse.data) return guestCheckoutResponse.data;
+        console.log(guestCheckoutResponse.data);
+        router.push(guestCheckoutResponse.data.data)
+      } catch (error) {
+        console.log("Error in guestCheckout() in services/CheckoutService.js");
+        console.log(error);
+      }
+    }
   };
 
   // Show and hide Login/Registration field start
@@ -836,7 +873,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                       {!placeOrderButtonStatus ? (
                         <button
                           type="submit"
-                          className="btn btn-dark btn-rounded btn-order"
+                          className={`btn btn-dark btn-rounded btn-order ${checkoutData.payment_type === "cash_on_delivery"? 'd-block':'d-none'}`}
                         >
                           Place Order
                         </button>
@@ -845,6 +882,12 @@ const index = ({ locations, inDhaka, outDhaka }) => {
                           Processing Order...
                         </button>
                       )}
+                       <button
+                          type="submit"
+                          className={`btn btn-dark btn-rounded btn-order ${checkoutData.payment_type === "online_payment"? 'd-block':'d-none'}`}
+                        >
+                          Pay now
+                        </button>
                     </div>
                   </div>
                 </aside>

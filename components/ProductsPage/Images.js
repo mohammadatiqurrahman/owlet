@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useProductsContext } from "../../context/products_context";
-import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
-import InnerImageZoom from "react-inner-image-zoom";
+// import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+// import InnerImageZoom from "react-inner-image-zoom";
 
 const Images = () => {
   const { single_product: product } = useProductsContext();
