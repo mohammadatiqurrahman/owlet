@@ -94,53 +94,53 @@ const index = ({ locations, inDhaka, outDhaka }) => {
     const email = emailValidation();
 
     setPlaceOrderButtonStatus(true);
-    // if (
-    //   !checkoutData.fullName ||
-    //   !checkoutData.email ||
-    //   !checkoutData.phone ||
-    //   !checkoutData.location ||
-    //   !checkoutData.area ||
-    //   !checkoutData.zip ||
-    //   !checkoutData.address ||
-    //   !checkoutData.shipping_cost ||
-    //   !checkoutData.terms_condition ||
-    //   !checkoutData.payment_type ||
-    //   `${checkoutData.phone}`.length !== 11 ||
-    //   !email
-    // ) {
-    //   setPlaceOrderButtonStatus(false);
-    //   setCheckoutError({
-    //     ...checkoutError,
-    //     fullNameError: checkoutData.fullName
-    //       ? ""
-    //       : "The Full Name field is required.",
-    //     emailError:
-    //       (checkoutData.email ? "" : "The Email field is required.") ||
-    //       (checkoutData.email !== "" && !email
-    //         ? "Enter valid email address"
-    //         : ""),
-    //     phoneError:
-    //       (checkoutData.phone ? "" : "The Phone field is required.") ||
-    //       (checkoutData.phone !== "" && `${checkoutData.phone}`.length !== 11
-    //         ? "Phone number must be 11 digits"
-    //         : ""),
-    //     locationError: checkoutData.location
-    //       ? ""
-    //       : "The City field is required.",
-    //     areaError: checkoutData.area ? "" : "The Area field is required.",
-    //     zipError: checkoutData.zip ? "" : "The Zip field is required.",
-    //     addressError: checkoutData.address
-    //       ? ""
-    //       : "The Address field is required.",
-    //     shippingCostError: checkoutData.shipping_cost
-    //       ? ""
-    //       : "The Shipping cost field is required.",
-    //     termsConditionError: checkoutData.terms_condition
-    //       ? ""
-    //       : "Please click on the checkbox before placing order.",
-    //   });
-    //   return;
-    // }
+    if (
+      !checkoutData.fullName ||
+      !checkoutData.email ||
+      !checkoutData.phone ||
+      !checkoutData.location ||
+      !checkoutData.area ||
+      !checkoutData.zip ||
+      !checkoutData.address ||
+      !checkoutData.shipping_cost ||
+      !checkoutData.terms_condition ||
+      !checkoutData.payment_type ||
+      `${checkoutData.phone}`.length !== 11 ||
+      !email
+    ) {
+      setPlaceOrderButtonStatus(false);
+      setCheckoutError({
+        ...checkoutError,
+        fullNameError: checkoutData.fullName
+          ? ""
+          : "The Full Name field is required.",
+        emailError:
+          (checkoutData.email ? "" : "The Email field is required.") ||
+          (checkoutData.email !== "" && !email
+            ? "Enter valid email address"
+            : ""),
+        phoneError:
+          (checkoutData.phone ? "" : "The Phone field is required.") ||
+          (checkoutData.phone !== "" && `${checkoutData.phone}`.length !== 11
+            ? "Phone number must be 11 digits"
+            : ""),
+        locationError: checkoutData.location
+          ? ""
+          : "The City field is required.",
+        areaError: checkoutData.area ? "" : "The Area field is required.",
+        zipError: checkoutData.zip ? "" : "The Zip field is required.",
+        addressError: checkoutData.address
+          ? ""
+          : "The Address field is required.",
+        shippingCostError: checkoutData.shipping_cost
+          ? ""
+          : "The Shipping cost field is required.",
+        termsConditionError: checkoutData.terms_condition
+          ? ""
+          : "Please click on the checkbox before placing order.",
+      });
+      return;
+    }
     if(checkoutData.payment_type === "cash_on_delivery"){
         const guest_invoice = new GuestInvoice(
         checkoutData.fullName,
@@ -188,7 +188,7 @@ const index = ({ locations, inDhaka, outDhaka }) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          url: `${based_url}/pay-via-ajax`,
+          url: `${based_url}/guest-pay-via-ajax`,
           data: guest_invoice,
         });
         // Expecting a object from the response
